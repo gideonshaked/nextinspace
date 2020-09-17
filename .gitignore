@@ -3,3 +3,6 @@ env/
 
 # Vscode
 .vscode/
+
+# Python
+nextinspace/__pycache__
