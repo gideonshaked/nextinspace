@@ -6,3 +6,6 @@ env/
 
 # Python
 nextinspace/__pycache__
+
+# Pytest
+.pytest_cache
