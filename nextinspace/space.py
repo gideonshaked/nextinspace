@@ -1,4 +1,4 @@
-"""Space is the class definitions used to store data from the LL2 API."""
+"""The class definitions used to store data from the LL2 API."""
 
 # Basic SpaceEvent parent class
 class SpaceEvent:
