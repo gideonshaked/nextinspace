@@ -6,7 +6,7 @@ from tzlocal import get_localzone
 
 def test_getOtherEvents(requests_mock):
     # Mock API
-    other_event_text = open("tests/api/other_event.txt", "r").read()
+    other_event_text = open("tests/api/other_event.json", "r").read()
     requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=other_event_text)
 
     # Test data
