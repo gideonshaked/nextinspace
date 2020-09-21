@@ -49,6 +49,3 @@ def getOtherEvents(num_events=1):
         events.append(space.OtherEvent(mission_name, location, mission_date, mission_description, mission_type))
 
     return events
-
-
-print(getOtherEvents()[0].mission_description)
