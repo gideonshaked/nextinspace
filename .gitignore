@@ -5,7 +5,7 @@
 .vscode/
 
 # Python
-nextinspace/__pycache__
+__pycache__
 
 # Pytest
 .pytest_cache
