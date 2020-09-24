@@ -59,4 +59,36 @@ def test_getLaunchEvents(requests_mock):
     assert event.mission_type == test_mission_type
 
 
-# TODO: add test_getRocket
+def test_getRocket(requests_mock):
+    # Mock API
+    rocket_url = "https://ll.thespacedevs.com/2.0.0/config/launcher/137/"
+    rocket_text = open("tests/api/test_rocket.json", "r").read()
+    requests_mock.get(rocket_url, text=rocket_text)
+
+    # Test data
+    test_name = "New Shepard"
+    test_payload_leo = 0
+    test_payload_gto = 0
+    test_liftoff_thrust = 490
+    test_liftoff_mass = 75
+    test_max_stages = 1
+    test_successful_launches = 12
+    test_consecutive_successful_launches = 12
+    test_failed_launches = 0
+
+    test_maiden_flight_date_unaware = datetime(2015, 4, 29)
+    test_maiden_flight_date = get_localzone().localize(test_maiden_flight_date_unaware)
+
+    # Get result of method
+    rocket = api.getRocket(rocket_url)
+
+    assert rocket.name == test_name
+    assert rocket.payload_leo == test_payload_leo
+    assert rocket.payload_gto == test_payload_gto
+    assert rocket.liftoff_thrust == test_liftoff_thrust
+    assert rocket.liftoff_mass == test_liftoff_mass
+    assert rocket.max_stages == test_max_stages
+    assert rocket.successful_launches == test_successful_launches
+    assert rocket.consecutive_successful_launches == test_consecutive_successful_launches
+    assert rocket.failed_launches == test_failed_launches
+    assert rocket.maiden_flight_date == test_maiden_flight_date
