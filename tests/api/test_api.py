@@ -10,8 +10,7 @@ def test_getOtherEvents(requests_mock):
     requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=other_event_text)
 
     # Test data
-    test_date_string = "2020-01-10T15:30:00Z"
-    test_mission_date_unaware = datetime.strptime(test_date_string, "%Y-%m-%dT%H:%M:%SZ")
+    test_mission_date_unaware = datetime(2020, 1, 10, hour=15, minute=30, second=0)
     test_mission_date = get_localzone().localize(test_mission_date_unaware)
 
     test_mission_name = "2017 NASA Astronaut class graduation ceremony"
@@ -42,8 +41,7 @@ def test_getLaunchEvents(requests_mock):
     requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", real_http=True)
 
     # Test data
-    test_date_string = "2020-09-24T15:00:00Z"
-    test_mission_date_unaware = datetime.strptime(test_date_string, "%Y-%m-%dT%H:%M:%SZ")
+    test_mission_date_unaware = datetime(2020, 9, 24, hour=15, minute=0, second=0)
     test_mission_date = get_localzone().localize(test_mission_date_unaware)
 
     test_mission_name = "NS-13"
