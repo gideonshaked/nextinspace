@@ -23,6 +23,7 @@ class OtherEvent(SpaceEvent):
 
 class Rocket:
     def __init__(
+        self,
         name,
         payload_leo,
         payload_gto,
