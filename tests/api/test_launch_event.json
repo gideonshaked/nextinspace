@@ -1,0 +1,85 @@
+{
+    "count": 202,
+    "next": "https://ll.thespacedevs.com/2.0.0/launch/?limit=1&net__gte=2020-09-23&offset=1",
+    "previous": null,
+    "results": [
+        {
+            "id": "d0380fe6-f406-40ed-b723-19975ab3580d",
+            "url": "https://ll.thespacedevs.com/2.0.0/launch/d0380fe6-f406-40ed-b723-19975ab3580d/",
+            "launch_library_id": null,
+            "slug": "new-shepard-ns-13",
+            "name": "New Shepard | NS-13",
+            "status": {
+                "id": 1,
+                "name": "Go"
+            },
+            "net": "2020-09-24T15:00:00Z",
+            "window_end": "2020-09-24T15:00:00Z",
+            "window_start": "2020-09-24T15:00:00Z",
+            "inhold": false,
+            "tbdtime": false,
+            "tbddate": false,
+            "probability": null,
+            "holdreason": "",
+            "failreason": "",
+            "hashtag": null,
+            "launch_service_provider": {
+                "id": 141,
+                "url": "https://ll.thespacedevs.com/2.0.0/agencies/141/",
+                "name": "Blue Origin",
+                "type": "Commercial"
+            },
+            "rocket": {
+                "id": 2793,
+                "configuration": {
+                    "id": 137,
+                    "launch_library_id": 9999,
+                    "url": "https://ll.thespacedevs.com/2.0.0/config/launcher/137/",
+                    "name": "New Shepard",
+                    "family": "Blue Origin",
+                    "full_name": "New Shepard",
+                    "variant": ""
+                }
+            },
+            "mission": {
+                "id": 1191,
+                "launch_library_id": null,
+                "name": "NS-13",
+                "description": "This will be the 13th New Shepard mission and the 7th consecutive flight for this particular vehicle (a record), demonstrating its operational reusability. \r\n\r\nNew Shepard will fly 12 commercial payloads to space and back on this mission, including the Deorbit, Descent, and Landing Sensor Demonstration with NASA’s Space Technology Mission Directorate under a Tipping Point partnership. This is the first payload to fly mounted on the exterior of a New Shepard booster rather than inside the capsule, opening the door to a wide range of future high-altitude sensing, sampling, and exposure payloads.",
+                "launch_designator": null,
+                "type": "Suborbital",
+                "orbit": {
+                    "id": 15,
+                    "name": "Sub-Orbital",
+                    "abbrev": "Sub Orbital"
+                }
+            },
+            "pad": {
+                "id": 90,
+                "url": "https://ll.thespacedevs.com/2.0.0/pad/90/",
+                "agency_id": 141,
+                "name": "West Texas Suborbital Launch Site/ Corn Ranch",
+                "info_url": "http://www.blueorigin.com",
+                "wiki_url": "https://en.wikipedia.org/wiki/Corn_Ranch",
+                "map_url": "https://www.google.com/maps/place/31%C2%B025'22.4%22N+104%C2%B045'25.6%22W",
+                "latitude": "31.422878000000000",
+                "longitude": "-104.757121000000000",
+                "location": {
+                    "id": 29,
+                    "url": "https://ll.thespacedevs.com/2.0.0/location/29/",
+                    "name": "Corn Ranch, USA",
+                    "country_code": "USA",
+                    "map_image": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/location_29_20200803142436.jpg",
+                    "total_launch_count": 12,
+                    "total_landing_count": 0
+                },
+                "map_image": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/pad_90_20200803143233.jpg",
+                "total_launch_count": 12
+            },
+            "webcast_live": false,
+            "image": "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/new2520shepard_image_20200922210608.jpeg",
+            "infographic": null,
+            "program": []
+        }
+    ]
+}
