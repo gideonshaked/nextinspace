@@ -10,16 +10,20 @@ class SpaceEvent:
         self.mission_type = mission_type
 
 
-# Child class adds rocket details
 class LaunchEvent(SpaceEvent):
+    def __init__(self, mission_name, location, mission_date, mission_description, mission_type, rocket):
+        super().__init__(mission_name, location, mission_date, mission_description, mission_type)
+        self.rocket = rocket
+
+
+# No additional attributes over SpaceEvent
+class OtherEvent(SpaceEvent):
+    pass
+
+
+class Rocket:
     def __init__(
-        self,
-        mission_name,
-        location,
-        mission_date,
-        mission_description,
-        mission_type,
-        rocket_name,
+        name,
         payload_leo,
         payload_gto,
         liftoff_thrust,
@@ -30,8 +34,8 @@ class LaunchEvent(SpaceEvent):
         failed_launches,
         maiden_flight_date,
     ):
-        super().__init__(mission_name, location, mission_date, mission_description, mission_type)
-        self.rocket_name = rocket_name
+
+        self.name = name
         self.payload_leo = payload_leo
         self.payload_gto = payload_gto
         self.liftoff_thrust = liftoff_thrust
@@ -41,8 +45,3 @@ class LaunchEvent(SpaceEvent):
         self.consecutive_successful_launches = consecutive_successful_launches
         self.failed_launches = failed_launches
         self.maiden_flight_date = maiden_flight_date
-
-
-# No additional attributes over SpaceEvent
-class OtherEvent(SpaceEvent):
-    pass
