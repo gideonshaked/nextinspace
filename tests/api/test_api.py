@@ -4,10 +4,10 @@ from datetime import datetime
 from tzlocal import get_localzone
 
 
-def test_getOtherEvents(requests_mock):
+def test_get_events(requests_mock):
     # Mock API
-    other_event_text = open("tests/api/test_other_event.json", "r").read()
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=other_event_text)
+    event_text = open("tests/api/event.json", "r").read()
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=event_text)
 
     # Test data
     test_mission_date_unaware = datetime(2020, 1, 10, hour=15, minute=30, second=0)
@@ -19,7 +19,7 @@ def test_getOtherEvents(requests_mock):
     test_mission_type = "Press Event"
 
     # Get result of method
-    event = api.getOtherEvents()[0]
+    event = api.get_events()[0]
 
     assert event.mission_name == test_mission_name
     assert event.location == test_location
@@ -28,13 +28,13 @@ def test_getOtherEvents(requests_mock):
     assert event.mission_type == test_mission_type
 
 
-def test_getLaunchEvents(requests_mock):
+def test_get_launches(requests_mock):
     # Mock API
-    launch_event_text = open("tests/api/test_launch_event.json", "r").read()
+    launch_text = open("tests/api/launch.json", "r").read()
     now = datetime.now()
     requests_mock.get(
         "https://ll.thespacedevs.com/2.0.0/launch/?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
-        text=launch_event_text,
+        text=launch_text,
     )
 
     # Make sure the request from the nested getRocket call is NOT intercepted
@@ -50,7 +50,7 @@ def test_getLaunchEvents(requests_mock):
     test_mission_type = "Suborbital"
 
     # Get result of method
-    event = api.getLaunchEvents()[0]
+    event = api.get_launches()[0]
 
     assert event.mission_name == test_mission_name
     assert event.location == test_location
@@ -59,10 +59,10 @@ def test_getLaunchEvents(requests_mock):
     assert event.mission_type == test_mission_type
 
 
-def test_getRocket(requests_mock):
+def test_get_rocket(requests_mock):
     # Mock API
     rocket_url = "https://ll.thespacedevs.com/2.0.0/config/launcher/137/"
-    rocket_text = open("tests/api/test_rocket.json", "r").read()
+    rocket_text = open("tests/api/rocket.json", "r").read()
     requests_mock.get(rocket_url, text=rocket_text)
 
     # Test data
@@ -80,7 +80,7 @@ def test_getRocket(requests_mock):
     test_maiden_flight_date = get_localzone().localize(test_maiden_flight_date_unaware)
 
     # Get result of method
-    rocket = api.getRocket(rocket_url)
+    rocket = api.get_rocket(rocket_url)
 
     assert rocket.name == test_name
     assert rocket.payload_leo == test_payload_leo

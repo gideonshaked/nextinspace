@@ -1,7 +1,7 @@
 """The class definitions used to store data from the LL2 API."""
 
-# Basic SpaceEvent parent class
-class SpaceEvent:
+
+class Event:
     def __init__(self, mission_name, location, mission_date, mission_description, mission_type):
         self.mission_name = mission_name
         self.location = location
@@ -10,15 +10,10 @@ class SpaceEvent:
         self.mission_type = mission_type
 
 
-class LaunchEvent(SpaceEvent):
+class Launch(Event):
     def __init__(self, mission_name, location, mission_date, mission_description, mission_type, rocket):
         super().__init__(mission_name, location, mission_date, mission_description, mission_type)
         self.rocket = rocket
-
-
-# No additional attributes over SpaceEvent
-class OtherEvent(SpaceEvent):
-    pass
 
 
 class Rocket:
