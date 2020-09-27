@@ -6,7 +6,7 @@ from tzlocal import get_localzone
 
 def test_get_events(requests_mock):
     # Mock API
-    event_text = open("tests/api/event.json", "r").read()
+    event_text = open("tests/data/event.json", "r").read()
     requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=event_text)
 
     # Test data
@@ -30,7 +30,7 @@ def test_get_events(requests_mock):
 
 def test_get_launches(requests_mock):
     # Mock API
-    launch_text = open("tests/api/launch.json", "r").read()
+    launch_text = open("tests/data/launch.json", "r").read()
     now = datetime.now()
     requests_mock.get(
         "https://ll.thespacedevs.com/2.0.0/launch/?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
@@ -62,7 +62,7 @@ def test_get_launches(requests_mock):
 def test_get_rocket(requests_mock):
     # Mock API
     rocket_url = "https://ll.thespacedevs.com/2.0.0/config/launcher/137/"
-    rocket_text = open("tests/api/rocket.json", "r").read()
+    rocket_text = open("tests/data/rocket.json", "r").read()
     requests_mock.get(rocket_url, text=rocket_text)
 
     # Test data
