@@ -11,7 +11,7 @@ README = (HERE / "README.md").read_text()
 setup(
     name="nextinspace",
     version=__import__("nextinspace").__version__,
-    description="Retrieve the latest from space!",
+    description="Never miss a launch.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/The-Kid-Gid/nextinspace",
