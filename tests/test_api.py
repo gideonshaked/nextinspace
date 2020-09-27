@@ -4,30 +4,6 @@ from datetime import datetime
 from tzlocal import get_localzone
 
 
-def test_get_events(requests_mock):
-    # Mock API
-    event_text = open("tests/data/event.json", "r").read()
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=event_text)
-
-    # Test data
-    test_mission_date_unaware = datetime(2020, 1, 10, hour=15, minute=30, second=0)
-    test_mission_date = get_localzone().localize(test_mission_date_unaware)
-
-    test_mission_name = "2017 NASA Astronaut class graduation ceremony"
-    test_location = "NASA's Johnson Space Center, Houston, TX, USA"
-    test_mission_description = "NASA will honor the first class of astronaut candidates to graduate under the Artemis program at 10:30 a.m. EST Friday, Jan. 10, at the agency’s Johnson Space Center in Houston. After completing more than two years of basic training, these candidates will become eligible for spaceflight, including assignments to the International Space Station, Artemis missions to the Moon, and ultimately, missions to Mars."
-    test_mission_type = "Press Event"
-
-    # Get result of method
-    event = api.get_events()[0]
-
-    assert event.mission_name == test_mission_name
-    assert event.location == test_location
-    assert event.mission_date == test_mission_date
-    assert event.mission_description == test_mission_description
-    assert event.mission_type == test_mission_type
-
-
 def test_get_launches(requests_mock):
     # Mock API
     launch_text = open("tests/data/launch.json", "r").read()
@@ -94,3 +70,27 @@ def test_get_rocket(requests_mock):
     assert rocket.consecutive_successful_launches == test_consecutive_successful_launches
     assert rocket.failed_launches == test_failed_launches
     assert rocket.maiden_flight_date == test_maiden_flight_date
+
+
+def test_get_events(requests_mock):
+    # Mock API
+    event_text = open("tests/data/event.json", "r").read()
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=event_text)
+
+    # Test data
+    test_mission_date_unaware = datetime(2020, 1, 10, hour=15, minute=30, second=0)
+    test_mission_date = get_localzone().localize(test_mission_date_unaware)
+
+    test_mission_name = "2017 NASA Astronaut class graduation ceremony"
+    test_location = "NASA's Johnson Space Center, Houston, TX, USA"
+    test_mission_description = "NASA will honor the first class of astronaut candidates to graduate under the Artemis program at 10:30 a.m. EST Friday, Jan. 10, at the agency’s Johnson Space Center in Houston. After completing more than two years of basic training, these candidates will become eligible for spaceflight, including assignments to the International Space Station, Artemis missions to the Moon, and ultimately, missions to Mars."
+    test_mission_type = "Press Event"
+
+    # Get result of method
+    event = api.get_events()[0]
+
+    assert event.mission_name == test_mission_name
+    assert event.location == test_location
+    assert event.mission_date == test_mission_date
+    assert event.mission_description == test_mission_description
+    assert event.mission_type == test_mission_type
