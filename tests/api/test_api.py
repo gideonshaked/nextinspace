@@ -72,6 +72,7 @@ def test_get_rocket(requests_mock):
     test_liftoff_thrust = 490
     test_liftoff_mass = 75
     test_max_stages = 1
+    test_height = 15.0
     test_successful_launches = 12
     test_consecutive_successful_launches = 12
     test_failed_launches = 0
@@ -88,6 +89,7 @@ def test_get_rocket(requests_mock):
     assert rocket.liftoff_thrust == test_liftoff_thrust
     assert rocket.liftoff_mass == test_liftoff_mass
     assert rocket.max_stages == test_max_stages
+    assert rocket.height == test_height
     assert rocket.successful_launches == test_successful_launches
     assert rocket.consecutive_successful_launches == test_consecutive_successful_launches
     assert rocket.failed_launches == test_failed_launches

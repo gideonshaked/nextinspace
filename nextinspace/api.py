@@ -1,13 +1,13 @@
-"""The functions used to retrieve data from the LL2 API."""
+"""The functions used to retrieve data from the LL2 API"""
 
-from nextinspace import space
 import requests
 from datetime import datetime
 from tzlocal import get_localzone
+from nextinspace import space
 
 
 def get_launches(num_launches=1):
-    """Returns list of Launches from API
+    """Return list of Launches from API
 
     Args:
         num_launches (int, optional): Number of Launches to be returned. Defaults to 1.
@@ -42,7 +42,7 @@ def get_launches(num_launches=1):
 
 
 def get_rocket(url):
-    """Returns Rocket from API
+    """Return Rocket from API
 
     Args:
         url (string): The LL2 API URL of the rocket
@@ -51,12 +51,13 @@ def get_rocket(url):
     response = requests.get(url)
     data = response.json()
 
-    name = data["name"]
+    name = data["full_name"]
     payload_leo = data["leo_capacity"]
     payload_gto = data["gto_capacity"]
     liftoff_thrust = data["to_thrust"]
     liftoff_mass = data["launch_mass"]
     max_stages = data["max_stage"]
+    height = data["length"]
     successful_launches = data["successful_launches"]
     consecutive_successful_launches = data["consecutive_successful_launches"]
     failed_launches = data["failed_launches"]
@@ -72,6 +73,7 @@ def get_rocket(url):
         liftoff_thrust,
         liftoff_mass,
         max_stages,
+        height,
         successful_launches,
         consecutive_successful_launches,
         failed_launches,
@@ -80,7 +82,7 @@ def get_rocket(url):
 
 
 def get_events(num_events=1):
-    """Returns list of Events from API
+    """Return list of Events from API
 
     Args:
         num_events (int, optional): Number of Events to be returned. Defaults to 1.

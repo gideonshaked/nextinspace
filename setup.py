@@ -29,7 +29,7 @@ setup(
     ],
     packages=["nextinspace"],
     include_package_data=True,
-    install_requires=["requests>=2.24.0", "tzlocal>=2.1"],
+    install_requires=["requests>=2.24.0", "tzlocal>=2.1", "colorama>=0.4.3"],
     entry_points={
         "console_scripts": [
             "nextinspace=nextinspace.__main__:main",
