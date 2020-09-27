@@ -13,8 +13,9 @@ def test_get_launches(requests_mock):
         text=launch_text,
     )
 
-    # Make sure the request from the nested getRocket call is NOT intercepted
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", real_http=True)
+    # Make sure the request from the nested get_rocket call is intercepted
+    rocket_text = open("tests/data/rocket.json", "r").read()
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=rocket_text)
 
     # Test data
     test_mission_date_unaware = datetime(2020, 9, 24, hour=15, minute=0, second=0)
