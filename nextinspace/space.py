@@ -191,6 +191,6 @@ class Rocket:
         print("│" + ("└" + "─" * CHART_WIDTH + "┘").center(MAX_LINE_LENGTH, " ") + "│")
 
     @staticmethod
-    def _add_to_chart(left, right) -> str:
+    def _add_to_chart(left, right):
         row = (left).center(CHART_WIDTH // 2, " ") + "│" + (right).center(CHART_WIDTH // 2, " ")
         return "│" + ("│" + row.center(CHART_WIDTH, " ") + "│").center(MAX_LINE_LENGTH, " ") + "│"
