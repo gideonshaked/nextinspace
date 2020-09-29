@@ -46,8 +46,8 @@ class Event:
         print("│" + Fore.CYAN + self.location.ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
 
         # Filler line
-        filler = "│" + " " * MAX_LINE_LENGTH + "│"
-        print(filler)
+        FILLER = "│" + " " * MAX_LINE_LENGTH + "│"
+        print(FILLER)
 
         # Date
         print(
@@ -63,7 +63,7 @@ class Event:
 
         # If verbosity is not set to quiet, print mission description
         if verbosity != verbosity.QUIET:
-            print(filler)
+            print(FILLER)
 
             mission_description_lines = t.wrap(
                 self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
@@ -95,8 +95,8 @@ class Launch(Event):
         print("│" + Fore.CYAN + self.location.ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
 
         # Filler line
-        filler = "│" + " " * MAX_LINE_LENGTH + "│"
-        print(filler)
+        FILLER = "│" + " " * MAX_LINE_LENGTH + "│"
+        print(FILLER)
 
         # Date
         print(
@@ -114,10 +114,10 @@ class Launch(Event):
         if verbosity != Verbosity.QUIET:
             # If verbosity is set to verbose, print rocket information
             if verbosity == Verbosity.VERBOSE:
-                print(filler)
+                print(FILLER)
                 self.rocket.display()
 
-            print(filler)
+            print(FILLER)
             mission_description_lines = t.wrap(
                 self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
             )
