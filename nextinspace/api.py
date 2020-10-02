@@ -15,7 +15,7 @@ def get_launches(num_launches=1):
 
     now = datetime.now()
     response = requests.get(
-        "https://ll.thespacedevs.com/2.0.0/launch/?limit=" + str(num_launches) + "&net__gte=" + now.strftime("%Y-%m-%d")
+        f"https://ll.thespacedevs.com/2.0.0/launch/?limit={num_launches}&net__gte={now.strftime('%Y-%m-%d')}"
     )
     data = response.json()
 
@@ -88,7 +88,7 @@ def get_events(num_events=1):
         num_events (int, optional): Number of Events to be returned. Defaults to 1.
     """
 
-    response = requests.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=" + str(num_events))
+    response = requests.get(f"https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit={num_events}")
     data = response.json()
 
     events = []
