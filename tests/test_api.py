@@ -23,7 +23,7 @@ def test_get_launches(requests_mock):
 
     test_mission_name = "NS-13"
     test_location = "West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA"
-    test_mission_description = "This will be the 13th New Shepard mission and the 7th consecutive flight for this particular vehicle (a record), demonstrating its operational reusability. \r\n\r\nNew Shepard will fly 12 commercial payloads to space and back on this mission, including the Deorbit, Descent, and Landing Sensor Demonstration with NASA’s Space Technology Mission Directorate under a Tipping Point partnership. This is the first payload to fly mounted on the exterior of a New Shepard booster rather than inside the capsule, opening the door to a wide range of future high-altitude sensing, sampling, and exposure payloads."
+    test_mission_description = "This will be the 13th New Shepard mission and the 7th consecutive flight for this particular vehicle (a record), demonstrating its operational reusability. \r\n\r\nNew Shepard will fly 12 commercial payloads to space and back on this mission, including the Deorbit, Descent, and Landing Sensor Demonstration with the NASA Space Technology Mission Directorate under the NASA Tipping Point partnership. This is the first payload to fly mounted on the exterior of a New Shepard booster rather than inside the capsule, opening the door to a wide range of future high-altitude sensing, sampling, and exposure payloads."
     test_mission_type = "Suborbital"
 
     # Get result of method
@@ -84,7 +84,7 @@ def test_get_events(requests_mock):
 
     test_mission_name = "2017 NASA Astronaut class graduation ceremony"
     test_location = "NASA's Johnson Space Center, Houston, TX, USA"
-    test_mission_description = "NASA will honor the first class of astronaut candidates to graduate under the Artemis program at 10:30 a.m. EST Friday, Jan. 10, at the agency’s Johnson Space Center in Houston. After completing more than two years of basic training, these candidates will become eligible for spaceflight, including assignments to the International Space Station, Artemis missions to the Moon, and ultimately, missions to Mars."
+    test_mission_description = "NASA will honor the first class of astronaut candidates to graduate under the Artemis program at 10:30 a.m. EST Friday, Jan. 10, at the Johnson Space Center in Houston. After completing more than two years of basic training, these candidates will become eligible for spaceflight, including assignments to the International Space Station, Artemis missions to the Moon, and ultimately, missions to Mars."
     test_mission_type = "Press Event"
 
     # Get result of method
