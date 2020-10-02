@@ -161,29 +161,29 @@ class Rocket:
         print("│" + ("┌" + "─" * CHART_WIDTH + "┐").center(MAX_LINE_LENGTH, " ") + "│")
         print("│" + ("│" + self.name.center(CHART_WIDTH) + "│").center(MAX_LINE_LENGTH, " ") + "│")
         print(INTER_CELL_DIVIDER)
-        print(self._add_to_chart("Height: " + str(self.height) + " m", "Mass to LEO: " + str(self.payload_leo) + " kg"))
+        print(self._generate_chart_line("Height: " + str(self.height) + " m", "Mass to LEO: " + str(self.payload_leo) + " kg"))
         print(INTER_CELL_DIVIDER)
         print(
-            self._add_to_chart(
+            self._generate_chart_line(
                 "Max Stages " + str(self.max_stages), "Liftoff Thrust: " + str(self.liftoff_thrust) + " kN"
             )
         )
         print(INTER_CELL_DIVIDER)
         print(
-            self._add_to_chart(
+            self._generate_chart_line(
                 "Mass to GTO: " + str(self.payload_gto) + " kg", "Liftoff Mass: " + str(self.liftoff_mass) + " Tonnes"
             )
         )
         print(INTER_CELL_DIVIDER)
         print(
-            self._add_to_chart(
+            self._generate_chart_line(
                 "Launch Successes: " + str(self.successful_launches),
                 "Maiden Flight: " + self.maiden_flight_date.strftime("%Y-%m-%d"),
             )
         )
         print(INTER_CELL_DIVIDER)
         print(
-            self._add_to_chart(
+            self._generate_chart_line(
                 "Consecutive Successes: " + str(self.consecutive_successful_launches),
                 "Failed Launches: " + str(self.failed_launches),
             )
@@ -191,6 +191,6 @@ class Rocket:
         print("│" + ("└" + "─" * CHART_WIDTH + "┘").center(MAX_LINE_LENGTH, " ") + "│")
 
     @staticmethod
-    def _add_to_chart(left, right):
+    def _generate_chart_line(left, right):
         row = (left).center(CHART_WIDTH // 2, " ") + "│" + (right).center(CHART_WIDTH // 2, " ")
         return "│" + ("│" + row.center(CHART_WIDTH, " ") + "│").center(MAX_LINE_LENGTH, " ") + "│"
