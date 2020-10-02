@@ -37,19 +37,26 @@ class Event:
             verbosity (Verbosity, optional): The verbosity displayed. Defaults to Verbosity.NORMAL.
         """
 
-        # Mission name
+        self._show_name()
+        self._show_location()
+        self._show_filler()
+        self._show_date()
+        self._show_type()
+
+        # If verbosity is not set to quiet, show description
+        if verbosity != verbosity.QUIET:
+            self._show_filler()
+            self._show_description()
+
+    def _show_name(self):
         mission_name_lines = t.wrap(self.mission_name, width=MAX_LINE_LENGTH)
         for line in mission_name_lines:
             print("│" + Style.BRIGHT + Fore.CYAN + line.ljust(MAX_LINE_LENGTH, " ") + Style.RESET_ALL + "│")
 
-        # Location
+    def _show_location(self):
         print("│" + Fore.CYAN + self.location.ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
 
-        # Filler line
-        FILLER = "│" + " " * MAX_LINE_LENGTH + "│"
-        print(FILLER)
-
-        # Date
+    def _show_date(self):
         print(
             "│"
             + Fore.GREEN
@@ -58,18 +65,19 @@ class Event:
             + "│"
         )
 
-        # Mission type
-        print("│" + ("    Event Type: " + self.mission_type).ljust(MAX_LINE_LENGTH, " ") + "│")
+    def _show_type(self):
+        print("│" + ("    " + type(self).__name__ + " Type: " + self.mission_type).ljust(MAX_LINE_LENGTH, " ") + "│")
 
-        # If verbosity is not set to quiet, print mission description
-        if verbosity != verbosity.QUIET:
-            print(FILLER)
+    def _show_description(self):
+        mission_description_lines = t.wrap(
+            self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
+        )
+        for line in mission_description_lines:
+            print("│" + line.ljust(MAX_LINE_LENGTH, " ") + "│")
 
-            mission_description_lines = t.wrap(
-                self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
-            )
-            for line in mission_description_lines:
-                print("│" + line.ljust(MAX_LINE_LENGTH, " ") + "│")
+    @staticmethod
+    def _show_filler():
+        print("│" + " " * MAX_LINE_LENGTH + "│")
 
 
 class Launch(Event):
@@ -86,43 +94,21 @@ class Launch(Event):
             verbosity (Verbosity, optional): The verbosity displayed. Defaults to Verbosity.NORMAL.
         """
 
-        # Mission name
-        mission_name_lines = t.wrap(self.mission_name, width=MAX_LINE_LENGTH)
-        for line in mission_name_lines:
-            print("│" + Style.BRIGHT + Fore.CYAN + line.ljust(MAX_LINE_LENGTH, " ") + Style.RESET_ALL + "│")
-
-        # Location
-        print("│" + Fore.CYAN + self.location.ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
-
-        # Filler line
-        FILLER = "│" + " " * MAX_LINE_LENGTH + "│"
-        print(FILLER)
-
-        # Date
-        print(
-            "│"
-            + Fore.GREEN
-            + ("    " + self.mission_date.strftime(DATE_FMAT_STR)).ljust(MAX_LINE_LENGTH, " ")
-            + Fore.RESET
-            + "│"
-        )
-
-        # Mission type
-        print("│" + ("    Launch Type: " + self.mission_type).ljust(MAX_LINE_LENGTH, " ") + "│")
+        self._show_name()
+        self._show_location()
+        self._show_filler()
+        self._show_date()
+        self._show_type()
 
         # If verbosity is not set to quiet, print mission description
         if verbosity != Verbosity.QUIET:
             # If verbosity is set to verbose, print rocket information
             if verbosity == Verbosity.VERBOSE:
-                print(FILLER)
+                self._show_filler()
                 self.rocket.display()
 
-            print(FILLER)
-            mission_description_lines = t.wrap(
-                self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
-            )
-            for line in mission_description_lines:
-                print("│" + line.ljust(MAX_LINE_LENGTH, " ") + "│")
+            self._show_filler()
+            self._show_description()
 
 
 class Rocket:
@@ -161,29 +147,31 @@ class Rocket:
         print("│" + ("┌" + "─" * CHART_WIDTH + "┐").center(MAX_LINE_LENGTH, " ") + "│")
         print("│" + ("│" + self.name.center(CHART_WIDTH) + "│").center(MAX_LINE_LENGTH, " ") + "│")
         print(INTER_CELL_DIVIDER)
-        print(self._generate_chart_line("Height: " + str(self.height) + " m", "Mass to LEO: " + str(self.payload_leo) + " kg"))
+        print(
+            self._get_chart_line("Height: " + str(self.height) + " m", "Mass to LEO: " + str(self.payload_leo) + " kg")
+        )
         print(INTER_CELL_DIVIDER)
         print(
-            self._generate_chart_line(
+            self._get_chart_line(
                 "Max Stages " + str(self.max_stages), "Liftoff Thrust: " + str(self.liftoff_thrust) + " kN"
             )
         )
         print(INTER_CELL_DIVIDER)
         print(
-            self._generate_chart_line(
+            self._get_chart_line(
                 "Mass to GTO: " + str(self.payload_gto) + " kg", "Liftoff Mass: " + str(self.liftoff_mass) + " Tonnes"
             )
         )
         print(INTER_CELL_DIVIDER)
         print(
-            self._generate_chart_line(
+            self._get_chart_line(
                 "Launch Successes: " + str(self.successful_launches),
                 "Maiden Flight: " + self.maiden_flight_date.strftime("%Y-%m-%d"),
             )
         )
         print(INTER_CELL_DIVIDER)
         print(
-            self._generate_chart_line(
+            self._get_chart_line(
                 "Consecutive Successes: " + str(self.consecutive_successful_launches),
                 "Failed Launches: " + str(self.failed_launches),
             )
@@ -191,6 +179,6 @@ class Rocket:
         print("│" + ("└" + "─" * CHART_WIDTH + "┘").center(MAX_LINE_LENGTH, " ") + "│")
 
     @staticmethod
-    def _generate_chart_line(left, right):
+    def _get_chart_line(left, right):
         row = (left).center(CHART_WIDTH // 2, " ") + "│" + (right).center(CHART_WIDTH // 2, " ")
         return "│" + ("│" + row.center(CHART_WIDTH, " ") + "│").center(MAX_LINE_LENGTH, " ") + "│"
