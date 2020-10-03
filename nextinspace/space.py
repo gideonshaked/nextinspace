@@ -66,14 +66,26 @@ class Event:
         )
 
     def _show_type(self):
-        print("│" + ("    " + type(self).__name__ + " Type: " + self.mission_type).ljust(MAX_LINE_LENGTH, " ") + "│")
+        if self.mission_type is None:
+            print(
+                "│"
+                + ("    " + type(self).__name__ + " Type: Launch Type Unavailable").ljust(MAX_LINE_LENGTH, " ")
+                + "│"
+            )
+        else:
+            print(
+                "│" + ("    " + type(self).__name__ + " Type: " + self.mission_type).ljust(MAX_LINE_LENGTH, " ") + "│"
+            )
 
     def _show_description(self):
-        mission_description_lines = t.wrap(
-            self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
-        )
-        for line in mission_description_lines:
-            print("│" + line.ljust(MAX_LINE_LENGTH, " ") + "│")
+        if self.mission_description is None:
+            print("│" + ("    Mission Description Unavailable").ljust(MAX_LINE_LENGTH, " ") + "│")
+        else:
+            mission_description_lines = t.wrap(
+                self.mission_description, width=MAX_LINE_LENGTH, initial_indent="    ", subsequent_indent="    "
+            )
+            for line in mission_description_lines:
+                print("│" + line.ljust(MAX_LINE_LENGTH, " ") + "│")
 
     @staticmethod
     def _show_filler():

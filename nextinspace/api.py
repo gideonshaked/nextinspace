@@ -23,15 +23,20 @@ def get_launches(num_launches=1):
     for i in range(num_launches):
         current = data["results"][i]
 
-        mission_name = current["mission"]["name"]
+        mission_name = current["name"]
         location = current["pad"]["name"] + ", " + current["pad"]["location"]["name"]
 
         date_string = current["net"]
         mission_date_unaware = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
         mission_date = get_localzone().localize(mission_date_unaware)
 
-        mission_description = current["mission"]["description"]
-        mission_type = current["mission"]["type"]
+        # Sometimes the API does not have any values for the mission
+        try:
+            mission_description = current["mission"]["description"]
+            mission_type = current["mission"]["type"]
+        except:
+            mission_description = None
+            mission_type = None
 
         rocket_url = current["rocket"]["configuration"]["url"]
         rocket = get_rocket(rocket_url)
