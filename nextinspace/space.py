@@ -145,22 +145,22 @@ class Rocket:
         print("│" + ("┌" + "─" * CHART_WIDTH + "┐").center(MAX_LINE_LENGTH, " ") + "│")
         print("│" + ("│" + self.name.center(CHART_WIDTH) + "│").center(MAX_LINE_LENGTH, " ") + "│")
 
-        self._show_divider()
+        self._show_chart_divider()
         self._show_chart_line("Height: " + str(self.height) + " m", "Mass to LEO: " + str(self.payload_leo) + " kg")
-        self._show_divider()
+        self._show_chart_divider()
         self._show_chart_line(
             "Max Stages: " + str(self.max_stages), "Liftoff Thrust: " + str(self.liftoff_thrust) + " kN"
         )
-        self._show_divider()
+        self._show_chart_divider()
         self._show_chart_line(
             "Mass to GTO: " + str(self.payload_gto) + " kg", "Liftoff Mass: " + str(self.liftoff_mass) + " Tonnes"
         )
-        self._show_divider()
+        self._show_chart_divider()
         self._show_chart_line(
             "Launch Successes: " + str(self.successful_launches),
             "Maiden Flight: " + self.maiden_flight_date.strftime("%Y-%m-%d"),
         )
-        self._show_divider()
+        self._show_chart_divider()
         self._show_chart_line(
             "Consecutive Successes: " + str(self.consecutive_successful_launches),
             "Failed Launches: " + str(self.failed_launches),
@@ -174,5 +174,5 @@ class Rocket:
         print("│" + ("│" + row.center(CHART_WIDTH, " ") + "│").center(MAX_LINE_LENGTH, " ") + "│")
 
     @staticmethod
-    def _show_divider():
+    def _show_chart_divider():
         print("│" + ("├" + "─" * CHART_WIDTH + "┤").center(MAX_LINE_LENGTH, " ") + "│")
