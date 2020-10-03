@@ -149,7 +149,7 @@ class Rocket:
         self._show_chart_line("Height: " + str(self.height) + " m", "Mass to LEO: " + str(self.payload_leo) + " kg")
         self._show_divider()
         self._show_chart_line(
-            "Max Stages " + str(self.max_stages), "Liftoff Thrust: " + str(self.liftoff_thrust) + " kN"
+            "Max Stages: " + str(self.max_stages), "Liftoff Thrust: " + str(self.liftoff_thrust) + " kN"
         )
         self._show_divider()
         self._show_chart_line(
