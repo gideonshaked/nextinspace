@@ -30,7 +30,7 @@ class Event:
         self.mission_description = mission_description
         self.mission_type = mission_type
 
-    def display(self, verbosity=Verbosity.NORMAL):
+    def display(self, verbosity):
         """Display self to terminal with box sides, indents, and colors
 
         Args:
@@ -87,7 +87,7 @@ class Launch(Event):
         super().__init__(mission_name, location, mission_date, mission_description, mission_type)
         self.rocket = rocket
 
-    def display(self, verbosity=Verbosity.NORMAL):
+    def display(self, verbosity):
         """Display self to terminal with box sides, indents, and colors
 
         Args:
