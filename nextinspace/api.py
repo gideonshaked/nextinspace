@@ -6,7 +6,7 @@ from tzlocal import get_localzone
 from nextinspace import space
 
 
-def get_launches(num_launches=1):
+def get_launches(num_launches):
     """Return list of Launches from API
 
     Args:
@@ -86,7 +86,7 @@ def get_rocket(url):
     )
 
 
-def get_events(num_events=1):
+def get_events(num_events):
     """Return list of Events from API
 
     Args:

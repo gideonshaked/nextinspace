@@ -21,13 +21,13 @@ def test_get_launches(requests_mock):
     test_mission_date_unaware = datetime(2020, 9, 24, hour=15, minute=0, second=0)
     test_mission_date = get_localzone().localize(test_mission_date_unaware)
 
-    test_mission_name = "NS-13"
+    test_mission_name = "New Shepard | NS-13"
     test_location = "West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA"
     test_mission_description = "This will be the 13th New Shepard mission and the 7th consecutive flight for this particular vehicle (a record), demonstrating its operational reusability. \r\n\r\nNew Shepard will fly 12 commercial payloads to space and back on this mission, including the Deorbit, Descent, and Landing Sensor Demonstration with the NASA Space Technology Mission Directorate under the NASA Tipping Point partnership. This is the first payload to fly mounted on the exterior of a New Shepard booster rather than inside the capsule, opening the door to a wide range of future high-altitude sensing, sampling, and exposure payloads."
     test_mission_type = "Suborbital"
 
     # Get result of method
-    event = api.get_launches()[0]
+    event = api.get_launches(1)[0]
 
     assert event.mission_name == test_mission_name
     assert event.location == test_location
@@ -88,7 +88,7 @@ def test_get_events(requests_mock):
     test_mission_type = "Press Event"
 
     # Get result of method
-    event = api.get_events()[0]
+    event = api.get_events(1)[0]
 
     assert event.mission_name == test_mission_name
     assert event.location == test_location
