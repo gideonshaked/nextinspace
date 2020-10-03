@@ -1,23 +1,28 @@
 from setuptools import setup
 import pathlib
 
+NAME = __import__("nextinspace").__name__
+VERSION = __import__("nextinspace").__version__
+DESCRIPTION = __import__("nextinspace").__description__
+URL = "https://github.com/The-Kid-Gid/nextinspace"
+AUTHOR = "The-Kid-Gid"
+AUTHOR_EMAIL = "gideonshaked@gmail.com"
+LICENSE = "GPLv3"
 
-# The directory containing this file
 HERE = pathlib.Path(__file__).parent
-
-# The text of the README file
 README = (HERE / "README.md").read_text()
 
+
 setup(
-    name="nextinspace",
-    version=__import__("nextinspace").__version__,
-    description="Never miss a launch.",
+    name=NAME,
+    version=VERSION,
+    description=DESCRIPTION,
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/The-Kid-Gid/nextinspace",
-    author="The-Kid-Gid",
-    author_email="gideonshaked@gmail.com",
-    license="GPLv3",
+    url=URL,
+    author=AUTHOR,
+    author_email=AUTHOR_EMAIL,
+    license=LICENSE,
     classifiers=[
         "Environment :: Console",
         "License :: OSI Approved :: GNU General Public License (GPL)",
