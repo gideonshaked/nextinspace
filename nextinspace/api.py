@@ -10,7 +10,7 @@ def get_launches(num_launches):
     """Return list of Launches from API
 
     Args:
-        num_launches (int, optional): Number of Launches to be returned. Defaults to 1.
+        num_launches (int): Number of Launches to be returned.
     """
 
     now = datetime.now()
@@ -19,7 +19,8 @@ def get_launches(num_launches):
     )
     data = response.json()
 
-    launches = []
+    # Since we know the size of the list, creating it beforehand is faster
+    launches = [None] * num_launches
     for i in range(num_launches):
         current = data["results"][i]
 
@@ -41,7 +42,7 @@ def get_launches(num_launches):
         rocket_url = current["rocket"]["configuration"]["url"]
         rocket = get_rocket(rocket_url)
 
-        launches.append(space.Launch(mission_name, location, mission_date, mission_description, mission_type, rocket))
+        launches[i] = space.Launch(mission_name, location, mission_date, mission_description, mission_type, rocket)
 
     return launches
 
@@ -90,13 +91,14 @@ def get_events(num_events):
     """Return list of Events from API
 
     Args:
-        num_events (int, optional): Number of Events to be returned. Defaults to 1.
+        num_events (int): Number of Events to be returned.
     """
 
     response = requests.get(f"https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit={num_events}")
     data = response.json()
 
-    events = []
+    # Since we know the size of the list, creating it beforehand is faster
+    events = [None] * num_events
     for i in range(num_events):
         current = data["results"][i]
 
@@ -110,6 +112,6 @@ def get_events(num_events):
         mission_description = current["description"]
         mission_type = current["type"]["name"]
 
-        events.append(space.Event(mission_name, location, mission_date, mission_description, mission_type))
+        events[i] = space.Event(mission_name, location, mission_date, mission_description, mission_type)
 
     return events
