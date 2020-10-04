@@ -3,10 +3,10 @@
 from nextinspace import space
 
 
-def display_list(list, verbosity):
+def display_list(items_list, verbosity):
     _show_top()
-    list[0].display(verbosity)
-    for s in list[1:]:
+    items_list[0].display(verbosity)
+    for s in items_list[1:]:
         _show_divider()
         s.display(verbosity)
     _show_bottom()

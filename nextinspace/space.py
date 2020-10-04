@@ -34,7 +34,7 @@ class Event:
         """Display self to terminal with box sides, indents, and colors
 
         Args:
-            verbosity (Verbosity, optional): The verbosity displayed. Defaults to Verbosity.NORMAL.
+            verbosity (Verbosity): The verbosity displayed.
         """
 
         self._show_name()
@@ -103,7 +103,7 @@ class Launch(Event):
         """Display self to terminal with box sides, indents, and colors
 
         Args:
-            verbosity (Verbosity, optional): The verbosity displayed. Defaults to Verbosity.NORMAL.
+            verbosity (Verbosity): The verbosity displayed.
         """
 
         self._show_name()
