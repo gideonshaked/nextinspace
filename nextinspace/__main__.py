@@ -14,9 +14,12 @@ def main():
     if args.events_only:
         events = api.get_events(args.num_items)
         viewer.display_list(events, VERBOSITY)
-    if args.launches_only:
+    elif args.launches_only:
         launches = api.get_launches(args.num_items)
         viewer.display_list(launches, VERBOSITY)
+    else:
+        items = api.get_all(args.num_items)
+        viewer.display_list(items, VERBOSITY)
 
 
 if __name__ == "__main__":

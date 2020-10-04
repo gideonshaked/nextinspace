@@ -115,3 +115,68 @@ def get_events(num_events):
         events[i] = space.Event(mission_name, location, mission_date, mission_description, mission_type)
 
     return events
+
+
+def get_all(num_items):
+    """Return list of items from API
+
+       Unfortunately, because the LL2 API does not offer any way of getting N
+       upcoming spaceflight items, the below process is necessary. This function
+       is horribly inefficient because it must do two API requests instead of one when
+       it will only use half of the information it receives. 🙁
+
+    Args:
+        num_items (int): Number of items to be returned.
+    """
+
+    # Get events and launches from API
+    events = get_events(num_items)
+    launches = get_launches(num_items)
+
+    # Set values needed for sorting
+    l_events = len(events)
+    l_launches = len(launches)
+    all_items = [None] * num_items
+    i = 0
+    j = 0
+    k = 0
+
+    # Traverse both lists
+    while i < l_events and j < l_launches:
+
+        # Check if current element of first array is smaller than current element of second array.
+        # If yes, store first array element and increment first array index. Otherwise do same with second array
+
+        # Note that these are compared by date
+        if events[i].mission_date < launches[j].mission_date:
+            all_items[k] = events[i]
+            k = k + 1
+            if k >= num_items:
+                return all_items
+            i = i + 1
+        else:
+            all_items[k] = launches[j]
+            k = k + 1
+            if k >= num_items:
+                return all_items
+            j = j + 1
+
+    # Store remaining elements
+    # of first array
+    while i < l_events:
+        all_items[k] = events[i]
+        k = k + 1
+        if k >= num_items:
+            return all_items
+        i = i + 1
+
+    # Store remaining elements
+    # of second array
+    while j < l_launches:
+        all_items[k] = launches[j]
+        k = k + 1
+        if k >= num_items:
+            return all_items
+        j = j + 1
+
+    return all_items
