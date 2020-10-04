@@ -19,30 +19,27 @@ def get_launches(num_launches):
     )
     data = response.json()
 
-    # Since we know the size of the list, creating it beforehand is faster
-    launches = [None] * num_launches
-    for i in range(num_launches):
-        current = data["results"][i]
+    launches = []
+    for result in data["results"]:
+        mission_name = result["name"]
+        location = result["pad"]["name"] + ", " + result["pad"]["location"]["name"]
 
-        mission_name = current["name"]
-        location = current["pad"]["name"] + ", " + current["pad"]["location"]["name"]
-
-        date_string = current["net"]
+        date_string = result["net"]
         mission_date_unaware = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
         mission_date = get_localzone().localize(mission_date_unaware)
 
         # Sometimes the API does not have any values for the mission
         try:
-            mission_description = current["mission"]["description"]
-            mission_type = current["mission"]["type"]
+            mission_description = result["mission"]["description"]
+            mission_type = result["mission"]["type"]
         except:
             mission_description = None
             mission_type = None
 
-        rocket_url = current["rocket"]["configuration"]["url"]
+        rocket_url = result["rocket"]["configuration"]["url"]
         rocket = get_rocket(rocket_url)
 
-        launches[i] = space.Launch(mission_name, location, mission_date, mission_description, mission_type, rocket)
+        launches.append(space.Launch(mission_name, location, mission_date, mission_description, mission_type, rocket))
 
     return launches
 
@@ -97,22 +94,19 @@ def get_events(num_events):
     response = requests.get(f"https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit={num_events}")
     data = response.json()
 
-    # Since we know the size of the list, creating it beforehand is faster
-    events = [None] * num_events
-    for i in range(num_events):
-        current = data["results"][i]
+    events = []
+    for result in data["results"]:
+        mission_name = result["name"]
+        location = result["location"]
 
-        mission_name = current["name"]
-        location = current["location"]
-
-        date_string = current["date"]
+        date_string = result["date"]
         mission_date_unaware = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
         mission_date = get_localzone().localize(mission_date_unaware)
 
-        mission_description = current["description"]
-        mission_type = current["type"]["name"]
+        mission_description = result["description"]
+        mission_type = result["type"]["name"]
 
-        events[i] = space.Event(mission_name, location, mission_date, mission_description, mission_type)
+        events.append(space.Event(mission_name, location, mission_date, mission_description, mission_type))
 
     return events
 
@@ -136,7 +130,14 @@ def get_all(num_items):
     # Set values needed for sorting
     l_events = len(events)
     l_launches = len(launches)
-    all_items = [None] * num_items
+
+    max_length = l_events + l_launches
+    if num_items < max_length:
+        l_all_items = num_items
+    else:
+        l_all_items = max_length
+
+    all_items = [None] * max_length
     i = 0
     j = 0
     k = 0
