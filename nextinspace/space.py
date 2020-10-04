@@ -1,4 +1,4 @@
-"""The classes for storing and displaying data from the LL2 API"""
+"""Store and display data from the LL2 API"""
 
 from colorama import init, Fore, Back, Style
 from datetime import datetime

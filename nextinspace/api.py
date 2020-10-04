@@ -1,4 +1,4 @@
-"""The functions used to retrieve data from the LL2 API"""
+"""Retrieve data from the LL2 API"""
 
 import requests
 from datetime import datetime

@@ -1,12 +1,12 @@
-"""The viewer for terminal output"""
+"""Viewer for terminal output"""
 
 from nextinspace import space
 
 
-def display_list(space_list, verbosity):
+def display_list(list, verbosity):
     _show_top()
-    space_list[0].display(verbosity)
-    for s in space_list[1:]:
+    list[0].display(verbosity)
+    for s in list[1:]:
         _show_divider()
         s.display(verbosity)
     _show_bottom()
