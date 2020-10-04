@@ -4,13 +4,27 @@ from datetime import datetime
 from tzlocal import get_localzone
 
 
-def test_get_launches(requests_mock):
+@pytest.fixture
+def example_launch_text():
+    return open("tests/data/launch.json", "r").read()
+
+
+@pytest.fixture
+def example_rocket_text():
+    return open("tests/data/rocket.json", "r").read()
+
+
+@pytest.fixture
+def example_event_text():
+    return open("tests/data/event.json", "r").read()
+
+
+def test_get_launches(requests_mock, example_launch_text):
     # Mock API
-    launch_text = open("tests/data/launch.json", "r").read()
     now = datetime.now()
     requests_mock.get(
         "https://ll.thespacedevs.com/2.0.0/launch/?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
-        text=launch_text,
+        text=example_launch_text,
     )
 
     # Make sure the request from the nested get_rocket call is intercepted
@@ -36,11 +50,10 @@ def test_get_launches(requests_mock):
     assert event.mission_type == test_mission_type
 
 
-def test_get_rocket(requests_mock):
+def test_get_rocket(requests_mock, example_rocket_text):
     # Mock API
     rocket_url = "https://ll.thespacedevs.com/2.0.0/config/launcher/137/"
-    rocket_text = open("tests/data/rocket.json", "r").read()
-    requests_mock.get(rocket_url, text=rocket_text)
+    requests_mock.get(rocket_url, text=example_rocket_text)
 
     # Test data
     test_name = "New Shepard"
@@ -73,10 +86,9 @@ def test_get_rocket(requests_mock):
     assert rocket.maiden_flight_date == test_maiden_flight_date
 
 
-def test_get_events(requests_mock):
+def test_get_events(requests_mock, example_event_text):
     # Mock API
-    event_text = open("tests/data/event.json", "r").read()
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=event_text)
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=example_event_text)
 
     # Test data
     test_mission_date_unaware = datetime(2020, 1, 10, hour=15, minute=30, second=0)
