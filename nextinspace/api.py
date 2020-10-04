@@ -1,7 +1,7 @@
 """Retrieve data from the LL2 API"""
 
 import requests
-from datetime import datetime
+from datetime import datetime, date
 from tzlocal import get_localzone
 from nextinspace import space
 
@@ -13,9 +13,9 @@ def get_launches(num_launches):
         num_launches (int): Number of Launches to be returned.
     """
 
-    now = datetime.now()
+    today = date.today()
     response = requests.get(
-        f"https://ll.thespacedevs.com/2.0.0/launch/?limit={num_launches}&net__gte={now.strftime('%Y-%m-%d')}"
+        f"https://ll.thespacedevs.com/2.0.0/launch/?limit={num_launches}&net__gte={today.strftime('%Y-%m-%d')}"
     )
     data = response.json()
 
