@@ -136,8 +136,7 @@ def get_all(num_items):
         l_all_items = num_items
     else:
         l_all_items = max_length
-
-    all_items = [None] * max_length
+    all_items = [None] * l_all_items
     i = 0
     j = 0
     k = 0
