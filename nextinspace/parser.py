@@ -14,7 +14,7 @@ def get_args():
         default=1,
         metavar="number of items",
         nargs="?",
-        type=int,
+        type=positive_int,
         help="The number of items to display.",
     )
 
@@ -47,3 +47,10 @@ def get_args():
     parser.add_argument("--version", action="version", version="%(prog)s v" + __import__("nextinspace").__version__)
 
     return parser.parse_args()
+
+
+def positive_int(x):
+    i = int(x)
+    if i <= 0:
+        raise ValueError()
+    return i
