@@ -1,7 +1,9 @@
-from nextinspace import api, space
-import pytest
 from datetime import datetime
+
+import pytest
 from tzlocal import get_localzone
+
+from nextinspace import api, space
 
 
 @pytest.fixture

@@ -1,10 +1,10 @@
 """Store and display data from the LL2 API"""
 
-from colorama import init, Fore, Back, Style
-from datetime import datetime
 import textwrap as t
+from datetime import datetime
 from enum import Enum
 
+from colorama import Back, Fore, Style, init
 
 # Values for display
 MAX_LINE_LENGTH = 88

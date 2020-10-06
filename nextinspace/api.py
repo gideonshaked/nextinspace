@@ -1,8 +1,10 @@
 """Retrieve data from the LL2 API"""
 
+from datetime import date, datetime
+
 import requests
-from datetime import datetime, date
 from tzlocal import get_localzone
+
 from nextinspace import space
 
 

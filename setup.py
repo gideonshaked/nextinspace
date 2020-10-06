@@ -1,5 +1,6 @@
-from setuptools import setup
 import pathlib
+
+from setuptools import setup
 
 NAME = __import__("nextinspace").__name__
 VERSION = __import__("nextinspace").__version__

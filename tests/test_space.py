@@ -1,6 +1,8 @@
-from nextinspace import space
-import pytest
 from datetime import datetime
+
+import pytest
+
+from nextinspace import space
 
 
 @pytest.fixture
