@@ -22,21 +22,23 @@ def get_launches(num_launches):
     launches = []
     for result in data["results"]:
         mission_name = result["name"]
-        location = result["pad"]["name"] + ", " + result["pad"]["location"]["name"]
 
-        date_string = result["net"]
-        mission_date_unaware = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
-        mission_date = get_localzone().localize(mission_date_unaware)
+        pad = parse_value(result, "pad", "name")
+        pad_loc = parse_value(result, "pad", "location", "name")
+        # Make sure location is a valid string with valid formatting
+        if pad is not None:
+            location = pad
+            if pad_loc is not None:
+                location += ", " + pad_loc
+        elif pad_loc is not None:
+            location = pad_loc
+        else:
+            location = None
 
-        # Sometimes the API does not have any values for the mission
-        try:
-            mission_description = result["mission"]["description"]
-            mission_type = result["mission"]["type"]
-        except:
-            mission_description = None
-            mission_type = None
-
-        rocket_url = result["rocket"]["configuration"]["url"]
+        mission_date = get_date(result["net"], "%Y-%m-%dT%H:%M:%SZ")
+        mission_description = parse_value(result, "mission", "description")
+        mission_type = parse_value(result, "mission", "type")
+        rocket_url = parse_value(result, "rocket", "configuration", "url")
         rocket = get_rocket(rocket_url)
 
         launches.append(space.Launch(mission_name, location, mission_date, mission_description, mission_type, rocket))
@@ -64,10 +66,7 @@ def get_rocket(url):
     successful_launches = data["successful_launches"]
     consecutive_successful_launches = data["consecutive_successful_launches"]
     failed_launches = data["failed_launches"]
-
-    maiden_flight_date_string = data["maiden_flight"]
-    maiden_flight_date_unaware = datetime.strptime(maiden_flight_date_string, "%Y-%m-%d")
-    maiden_flight_date = get_localzone().localize(maiden_flight_date_unaware)
+    maiden_flight_date = get_date(data["maiden_flight"], "%Y-%m-%d")
 
     return space.Rocket(
         name,
@@ -98,13 +97,9 @@ def get_events(num_events):
     for result in data["results"]:
         mission_name = result["name"]
         location = result["location"]
-
-        date_string = result["date"]
-        mission_date_unaware = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
-        mission_date = get_localzone().localize(mission_date_unaware)
-
+        mission_date = get_date(result["date"], "%Y-%m-%dT%H:%M:%SZ")
         mission_description = result["description"]
-        mission_type = result["type"]["name"]
+        mission_type = parse_value(result, "type", "name")
 
         events.append(space.Event(mission_name, location, mission_date, mission_description, mission_type))
 
@@ -112,12 +107,13 @@ def get_events(num_events):
 
 
 def get_all(num_items):
-    """Return list of items from API
+    """
+    Return list of items from API
 
-       Unfortunately, because the LL2 API does not offer any way of getting N
-       upcoming spaceflight items, the below process is necessary. This function
-       is horribly inefficient because it must do two API requests instead of one when
-       it will only use half of the information it receives. 🙁
+    Unfortunately, because the LL2 API does not offer any way of getting N
+    upcoming spaceflight items, the below process is necessary. This function
+    is horribly inefficient because it must do two API requests instead of one when
+    it will only use half of the information it receives. 🙁
 
     Args:
         num_items (int): Number of items to be returned.
@@ -180,3 +176,39 @@ def get_all(num_items):
         j = j + 1
 
     return all_items
+
+
+def parse_value(dict, *keys):
+    """
+    Try to return the value present in the nested dict at
+    the specified keys. If a TypeError is raised
+    (because at some point in the path we find None),
+    then return None.
+
+    This is necessary because there is no API documentation
+    I could find that specified when and how values could be
+    left nonexistant. If there was a better way of doing this
+    then I would do that.
+
+    Note that this method is only required when accessing a
+    nested dict (ex: dict[x][y]).
+
+    Args:
+        dict (dict)
+
+    Returns:
+        The value at path
+    """
+
+    try:
+        for key in keys:
+            dict = dict[key]
+        return dict
+    except TypeError:
+        return None
+
+
+def get_date(date_str, fmat_str):
+    if date_str is None:
+        return None
+    return get_localzone().localize(datetime.strptime(date_str, fmat_str))
