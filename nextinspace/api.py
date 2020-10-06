@@ -52,7 +52,6 @@ def get_rocket(url):
     Args:
         url (string): The LL2 API URL of the rocket
     """
-
     response = requests.get(url)
     data = response.json()
 
