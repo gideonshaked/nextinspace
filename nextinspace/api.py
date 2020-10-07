@@ -127,12 +127,9 @@ def get_all(num_items):
     # Set values needed for sorting
     l_events = len(events)
     l_launches = len(launches)
-
     max_length = l_events + l_launches
-    if num_items < max_length:
-        l_all_items = num_items
-    else:
-        l_all_items = max_length
+    l_all_items = min(num_items, max_length)
+
     all_items = [None] * l_all_items
     i = 0
     j = 0
@@ -147,34 +144,34 @@ def get_all(num_items):
         # Note that these are compared by date
         if events[i].mission_date < launches[j].mission_date:
             all_items[k] = events[i]
-            k = k + 1
+            k += 1
             if k >= num_items:
                 return all_items
-            i = i + 1
+            i += 1
         else:
             all_items[k] = launches[j]
-            k = k + 1
+            k += 1
             if k >= num_items:
                 return all_items
-            j = j + 1
+            j += 1
 
     # Store remaining elements
     # of first array
     while i < l_events:
         all_items[k] = events[i]
-        k = k + 1
+        k += 1
         if k >= num_items:
             return all_items
-        i = i + 1
+        i += 1
 
     # Store remaining elements
     # of second array
     while j < l_launches:
         all_items[k] = launches[j]
-        k = k + 1
+        k += 1
         if k >= num_items:
             return all_items
-        j = j + 1
+        j += 1
 
     return all_items
 
