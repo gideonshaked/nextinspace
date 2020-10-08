@@ -12,14 +12,13 @@ def main():
         VERBOSITY = space.Verbosity.NORMAL
 
     if args.events_only:
-        events = api.get_events(args.num_items)
-        viewer.display_list(events, VERBOSITY)
+        items = api.get_events(args.num_items)
     elif args.launches_only:
-        launches = api.get_launches(args.num_items)
-        viewer.display_list(launches, VERBOSITY)
+        items = api.get_launches(args.num_items)
     else:
         items = api.get_all(args.num_items)
-        viewer.display_list(items, VERBOSITY)
+
+    viewer.display_list(items, VERBOSITY)
 
 
 if __name__ == "__main__":
