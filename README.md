@@ -18,7 +18,7 @@ pip install nextinspace
 ```
 
 If you want to install it manually, use:
-```
+```bash
 git clone https://github.com/The-Kid-Gid/nextinspace
 cd nextinspace
 pip install .
