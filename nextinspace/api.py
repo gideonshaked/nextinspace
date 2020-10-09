@@ -8,8 +8,10 @@ from tzlocal import get_localzone
 from nextinspace import space
 
 
-def get_launches(num_launches):
-    """Return list of Launches from API
+def get_launches(num_launches, verbosity):
+    """
+    Return list of Launches from API. The verbosity is passed
+    in to avoid unecessary API calls when rocket is not being displayed.
 
     Args:
         num_launches (int): Number of Launches to be returned.
@@ -41,7 +43,7 @@ def get_launches(num_launches):
         mission_description = parse_value(result, "mission", "description")
         mission_type = parse_value(result, "mission", "type")
         rocket_url = parse_value(result, "rocket", "configuration", "url")
-        rocket = get_rocket(rocket_url)
+        rocket = get_rocket(rocket_url) if verbosity == space.Verbosity.VERBOSE else None
 
         launches.append(space.Launch(mission_name, location, mission_date, mission_description, mission_type, rocket))
 
@@ -107,7 +109,7 @@ def get_events(num_events):
     return events
 
 
-def get_all(num_items):
+def get_all(num_items, verbosity):
     """
     Return list of items from API
 
@@ -122,7 +124,7 @@ def get_all(num_items):
 
     # Get events and launches from API
     events = get_events(num_items)
-    launches = get_launches(num_items)
+    launches = get_launches(num_items, verbosity)
 
     # Set values needed for sorting
     l_events = len(events)

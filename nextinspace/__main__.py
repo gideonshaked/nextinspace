@@ -14,9 +14,9 @@ def main():
     if args.events_only:
         items = api.get_events(args.num_items)
     elif args.launches_only:
-        items = api.get_launches(args.num_items)
+        items = api.get_launches(args.num_items, VERBOSITY)
     else:
-        items = api.get_all(args.num_items)
+        items = api.get_all(args.num_items, VERBOSITY)
 
     viewer.display_list(items, VERBOSITY)
 
