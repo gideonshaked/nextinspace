@@ -9,7 +9,7 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-> ”Never miss a launch.”
+> “Never miss a launch.”
 
 Nextinspace is a command-line tool for seeing the latest in space! Nextinspace will print upcoming space-related events to your terminal. You can filter by type, toggle the verbosity level, and view the next *n* events, all from the CLI.
 
