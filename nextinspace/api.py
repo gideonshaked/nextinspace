@@ -15,6 +15,7 @@ def get_launches(num_launches, verbosity):
 
     Args:
         num_launches (int): Number of Launches to be returned.
+        verbosity (Verbosity): The verbosity for display. Needed to know whether to get rocket
     """
 
     today = date.today()
@@ -120,6 +121,7 @@ def get_all(num_items, verbosity):
 
     Args:
         num_items (int): Number of items to be returned.
+        verbosity (Verbosity): The verbosity for display. Needed to know whether to get rocket.
     """
 
     # Get events and launches from API
