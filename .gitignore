@@ -6,6 +6,9 @@
 
 # Python
 __pycache__
+nextinspace.egg-info
+build/
+dist/
 
 # Pytest
 .pytest_cache
