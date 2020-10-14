@@ -43,7 +43,7 @@ class Event:
         self._show_type()
 
         # If verbosity is not set to quiet, show description
-        if verbosity != verbosity.QUIET:
+        if verbosity != Verbosity.QUIET:
             self._show_filler()
             self._show_description()
 
