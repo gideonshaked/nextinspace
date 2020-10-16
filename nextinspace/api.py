@@ -11,7 +11,7 @@ from nextinspace import space
 def get_launches(num_launches, verbosity):
     """
     Return list of Launches from API. The verbosity is passed
-    in to avoid unecessary API calls when rocket is not being displayed.
+    in to avoid unnecessary API calls when rocket is not being displayed.
 
     Args:
         num_launches (int): Number of Launches to be returned.
