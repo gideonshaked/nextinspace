@@ -1,14 +1,13 @@
 """Retrieve data from the LL2 API"""
 
+import sys
+import traceback
 from datetime import date, datetime
 
 import requests
 from tzlocal import get_localzone
 
 from nextinspace import space
-
-import traceback
-import sys
 
 
 def get_launches(num_launches, verbosity):
