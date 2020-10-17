@@ -7,6 +7,9 @@ from tzlocal import get_localzone
 
 from nextinspace import space
 
+import traceback
+import sys
+
 
 def get_launches(num_launches, verbosity):
     """
@@ -18,11 +21,8 @@ def get_launches(num_launches, verbosity):
         verbosity (Verbosity): The verbosity for display. Needed to know whether to get rocket
     """
 
-    today = date.today()
-    response = requests.get(
-        f"https://ll.thespacedevs.com/2.0.0/launch/?limit={num_launches}&net__gte={today.strftime('%Y-%m-%d')}"
-    )
-    data = response.json()
+    today_str = date.today().strftime("%Y-%m-%d")
+    data = get_data("https://ll.thespacedevs.com/2.0.0/launch", {"limit": num_launches, "net__gte": today_str})
 
     launches = []
     for result in data["results"]:
@@ -57,8 +57,8 @@ def get_rocket(url):
     Args:
         url (string): The LL2 API URL of the rocket
     """
-    response = requests.get(url)
-    data = response.json()
+
+    data = get_data(url)
 
     name = data["full_name"]
     payload_leo = data["leo_capacity"]
@@ -94,8 +94,7 @@ def get_events(num_events):
         num_events (int): Number of Events to be returned.
     """
 
-    response = requests.get(f"https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit={num_events}")
-    data = response.json()
+    data = get_data("https://ll.thespacedevs.com/2.0.0/event/upcoming", {"limit": num_events})
 
     events = []
     for result in data["results"]:
@@ -214,3 +213,24 @@ def get_date(date_str, fmat_str):
     if date_str is None:
         return None
     return get_localzone().localize(datetime.strptime(date_str, fmat_str))
+
+
+def get_data(url, payload={}):
+    """Get data from API.
+
+    Args:
+        url (string)
+        payload (dict): the parameters passed as the query string. Defaults to {}.
+
+    Returns:
+        [type]: [description]
+    """
+
+    try:
+        response = requests.get(url, params=payload)
+        response.raise_for_status()
+    except requests.exceptions.RequestException:
+        print("nextinspace: error: GET request failed", end="\n\n")
+        traceback.print_exc()
+        sys.exit(1)
+    return response.json()

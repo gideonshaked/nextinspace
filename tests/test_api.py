@@ -7,7 +7,7 @@ def test_get_launches(requests_mock, example_launch_text, example_launch):
     # Mock API
     now = datetime.now()
     requests_mock.get(
-        "https://ll.thespacedevs.com/2.0.0/launch/?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
+        "https://ll.thespacedevs.com/2.0.0/launch?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
         text=example_launch_text,
     )
     # Make sure the request from the nested get_rocket call is intercepted
@@ -47,7 +47,7 @@ def test_get_rocket(requests_mock, example_rocket_text, example_rocket):
 
 def test_get_events(requests_mock, example_event_text, example_event):
     # Mock API
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming/?limit=1", text=example_event_text)
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming?limit=1", text=example_event_text)
 
     # Get result of method
     event = api.get_events(1)[0]
