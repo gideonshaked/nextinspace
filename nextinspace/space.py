@@ -59,7 +59,9 @@ class Event:
 
     def _show_location(self):
         if self.location is not None:
-            print("│" + Fore.CYAN + self.location.ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
+            location_lines = t.wrap(self.location, width=MAX_LINE_LENGTH)
+            for line in location_lines:
+                print("│" + Fore.CYAN + line.ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
         else:
             print("│" + Fore.CYAN + "Location Unavailable".ljust(MAX_LINE_LENGTH, " ") + Fore.RESET + "│")
 
