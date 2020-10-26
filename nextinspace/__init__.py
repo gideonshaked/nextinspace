@@ -1,5 +1,5 @@
 # Version of the nextinspace package
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 # Package name
 __name__ = "nextinspace"
