@@ -225,11 +225,10 @@ def get_data(url, payload={}):
         [type]: [description]
     """
 
+    response = requests.get(url, params=payload)
     try:
-        response = requests.get(url, params=payload)
         response.raise_for_status()
-    except requests.exceptions.RequestException:
-        print("nextinspace: error: GET request failed", end="\n\n")
-        traceback.print_exc()
+    except requests.exceptions.HTTPError as e:
+        print(f"nextinspace: error: API request failed: status code {response.status_code}: {response.reason}")
         sys.exit(1)
     return response.json()
