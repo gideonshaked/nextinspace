@@ -1,6 +1,6 @@
 # Nextinspace
 <p align="center">
-<a href="https://github.com/The-Kid-Gid/nextinspace/workflows/Test/badge.svg"><img alt="Test" src="https://github.com/The-Kid-Gid/nextinspace/workflows/Test/badge.svg"></a>
+<a href="https://github.com/The-Kid-Gid/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/The-Kid-Gid/nextinspace/workflows/Test/badge.svg"></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
 <a href="https://pypi.org/project/nextinspace/"><img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace"></a>
 <a href="https://img.shields.io/pypi/pyversions/nextinspace"><img alt="Pyversions" src="https://img.shields.io/pypi/pyversions/nextinspace"></a>
