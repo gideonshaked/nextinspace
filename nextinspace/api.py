@@ -1,7 +1,6 @@
 """Retrieve data from the LL2 API"""
 
 import sys
-import traceback
 from datetime import date, datetime
 
 import requests
@@ -228,7 +227,7 @@ def get_data(url, payload={}):
     response = requests.get(url, params=payload)
     try:
         response.raise_for_status()
-    except requests.exceptions.HTTPError as e:
+    except requests.exceptions.HTTPError:
         print(f"nextinspace: error: API request failed: status code {response.status_code}: {response.reason}")
         sys.exit(1)
     return response.json()
