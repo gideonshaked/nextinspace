@@ -1,10 +1,9 @@
 """Retrieve data from the LL2 API"""
 
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 import requests
-from tzlocal import get_localzone
 
 from nextinspace import space
 
@@ -210,7 +209,8 @@ def parse_value(dict, *keys):
 def get_date(date_str, fmat_str):
     if date_str is None:
         return None
-    return get_localzone().localize(datetime.strptime(date_str, fmat_str))
+    date_utc = datetime.strptime(date_str, fmat_str).replace(tzinfo=timezone.utc)
+    return date_utc.astimezone()
 
 
 def get_data(url, payload={}):
