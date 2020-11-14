@@ -26,7 +26,7 @@ Nextinspace is a command-line tool for seeing the latest in space! Nextinspace w
 pip install nextinspace
 ```
 
-If you want to install it from github, use:
+If you want to install it from Github, use:
 
 ```bash
 pip install git+https://github.com/The-Kid-Gid/nextinspace
