@@ -6,13 +6,19 @@ from nextinspace import space
 
 
 def display_list(items_list, verbosity):
+    if len(items_list) == 0:
+        return
+
     show_top()
-    init()  # For compatibility with Windows
+
+    # For compatibility with Windows terminals
+    init()
     items_list[0].display(verbosity)
-    for s in items_list[1:]:
+    for item in items_list[1:]:
         show_divider()
-        s.display(verbosity)
+        item.display(verbosity)
     deinit()
+
     show_bottom()
 
 
