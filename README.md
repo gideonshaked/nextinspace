@@ -3,7 +3,7 @@
 <a href="https://github.com/The-Kid-Gid/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/The-Kid-Gid/nextinspace/workflows/Test/badge.svg"></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
 <a href="https://pypi.org/project/nextinspace/"><img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace"></a>
-<a href="https://pepy.tech/project/nextinspace"><img alt="Downloads" src="https://pepy.tech/badge/nextinspace"></a>
+<a href="https://pepy.tech/project/nextinspace"><img alt="Downloads" src="https://static.pepy.tech/badge/nextinspace?period=total"></a>
 <a href="https://img.shields.io/pypi/pyversions/nextinspace"><img alt="Pyversions" src="https://img.shields.io/pypi/pyversions/nextinspace"></a>
 <a href="https://pycqa.github.io/isort/"><img alt="Imports: isort" src="https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336"></a>
 <a href="https://github.com/pre-commit/pre-commit"><img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"></a>
