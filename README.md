@@ -22,14 +22,21 @@ Nextinspace is a command-line tool for seeing the latest in space! Nextinspace w
 
 ## Installation
 
+To install nextinspace, simply run:
 ```bash
 pip install nextinspace
+
+# directly from Github
+pip install git+https://github.com/The-Kid-Gid/nextinspace
 ```
 
-If you want to install it from Github, use:
-
+Or use your favourite package manager:
 ```bash
-pip install git+https://github.com/The-Kid-Gid/nextinspace
+# Arch Linux
+yay -S nextinspace
+
+# Nix
+nix-env -iA nixpkgs.nextinspace
 ```
 
 ## Usage
