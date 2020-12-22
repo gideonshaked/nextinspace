@@ -8,10 +8,10 @@ repos:
     rev: master
     hooks:
       - id: isort
-  - repo: https://gitlab.com/pycqa/flake8
+  - repo: https://github.com/life4/flakehell
     rev: master
     hooks:
-      - id: flake8
+      - id: flakehell
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: master
     hooks:
