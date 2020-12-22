@@ -1,4 +1,4 @@
+bumpversion
+pre-commit
 pytest
 requests-mock
-pre-commit
-bumpversion

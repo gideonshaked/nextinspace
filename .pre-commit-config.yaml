@@ -1,14 +1,31 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: master
     hooks:
       - id: black
         language_version: python3.8
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.6.4
+    rev: master
     hooks:
       - id: isort
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: master
     hooks:
       - id: flake8
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: master
+    hooks:
+      - id: requirements-txt-fixer
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+  - repo: https://github.com/codespell-project/codespell
+    rev: master
+    hooks:
+      - id: codespell
+        # Should be with the "--skip" option but this seems to be broken
+        exclude: >
+          (?x)^(
+              .*\.svg|
+              .*\.cast
+          )$

@@ -185,7 +185,7 @@ def parse_value(dict, *keys):
 
     This is necessary because there is no API documentation
     I could find that specified when and how values could be
-    left nonexistant. If there was a better way of doing this
+    left nonexistent. If there was a better way of doing this
     then I would do that.
 
     Note that this method is only required when accessing a
