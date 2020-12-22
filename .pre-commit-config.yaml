@@ -29,3 +29,8 @@ repos:
               .*\.svg|
               .*\.cast
           )$
+  - repo: https://github.com/pappasam/toml-sort
+    rev: master
+    hooks:
+      - id: toml-sort
+        args: ["--in-place"]

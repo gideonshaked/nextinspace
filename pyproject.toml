@@ -14,9 +14,6 @@ exclude = '''
 )/
 '''
 
-[tool.isort]
-profile = "black"
-
 [tool.flakehell]
 max_line_length = 120
 exclude = [".git", "__pycache__"]
@@ -24,3 +21,6 @@ exclude = [".git", "__pycache__"]
 [tool.flakehell.plugins]
 pyflakes = ["+*"]
 pycodestyle = ["+*", "-E501", "-W503"]
+
+[tool.isort]
+profile = "black"
