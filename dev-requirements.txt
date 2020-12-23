@@ -1,4 +1,0 @@
-bumpversion
-pre-commit
-pytest
-requests-mock
