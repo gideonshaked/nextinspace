@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 120
 exclude = '''
@@ -24,3 +28,41 @@ pycodestyle = ["+*", "-E501", "-W503"]
 
 [tool.isort]
 profile = "black"
+
+[tool.poetry]
+name = "nextinspace"
+version = "1.0.6"
+description = "Never miss a launch."
+license = "GPL-3.0-or-later"
+authors = ["Gideon Shaked <gideonshaked@gmail.com>"]
+maintainers = ["Gideon Shaked <gideonshaked@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/The-Kid-Gid/nextinspace"
+repository = "https://github.com/The-Kid-Gid/nextinspace"
+keywords = ["space", "nextinspace", "space news", "spaceflight", "rockets"]
+include = ["LICENSE"]
+classifiers = ["Environment :: Console",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3 :: Only",
+        "Natural Language :: English"]
+
+[tool.poetry.dependencies]
+python = "^3.6.1"
+requests = "^2.24"
+tzlocal = "^2.1"
+colorama = "^0.4.3"
+
+[tool.poetry.dev-dependencies]
+bump2version = "^1.0.1"
+pre-commit = "^2.9.3"
+pytest = "^6.1.1"
+requests-mock = "^1.8"
+
+[tool.poetry.scripts]
+nextinspace = "nextinspace.__main__:main"
