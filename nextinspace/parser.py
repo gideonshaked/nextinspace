@@ -4,9 +4,7 @@ import argparse
 
 
 def get_args():
-    parser = argparse.ArgumentParser(
-        prog=__import__("nextinspace").__name__, description=__import__("nextinspace").__description__
-    )
+    parser = argparse.ArgumentParser(prog="nextinspace", description="Never miss a launch.")
 
     # Number of events wanted by user
     parser.add_argument(
