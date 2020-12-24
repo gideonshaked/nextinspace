@@ -228,6 +228,9 @@ def get_data(url, payload={}):
     try:
         response.raise_for_status()
     except requests.exceptions.HTTPError:
-        print(f"nextinspace: error: API request failed: status code {response.status_code}: {response.reason}")
+        print(
+            f"nextinspace: error: API request failed: status code {response.status_code}: {response.reason}",
+            file=sys.stderr,
+        )
         sys.exit(1)
     return response.json()
