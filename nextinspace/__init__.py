@@ -1,10 +1,10 @@
 __version__ = "1.0.6"
-__all__ = ["nextinspace, next_launch, next_event, Verbosity"]
+__all__ = ["nextinspace", "next_launch", "next_event", "Verbosity"]
 
 from datetime import date as datetime_date  # Get around duplicate date identifier
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import requests
 
@@ -28,28 +28,17 @@ class Verbosity(Enum):
 class Event:
     """Generic space event."""
 
-    def __init__(self, name, location, date, description, type_):
-        self.name: str = name
-        self.location: str = location
-        self.date: datetime = date
-        self.description: str = description
-        self.type_: str = type_
+    def __init__(self, name: str, location: str, date: datetime, description: str, type_: str):
+        self.name = name
+        self.location = location
+        self.date = date
+        self.description = description
+        self.type_ = type_
 
     def __eq__(self, other: object) -> bool:
         if type(self) is type(other):
             return self.__dict__ == other.__dict__
         return False
-
-    def __ne__(self, other: object) -> bool:
-        return not self.__eq__(other)
-
-
-class Launch(Event):
-    """Launch event"""
-
-    def __init__(self, name, location, date, description, type_, rocket):
-        super().__init__(name, location, date, description, type_)
-        self.rocket: Rocket = rocket
 
 
 class Rocket:
@@ -57,38 +46,45 @@ class Rocket:
 
     def __init__(
         self,
-        name,
-        payload_leo,
-        payload_gto,
-        liftoff_thrust,
-        liftoff_mass,
-        max_stages,
-        height,
-        successful_launches,
-        consecutive_successful_launches,
-        failed_launches,
-        maiden_flight_date,
+        name: str,
+        payload_leo: float,
+        payload_gto: float,
+        liftoff_thrust: float,
+        liftoff_mass: float,
+        max_stages: int,
+        height: float,
+        successful_launches: int,
+        consecutive_successful_launches: int,
+        failed_launches: int,
+        maiden_flight_date: datetime,
     ):
 
-        self.name: str = name
-        self.payload_leo: float = payload_leo
-        self.payload_gto: float = payload_gto
-        self.liftoff_thrust: float = liftoff_thrust
-        self.liftoff_mass: float = liftoff_mass
-        self.max_stages: int = max_stages
-        self.height: float = height
-        self.successful_launches: int = successful_launches
-        self.consecutive_successful_launches: int = consecutive_successful_launches
-        self.failed_launches: int = failed_launches
-        self.maiden_flight_date: datetime = maiden_flight_date
+        self.name = name
+        self.payload_leo = payload_leo
+        self.payload_gto = payload_gto
+        self.liftoff_thrust = liftoff_thrust
+        self.liftoff_mass = liftoff_mass
+        self.max_stages = max_stages
+        self.height = height
+        self.successful_launches = successful_launches
+        self.consecutive_successful_launches = consecutive_successful_launches
+        self.failed_launches = failed_launches
+        self.maiden_flight_date = maiden_flight_date
 
     def __eq__(self, other: object) -> bool:
         if type(self) is type(other):
             return self.__dict__ == other.__dict__
         return False
 
-    def __ne__(self, other: object) -> bool:
-        return not self.__eq__(other)
+
+class Launch(Event):
+    """Launch event"""
+
+    def __init__(
+        self, name: str, location: str, date: datetime, description: str, type_: str, rocket: Optional[Rocket]
+    ):
+        super().__init__(name, location, date, description, type_)
+        self.rocket = rocket
 
 
 def nextinspace(num_items: int, verbosity: Verbosity = Verbosity.normal) -> Tuple:
@@ -118,7 +114,10 @@ def nextinspace(num_items: int, verbosity: Verbosity = Verbosity.normal) -> Tupl
     return tuple(merge_sorted_sequences(events, launches, num_items))
 
 
-def merge_sorted_sequences(seq_1: Sequence, seq_2: Sequence, target_length_merged_list: int) -> List:
+def merge_sorted_sequences(
+    seq_1: Sequence[Union[Launch, Event]], seq_2: Sequence[Union[Launch, Event]], target_length_merged_list: int
+) -> List:
+    """Perform a merge of two sorted sequences. Sequences must be of Events or of Event subclasses with date attributes"""
     l_seq_1 = len(seq_1)
     l_seq_2 = len(seq_2)
 
@@ -133,10 +132,10 @@ def merge_sorted_sequences(seq_1: Sequence, seq_2: Sequence, target_length_merge
     # (which is as close to the target as is possible)
     merged_list_length = min(target_length_merged_list, max_possible_length)
 
-    merged_list = [None] * merged_list_length
-    i: int = 0
-    j: int = 0
-    k: int = 0
+    merged_list: List[Union[Launch, Event, None]] = [None] * merged_list_length
+    i = 0
+    j = 0
+    k = 0
 
     # Traverse both lists simultaneously
     while i < l_seq_1 and j < l_seq_2:
