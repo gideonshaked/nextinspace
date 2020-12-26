@@ -1,9 +1,6 @@
 """Pytest fixtures"""
 
-from datetime import datetime
-
 import pytest
-from tzlocal import get_localzone
 
 import nextinspace
 
@@ -24,25 +21,37 @@ def example_event_text():
 
 
 @pytest.fixture
-def example_launch(example_rocket):
+def example_launch_verbose(example_rocket):
     return nextinspace.Launch(
-        mission_name="New Shepard | NS-13",
+        name="New Shepard | NS-13",
         location="West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA",
-        mission_description="This will be the 13th New Shepard mission...",
-        mission_date=get_localzone().localize(datetime(2020, 9, 24, hour=15, minute=0, second=0)),
-        mission_type="Suborbital",
+        description="This will be the 13th New Shepard mission...",
+        date=nextinspace.date_str_to_datetime("2020-09-24T15:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
+        type_="Suborbital",
         rocket=example_rocket,
+    )
+
+
+@pytest.fixture
+def example_launch_normal():
+    return nextinspace.Launch(
+        name="New Shepard | NS-13",
+        location="West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA",
+        description="This will be the 13th New Shepard mission...",
+        date=nextinspace.date_str_to_datetime("2020-09-24T15:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
+        type_="Suborbital",
+        rocket=None,
     )
 
 
 @pytest.fixture
 def example_event():
     return nextinspace.Event(
-        mission_name="2017 NASA Astronaut class graduation ceremony",
+        name="2017 NASA Astronaut class graduation ceremony",
         location="NASA's Johnson Space Center, Houston, TX, USA",
-        mission_description="NASA will honor the first class of astronaut...",
-        mission_date=get_localzone().localize(datetime(2020, 1, 10, hour=15, minute=30, second=0)),
-        mission_type="Press Event",
+        description="NASA will honor the first class of astronaut...",
+        date=nextinspace.date_str_to_datetime("2020-01-10T15:30:00Z", "%Y-%m-%dT%H:%M:%SZ"),
+        type_="Press Event",
     )
 
 
@@ -59,5 +68,5 @@ def example_rocket():
         successful_launches=12,
         consecutive_successful_launches=12,
         failed_launches=0,
-        maiden_flight_date=get_localzone().localize(datetime(2015, 4, 29)),
+        maiden_flight_date=nextinspace.date_str_to_datetime("2015-04-29", "%Y-%m-%d"),
     )
