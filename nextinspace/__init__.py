@@ -1,6 +1,7 @@
 __version__ = "1.0.6"
 __all__ = ["nextinspace", "next_launch", "next_event", "Verbosity"]
 
+from datetime import MINYEAR
 from datetime import date as datetime_date  # Get around duplicate date identifier
 from datetime import datetime, timezone
 from enum import Enum
@@ -28,7 +29,14 @@ class Verbosity(Enum):
 class Event:
     """Generic space event."""
 
-    def __init__(self, name: str, location: str, date: datetime, description: str, type_: str):
+    def __init__(
+        self,
+        name: Optional[str],
+        location: Optional[str],
+        date: datetime,
+        description: Optional[str],
+        type_: Optional[str],
+    ):
         self.name = name
         self.location = location
         self.date = date
@@ -46,16 +54,16 @@ class Rocket:
 
     def __init__(
         self,
-        name: str,
-        payload_leo: float,
-        payload_gto: float,
-        liftoff_thrust: float,
-        liftoff_mass: float,
-        max_stages: int,
-        height: float,
-        successful_launches: int,
-        consecutive_successful_launches: int,
-        failed_launches: int,
+        name: Optional[str],
+        payload_leo: Optional[float],
+        payload_gto: Optional[float],
+        liftoff_thrust: Optional[float],
+        liftoff_mass: Optional[float],
+        max_stages: Optional[int],
+        height: Optional[float],
+        successful_launches: Optional[int],
+        consecutive_successful_launches: Optional[int],
+        failed_launches: Optional[int],
         maiden_flight_date: datetime,
     ):
 
@@ -81,7 +89,13 @@ class Launch(Event):
     """Launch event"""
 
     def __init__(
-        self, name: str, location: str, date: datetime, description: str, type_: str, rocket: Optional[Rocket]
+        self,
+        name: Optional[str],
+        location: Optional[str],
+        date: datetime,
+        description: Optional[str],
+        type_: Optional[str],
+        rocket: Optional[Rocket],
     ):
         super().__init__(name, location, date, description, type_)
         self.rocket = rocket
@@ -208,7 +222,7 @@ def next_launch(num_launches: int, verbosity: Verbosity = Verbosity.normal) -> T
     return tuple(launches)
 
 
-def build_location_string(pad_name: str, pad_location: str) -> str:
+def build_location_string(pad_name: Optional[str], pad_location: Optional[str]) -> Optional[str]:
     if pad_name is not None:
         if pad_location is not None:
             return f"{pad_name}, {pad_location}"
@@ -299,18 +313,18 @@ def get_rocket(url: str) -> Rocket:
     )
 
 
-def date_str_to_datetime(datetime_str: str, fmat_str: str) -> datetime:
+def date_str_to_datetime(datetime_str: Optional[str], fmat_str: str) -> datetime:
     """Convert datetime string in UTC to datetime object in local timezone
 
     :param datetime_str:
-    :type datetime_str: str
+    :type datetime_str: Optional[str]
     :param fmat_str: Format str for `datetime.strptime()`
     :type fmat_str: str
     :return: datetime object in local timezone
     :rtype: datetime
     """
     if datetime_str is None:
-        return None
+        return datetime(MINYEAR, 1, 1)
     datetime_utc = datetime.strptime(datetime_str, fmat_str).replace(tzinfo=timezone.utc)
     return datetime_utc.astimezone()
 
