@@ -4,9 +4,6 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import nextinspace
-import sphinx_rtd_theme
-
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -17,6 +14,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))
+
+import nextinspace
 
 
 # -- Project information -----------------------------------------------------
@@ -33,6 +32,9 @@ release = nextinspace.__version__
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+
+import sphinx_rtd_theme
+
 extensions = [
     "sphinx.ext.autodoc",
     "recommonmark",
