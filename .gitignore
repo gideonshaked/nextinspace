@@ -15,3 +15,6 @@ dist/
 
 # Poetry
 poetry.lock
+
+# Docs
+docs/_build
