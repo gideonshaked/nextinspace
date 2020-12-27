@@ -1,6 +1,7 @@
 __version__ = "1.0.6"
-__all__ = ["nextinspace", "next_launch", "next_event", "Verbosity"]
+__all__ = ["nextinspace", "next_launch", "next_event"]
 
+import typing
 from datetime import MINYEAR
 from datetime import date as datetime_date  # Get around duplicate date identifier
 from datetime import datetime, timezone
@@ -10,7 +11,10 @@ import requests
 
 
 class Event:
-    """Generic space event."""
+    """Generic space event.
+
+    .. note:: This constructor is meant for private use. This class is documented solely for its attributes.
+    """
 
     def __init__(
         self,
@@ -33,7 +37,10 @@ class Event:
 
 
 class Launcher:
-    """Holds launcher information for instances of the :class:`Launch` class"""
+    """Holds launcher information for instances of the :class:`Launch` class
+
+    .. note:: This constructor is meant for private use. This class is documented solely for its attributes.
+    """
 
     def __init__(
         self,
@@ -69,7 +76,10 @@ class Launcher:
 
 
 class Launch(Event):
-    """Launch event"""
+    """Launch event
+
+    .. note:: This constructor is meant for private use. This class is documented solely for its attributes.
+    """
 
     def __init__(
         self,
@@ -84,7 +94,7 @@ class Launch(Event):
         self.launcher = launcher
 
 
-def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple:
+def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple[Union[Launch, Event], ...]:
     """This gets the next (specified number) of items from the LL2 API.
 
     :param num_items: Number of items to get from the API
@@ -111,9 +121,10 @@ def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple:
     return tuple(merge_sorted_sequences(events, launches, num_items))
 
 
+@typing.no_type_check
 def merge_sorted_sequences(
     seq_1: Sequence[Union[Launch, Event]], seq_2: Sequence[Union[Launch, Event]], target_length_merged_list: int
-) -> List:
+) -> List[Union[Launch, Event]]:
     """Perform a merge of two sorted sequences. Sequences must be of Events or of Event subclasses with date attributes"""
     l_seq_1 = len(seq_1)
     l_seq_2 = len(seq_2)
@@ -129,7 +140,7 @@ def merge_sorted_sequences(
     # (which is as close to the target as is possible)
     merged_list_length = min(target_length_merged_list, max_possible_length)
 
-    merged_list: List[Union[Launch, Event, None]] = [None] * merged_list_length
+    merged_list: Any = [None] * merged_list_length
     i = 0
     j = 0
     k = 0
@@ -171,7 +182,7 @@ def merge_sorted_sequences(
     return merged_list
 
 
-def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple:
+def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple[Launch, ...]:
     """Same as :func:`nextinspace` but only :class:`Launches <Launch>` requested.
 
     :param num_launches: Number of :class:`Launches <Launch>` to get from the API
@@ -180,7 +191,8 @@ def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple:
     :type inlcude_launcher: bool, optional
     :return: Upcoming :class:`Launches <Launch>`. Note that the length of this tuple will be <= `num_launches`.
     :rtype: Tuple
-    :raises requests.exceptions.RequestException:
+    :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
+        so HTTPErrors are possible as well.
     """
     today_str = datetime_date.today().strftime("%Y-%m-%d")
     data = api_get_request("https://ll.thespacedevs.com/2.0.0/launch", {"limit": num_launches, "net__gte": today_str})
@@ -216,14 +228,15 @@ def build_location_string(pad_name: Optional[str], pad_location: Optional[str]) 
         return None
 
 
-def next_event(num_events: int) -> Tuple:
+def next_event(num_events: int) -> Tuple[Event, ...]:
     """Same as :func:`nextinspace` but only :class:`Events <Event>` requested.
 
     :param num_events: Number of :class:`Events <Event>` to get from the API
     :type num_events: int
     :return: Upcoming :class:`Events <Event>`. Note that the length of this tuple will be <= `num_events`.
     :rtype: Tuple
-    :raises requests.exceptions.RequestException:
+    :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
+        so HTTP errors are possible as well.
     """
     data = api_get_request("https://ll.thespacedevs.com/2.0.0/event/upcoming", {"limit": num_events})
 
