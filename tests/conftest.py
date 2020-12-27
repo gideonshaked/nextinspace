@@ -11,8 +11,8 @@ def example_launch_text():
 
 
 @pytest.fixture
-def example_rocket_text():
-    return open("tests/data/rocket.json", "r").read()
+def example_launcher_text():
+    return open("tests/data/launcher.json", "r").read()
 
 
 @pytest.fixture
@@ -21,14 +21,14 @@ def example_event_text():
 
 
 @pytest.fixture
-def example_launch_verbose(example_rocket):
+def example_launch_verbose(example_launcher):
     return nextinspace.Launch(
         name="New Shepard | NS-13",
         location="West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA",
         description="This will be the 13th New Shepard mission...",
         date=nextinspace.date_str_to_datetime("2020-09-24T15:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
         type_="Suborbital",
-        rocket=example_rocket,
+        launcher=example_launcher,
     )
 
 
@@ -40,7 +40,7 @@ def example_launch_normal():
         description="This will be the 13th New Shepard mission...",
         date=nextinspace.date_str_to_datetime("2020-09-24T15:00:00Z", "%Y-%m-%dT%H:%M:%SZ"),
         type_="Suborbital",
-        rocket=None,
+        launcher=None,
     )
 
 
@@ -56,8 +56,8 @@ def example_event():
 
 
 @pytest.fixture
-def example_rocket():
-    return nextinspace.Rocket(
+def example_launcher():
+    return nextinspace.Launcher(
         name="New Shepard",
         payload_leo=0,
         payload_gto=0,

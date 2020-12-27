@@ -7,7 +7,7 @@ import nextinspace
 from tests.conftest import *
 
 
-@pytest.mark.parametrize("example", [example_event, example_rocket, example_launch_verbose])
+@pytest.mark.parametrize("example", [example_event, example_launcher, example_launch_verbose])
 def test_eq(example):
     assert example == copy.copy(example)
 
@@ -68,37 +68,37 @@ def test_date_str_to_datetime(datetime_str, result):
 
 
 @pytest.mark.parametrize(
-    "launch, verbosity",
+    "launch, include_launcher",
     [
-        (example_launch_verbose, nextinspace.Verbosity.verbose),
-        (example_launch_normal, nextinspace.Verbosity.normal),
+        (example_launch_verbose, True),
+        (example_launch_normal, False),
     ],
 )
-def test_next_launch(requests_mock, example_launch_text, launch, verbosity, example_rocket_text):
+def test_next_launch(requests_mock, example_launch_text, launch, include_launcher, example_launcher_text):
     # Mock API
     now = datetime.now()
     requests_mock.get(
         "https://ll.thespacedevs.com/2.0.0/launch?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
         text=example_launch_text,
     )
-    # Make sure the request from the nested get_rocket call is intercepted
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=example_rocket_text)
+    # Make sure the request from the nested get_launcher call is intercepted
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=example_launcher_text)
 
     # Get result of function
-    launch = nextinspace.next_launch(1, verbosity)[0]
+    launch = nextinspace.next_launch(1, include_launcher)[0]
 
     assert launch == launch
 
 
-def test_get_rocket(requests_mock, example_rocket_text, example_rocket):
+def test_get_launcher(requests_mock, example_launcher_text, example_launcher):
     # Mock API
-    rocket_url = "https://ll.thespacedevs.com/2.0.0/config/launcher/137/"
-    requests_mock.get(rocket_url, text=example_rocket_text)
+    launcher_url = "https://ll.thespacedevs.com/2.0.0/config/launcher/137/"
+    requests_mock.get(launcher_url, text=example_launcher_text)
 
     # Get result of function
-    rocket = nextinspace.get_rocket(rocket_url)
+    launcher = nextinspace.get_launcher(launcher_url)
 
-    assert rocket == example_rocket
+    assert launcher == example_launcher
 
 
 def test_next_event(requests_mock, example_event_text, example_event):
@@ -112,7 +112,7 @@ def test_next_event(requests_mock, example_event_text, example_event):
 
 
 def test_nextinspace(
-    requests_mock, example_launch_text, example_event_text, example_rocket_text, example_event, example_launch_normal
+    requests_mock, example_launch_text, example_event_text, example_launcher_text, example_event, example_launch_normal
 ):
     # Mock API (Launch)
     now = datetime.now()
@@ -120,8 +120,8 @@ def test_nextinspace(
         "https://ll.thespacedevs.com/2.0.0/launch?limit=2&net__gte=" + now.strftime("%Y-%m-%d"),
         text=example_launch_text,
     )
-    # Make sure the request from the nested get_rocket call is intercepted
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=example_rocket_text)
+    # Make sure the request from the nested get_launcher call is intercepted
+    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=example_launcher_text)
 
     # Mock API (Event)
     requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming?limit=2", text=example_event_text)

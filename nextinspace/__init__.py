@@ -4,26 +4,9 @@ __all__ = ["nextinspace", "next_launch", "next_event", "Verbosity"]
 from datetime import MINYEAR
 from datetime import date as datetime_date  # Get around duplicate date identifier
 from datetime import datetime, timezone
-from enum import Enum
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import requests
-
-
-class Verbosity(Enum):
-    """This is an Enum class to represent the verbosity of a requested :class:`Launch`. In the internal `nextinspace` API,
-    the verbosity affects whether or not a :class:`Rocket` is created (and more importantly retrieved from the LL2 API) for each
-    :class:`Launch`. **A :class:`Verbosity` of `verbose` will create an additional API request for each Launch you request. This will
-    take time and count toward your daily request quota before you are rate-limited.**
-
-    .. note::
-
-       In the context of the included CLI the "verbosity" a) has an effect on both :class:`Launches <Launch>` and :class:`Events <Event>`
-       and b) can be set to `quiet`, `normal`, or `verbose`. That is separate from this.
-    """
-
-    normal = 1
-    verbose = 2
 
 
 class Event:
@@ -49,8 +32,8 @@ class Event:
         return False
 
 
-class Rocket:
-    """Holds rocket information for instances of the :class:`Launch` class"""
+class Launcher:
+    """Holds launcher information for instances of the :class:`Launch` class"""
 
     def __init__(
         self,
@@ -95,19 +78,19 @@ class Launch(Event):
         date: datetime,
         description: Optional[str],
         type_: Optional[str],
-        rocket: Optional[Rocket],
+        launcher: Optional[Launcher],
     ):
         super().__init__(name, location, date, description, type_)
-        self.rocket = rocket
+        self.launcher = launcher
 
 
-def nextinspace(num_items: int, verbosity: Verbosity = Verbosity.normal) -> Tuple:
+def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple:
     """This gets the next (specified number) of items from the LL2 API.
 
     :param num_items: Number of items to get from the API
     :type num_items: int
-    :param verbosity: The :class:`Verbosity` of the requested :class:`Launches <Launch>`, defaults to Verbosity.normal
-    :type verbosity: Verbosity, optional
+    :param include_launcher: Whether to include the launcher of the requested :class:`Launches <Launch>`, defaults to False
+    :type inlcude_launcher: bool, optional
     :return: Upcoming :class:`Launches <Launch>` and :class:`Events <Event>`. Note that the length of this tuple will be <= `num_items`.
     :rtype: Tuple
     :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
@@ -124,7 +107,7 @@ def nextinspace(num_items: int, verbosity: Verbosity = Verbosity.normal) -> Tupl
        Because the filter by time function of the LL2 API is currently broken, **upcoming means beyond and including today**.
     """
     events = next_event(num_items)
-    launches = next_launch(num_items, verbosity)
+    launches = next_launch(num_items, include_launcher)
     return tuple(merge_sorted_sequences(events, launches, num_items))
 
 
@@ -188,13 +171,13 @@ def merge_sorted_sequences(
     return merged_list
 
 
-def next_launch(num_launches: int, verbosity: Verbosity = Verbosity.normal) -> Tuple:
+def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple:
     """Same as :func:`nextinspace` but only :class:`Launches <Launch>` requested.
 
     :param num_launches: Number of :class:`Launches <Launch>` to get from the API
     :type num_launches: int
-    :param verbosity: The :class:`Verbosity` of the requested :class:`Launches <Launch>`, defaults to Verbosity.normal
-    :type verbosity: Verbosity, optional
+    :param include_launcher: Whether to include the launcher of the requested :class:`Launches <Launch>`, defaults to False
+    :type inlcude_launcher: bool, optional
     :return: Upcoming :class:`Launches <Launch>`. Note that the length of this tuple will be <= `num_launches`.
     :rtype: Tuple
     :raises requests.exceptions.RequestException:
@@ -214,10 +197,10 @@ def next_launch(num_launches: int, verbosity: Verbosity = Verbosity.normal) -> T
         description = get_nested_dict_val(result, "mission", "description")
         type_ = get_nested_dict_val(result, "mission", "type")
 
-        rocket_url = get_nested_dict_val(result, "rocket", "configuration", "url")
-        rocket = get_rocket(rocket_url) if verbosity == Verbosity.verbose else None
+        launcher_url = get_nested_dict_val(result, "rocket", "configuration", "url")
+        launcher = get_launcher(launcher_url) if include_launcher else None
 
-        launches.append(Launch(name, location, date, description, type_, rocket))
+        launches.append(Launch(name, location, date, description, type_, launcher))
 
     return tuple(launches)
 
@@ -276,13 +259,13 @@ def get_nested_dict_val(dict_: Dict, *keys: str) -> Any:
         return None
 
 
-def get_rocket(url: str) -> Rocket:
-    """Get rocket from API
+def get_launcher(url: str) -> Launcher:
+    """Get launcher from API
 
-    :param url: LL2 API URL for requested :class:`Rocket`
+    :param url: LL2 API URL for requested :class:`Launcher`
     :type url: str
-    :return: Requested :class:`Rocket`
-    :rtype: Rocket
+    :return: Requested :class:`Launcher`
+    :rtype: Launcher
     """
     data = api_get_request(url)
 
@@ -298,7 +281,7 @@ def get_rocket(url: str) -> Rocket:
     failed_launches = data["failed_launches"]
     maiden_flight_date = date_str_to_datetime(data["maiden_flight"], "%Y-%m-%d")
 
-    return Rocket(
+    return Launcher(
         name,
         payload_leo,
         payload_gto,
