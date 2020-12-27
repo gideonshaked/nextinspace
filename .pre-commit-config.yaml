@@ -37,3 +37,4 @@ repos:
     rev: master
     hooks:
       - id: mypy
+exclude: docs/
