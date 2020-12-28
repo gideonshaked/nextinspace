@@ -59,7 +59,7 @@ classifiers = ["Environment :: Console",
 python = "^3.6.1"
 requests = "^2.24"
 tzlocal = "^2.1"
-rich = "^9.5.1"
+colorama = "^0.4.3"
 
 [tool.poetry.dev-dependencies]
 bump2version = "^1.0.1"
