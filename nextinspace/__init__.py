@@ -13,7 +13,12 @@ import requests
 class Event:
     """Generic space event.
 
-    .. note:: This constructor is meant for private use. This class is documented solely for its attributes.
+    This constructor is meant for private use. This class is documented solely for its attributes.
+
+    .. note::
+
+       When the LL2 API does not provide a date for the :class:`Event`, the `date` attribute is set to `datetime(datetime.MINYEAR, 1, 1)`.
+       This is so the :class:`Event` is sorted to the back of the returned tuple.
     """
 
     def __init__(
@@ -39,7 +44,12 @@ class Event:
 class Launcher:
     """Holds launcher information for instances of the :class:`Launch` class
 
-    .. note:: This constructor is meant for private use. This class is documented solely for its attributes.
+    This constructor is meant for private use. This class is documented solely for its attributes.
+
+    .. note::
+
+       When the LL2 API does not provide a maiden flight date for the :class:`Launcher`,
+       the `maiden_flight_date` attribute is set to `datetime(datetime.MINYEAR, 1, 1)`.
     """
 
     def __init__(
@@ -78,7 +88,12 @@ class Launcher:
 class Launch(Event):
     """Launch event
 
-    .. note:: This constructor is meant for private use. This class is documented solely for its attributes.
+    This constructor is meant for private use. This class is documented solely for its attributes.
+
+    .. note::
+
+       When the LL2 API does not provide a date for the :class:`Launch`, the `date` attribute is set to `datetime(datetime.MINYEAR, 1, 1)`.
+       This is so the :class:`Launch` is sorted to the back of the returned tuple.
     """
 
     def __init__(
