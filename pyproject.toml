@@ -18,6 +18,9 @@ exclude = '''
 )/
 '''
 
+[tool.coverage.run]
+omit = ["*/site-packages/*"]
+
 [tool.flakehell]
 max_line_length = 120
 exclude = [".git", "__pycache__"]
