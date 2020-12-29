@@ -68,4 +68,4 @@ requests-mock = "^1.8"
 pytest-lazy-fixture = "^0.6.3"
 
 [tool.poetry.scripts]
-nextinspace = "nextinspace.__main__:main"
+nextinspace = "nextinspace.cli.console:run"
