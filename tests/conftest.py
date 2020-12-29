@@ -1,5 +1,7 @@
 """Pytest fixtures"""
 
+from datetime import datetime
+
 import pytest
 
 import nextinspace
@@ -70,3 +72,20 @@ def example_launcher():
         failed_launches=0,
         maiden_flight_date=nextinspace.date_str_to_datetime("2015-04-29", "%Y-%m-%d"),
     )
+
+
+class DateHolder:
+    """Placeholder for Launches or Events with actual date attributes"""
+
+    def __init__(self, size):
+        self.date = datetime(size, 1, 1)
+
+
+@pytest.fixture
+def list_1():
+    return [DateHolder(size) for size in range(1, 8)]
+
+
+@pytest.fixture
+def list_2():
+    return [DateHolder(size * 2) for size in range(1, 8)]
