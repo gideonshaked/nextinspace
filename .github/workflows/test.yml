@@ -26,4 +26,13 @@ jobs:
 
       - name: Unit tests
         run: |
-          poetry run pytest -vv
+          poetry run coverage run -m pytest
+          poetry run coverage xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          flags: ${{ matrix.python-version }}
+          fail_ci_if_error: true
+          file: ./coverage.xml
+          verbose: true
