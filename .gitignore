@@ -21,3 +21,4 @@ docs/_build
 
 # Coverage
 .coverage
+coverage.*
