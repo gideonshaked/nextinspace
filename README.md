@@ -1,13 +1,15 @@
 # Nextinspace
 <p align="center">
 <a href="https://github.com/The-Kid-Gid/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/The-Kid-Gid/nextinspace/workflows/Test/badge.svg"></a>
-<a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
-<a href="https://pypi.org/project/nextinspace/"><img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace"></a>
-<a href="https://pepy.tech/project/nextinspace"><img alt="Downloads" src="https://static.pepy.tech/badge/nextinspace?period=total"></a>
+<a href='https://nextinspace.readthedocs.io/en/feat-v2/?badge=feat-v2'><img src='https://readthedocs.org/projects/nextinspace/badge/?version=feat-v2'alt='Documentation Status' /></a>
+<a href="https://codecov.io/gh/The-Kid-Gid/nextinspace">
+<img src="https://codecov.io/gh/The-Kid-Gid/nextinspace/branch/master/graph/badge.svg?token=OCYIVWG21F"/></a>
+<img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace?color=lgreen&label=PyPI%20Package">
+<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/The-Kid-Gid/nextinspace?label=Github%20Release">
+<a href="https://pepy.tech/project/nextinspace"><img alt="Downloads" src="https://static.pepy.tech/personalized-badge/nextinspace?period=total&units=none&left_color=grey&right_color=green&left_text=Downloads"></a>
 <a href="https://img.shields.io/pypi/pyversions/nextinspace"><img alt="Pyversions" src="https://img.shields.io/pypi/pyversions/nextinspace"></a>
-<a href="https://pycqa.github.io/isort/"><img alt="Imports: isort" src="https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336"></a>
-<a href="https://github.com/pre-commit/pre-commit"><img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+<a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
 </p>
 
 > “Never miss a launch.”
