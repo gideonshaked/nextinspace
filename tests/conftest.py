@@ -89,3 +89,70 @@ def list_1():
 @pytest.fixture
 def list_2():
     return [DateHolder(size * 2) for size in range(1, 8)]
+
+
+@pytest.fixture
+def example_event_dict():
+    return {
+        "type": "event",
+        "name": "2017 NASA Astronaut class graduation ceremony",
+        "location": "NASA's Johnson Space Center, Houston, TX, USA",
+        "date": "2020-01-10T15:30:00Z",
+        "description": "NASA will honor the first class of astronaut...",
+        "subtype": "Press Event",
+    }
+
+
+@pytest.fixture
+def example_launcher_dict():
+    return {
+        "name": "New Shepard",
+        "payload_leo": 0,
+        "payload_gto": 0,
+        "liftoff_thrust": 490,
+        "liftoff_mass": 75,
+        "max_stages": 1,
+        "height": 15.0,
+        "successful_launches": 12,
+        "consecutive_successful_launches": 12,
+        "failed_launches": 0,
+        "maiden_flight_date": "2015-04-29",
+    }
+
+
+@pytest.fixture
+def example_launch_normal_dict():
+    return {
+        "type": "launch",
+        "name": "New Shepard | NS-13",
+        "location": "West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA",
+        "date": "2020-09-24T15:00:00Z",
+        "description": "This will be the 13th New Shepard mission...",
+        "subtype": "Suborbital",
+        "launcher": None,
+    }
+
+
+@pytest.fixture
+def example_launch_verbose_dict():
+    return {
+        "type": "launch",
+        "name": "New Shepard | NS-13",
+        "location": "West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA",
+        "date": "2020-09-24T15:00:00Z",
+        "description": "This will be the 13th New Shepard mission...",
+        "subtype": "Suborbital",
+        "launcher": {
+            "name": "New Shepard",
+            "payload_leo": 0,
+            "payload_gto": 0,
+            "liftoff_thrust": 490,
+            "liftoff_mass": 75,
+            "max_stages": 1,
+            "height": 15.0,
+            "successful_launches": 12,
+            "consecutive_successful_launches": 12,
+            "failed_launches": 0,
+            "maiden_flight_date": "2015-04-29",
+        },
+    }
