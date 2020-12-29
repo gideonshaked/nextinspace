@@ -4,10 +4,16 @@ from datetime import MINYEAR, datetime, timedelta, timezone
 import pytest
 
 import nextinspace
-from tests.conftest import *
 
 
-@pytest.mark.parametrize("example", [example_event, example_launcher, example_launch_verbose])
+@pytest.mark.parametrize(
+    "example",
+    [
+        pytest.lazy_fixture("example_event"),
+        pytest.lazy_fixture("example_launcher"),
+        pytest.lazy_fixture("example_launch_verbose"),
+    ],
+)
 def test_eq(example):
     assert example == copy.copy(example)
 
@@ -60,8 +66,8 @@ def test_date_str_to_datetime(datetime_str, result):
 @pytest.mark.parametrize(
     "launch, include_launcher",
     [
-        (example_launch_verbose, True),
-        (example_launch_normal, False),
+        (pytest.lazy_fixture("example_launch_verbose"), True),
+        (pytest.lazy_fixture("example_launch_normal"), False),
     ],
 )
 def test_next_launch(requests_mock, example_launch_text, launch, include_launcher, example_launcher_text):
@@ -75,9 +81,9 @@ def test_next_launch(requests_mock, example_launch_text, launch, include_launche
     requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=example_launcher_text)
 
     # Get result of function
-    launch = nextinspace.next_launch(1, include_launcher)[0]
+    result_launch = nextinspace.next_launch(1, include_launcher)[0]
 
-    assert launch == launch
+    assert result_launch == launch
 
 
 def test_get_launcher(requests_mock, example_launcher_text, example_launcher):
