@@ -8,6 +8,7 @@ Table of Contents
 
 .. toctree::
     :caption: Overview
+    :maxdepth: 2
     
     README
 
