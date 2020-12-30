@@ -174,7 +174,7 @@ The structure and values of the data reflect the relationships between the `Laun
 
 ```
 ❯ nextinspace --help
-usage: nextinspace [-h] [-e | -l] [-v | -q] [--version] [number of items]
+usage: nextinspace [-h] [-e | -l] [-v | -q] [--json] [--version] [number of items]
 
 Never miss a launch.
 
@@ -187,8 +187,8 @@ optional arguments:
   -l, --launches-only  Only display orbital and suborbital launches. Generally these will be all orbital launches and suborbital launches which aim to reach “space” or the Karman line.
   -v, --verbose        Display additional details about launches.
   -q, --quiet          Only display name, location, date, and type.
+  --json               Output data in JSON format. Note that '--quiet' has no effect when this flag is set.
   --version            show program's version number and exit
-
 ```
 
 ## Credits
