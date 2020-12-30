@@ -26,7 +26,7 @@ jobs:
 
       - name: Unit tests
         run: |
-          poetry run coverage run -m pytest
+          poetry run coverage run -m pytest -vv
           poetry run coverage xml
 
       - name: Upload coverage to Codecov
