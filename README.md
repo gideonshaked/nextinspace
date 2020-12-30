@@ -2,7 +2,7 @@
 
 <p align="center">
 <a href="https://github.com/The-Kid-Gid/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/The-Kid-Gid/nextinspace/workflows/Test/badge.svg"></a>
-<a href='https://nextinspace.readthedocs.io/en/feat-v2/?badge=feat-v2'><img src='https://readthedocs.org/projects/nextinspace/badge/?version=feat-v2'alt='Documentation Status' /></a>
+<a href='https://nextinspace.readthedocs.io/en/stable/?badge=stable'><img src='https://readthedocs.org/projects/nextinspace/badge/?version=stable' alt='Documentation Status' /></a>
 <a href="https://codecov.io/gh/The-Kid-Gid/nextinspace">
 <img src="https://codecov.io/gh/The-Kid-Gid/nextinspace/branch/master/graph/badge.svg?token=OCYIVWG21F"/></a>
 <a href="https://pypi.org/project/nextinspace"><img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace?color=lgreen&label=PyPI%20Package"></a>
