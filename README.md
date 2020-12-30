@@ -167,7 +167,7 @@ Nextinspace is capable of outputting structured JSON data that can be parsed by 
 The structure of the JSON outputted by nextinspace is basically demonstrated in the example above.
 The structure and values of the data reflect the relationships between the `Launch`, `Event`, and `Launcher` classes, with a few notable exceptions:
 
-- **The `type` attribute:** The `type` attribute of Nextinspace `Event` and `Launch` objects is actually stored in the `subtype` key. The `type` key actually holds the class of the Nextinspace object represented in the JSON object (either `launch` or `event`).
+- **The `type_` attribute:** The `type_` attribute of Nextinspace `Event` and `Launch` objects is actually stored in the `subtype` key. The `type` key actually holds the class of the Nextinspace object represented in the JSON object (either `launch` or `event`).
 - **The `date` key:** Internally, Nextinspace stores dates and times in local time, but for JSON output Nextinspace converts date and time values to UTC. Also, Nextinspace outputs date and time values in [ISO 8601 format](https://www.iso.org/iso-8601-date-and-time-format.html).
 
 ## CLI Reference
