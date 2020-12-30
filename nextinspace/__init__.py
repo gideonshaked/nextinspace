@@ -40,6 +40,9 @@ class Event:
             return self.__dict__ == other.__dict__
         return False
 
+    def __repr__(self):
+        return f"{self.__class__.__module__}.{self.__class__.__qualname__}({', '.join(repr(attr) for attr in self.__dict__.values())})"
+
 
 class Launcher:
     """Holds launcher information for instances of the :class:`Launch` class
@@ -83,6 +86,9 @@ class Launcher:
         if type(self) is type(other):
             return self.__dict__ == other.__dict__
         return False
+
+    def __repr__(self):
+        return f"{self.__class__.__module__}.{self.__class__.__qualname__}({', '.join(repr(attr) for attr in self.__dict__.values())})"
 
 
 class Launch(Event):

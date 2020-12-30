@@ -1,3 +1,5 @@
+# type: ignore
+
 import copy
 from datetime import MINYEAR, datetime, timedelta, timezone
 
@@ -16,6 +18,23 @@ import nextinspace
 )
 def test_eq(example):
     assert example == copy.copy(example)
+
+
+@pytest.mark.parametrize(
+    "example, repr_str",
+    [
+        (
+            pytest.lazy_fixture("example_event"),
+            """nextinspace.Event('2017 NASA Astronaut class graduation ceremony', "NASA's Johnson Space Center, Houston, TX, USA", datetime.datetime(2020, 1, 10, 10, 30, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=68400), 'EST')), 'NASA will honor the first class of astronaut...', 'Press Event')""",
+        ),
+        (
+            pytest.lazy_fixture("example_launch_verbose"),
+            """nextinspace.Launch('New Shepard | NS-13', 'West Texas Suborbital Launch Site/ Corn Ranch, Corn Ranch, USA', datetime.datetime(2020, 9, 24, 11, 0, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=72000), 'EDT')), 'This will be the 13th New Shepard mission...', 'Suborbital', nextinspace.Launcher('New Shepard', 0, 0, 490, 75, 1, 15.0, 12, 12, 0, datetime.datetime(2015, 4, 28, 20, 0, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=72000), 'EDT'))))""",
+        ),
+    ],
+)
+def test_repr(example, repr_str):
+    assert repr(example) == repr_str
 
 
 @pytest.mark.parametrize(
