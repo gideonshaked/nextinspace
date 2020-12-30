@@ -1,4 +1,4 @@
-__version__ = "2.0.0"
+__version__ = "2.0.1"
 __all__ = ["nextinspace", "next_launch", "next_event"]
 
 import typing
@@ -216,7 +216,7 @@ def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple[Laun
         so HTTPErrors are possible as well.
     """
     today_str = datetime_date.today().strftime("%Y-%m-%d")
-    data = api_get_request("https://ll.thespacedevs.com/2.0.0/launch", {"limit": num_launches, "net__gte": today_str})
+    data = api_get_request("https://ll.thespacedevs.com/2.0.1/launch", {"limit": num_launches, "net__gte": today_str})
 
     launches = []
     for result in data["results"]:
@@ -259,7 +259,7 @@ def next_event(num_events: int) -> Tuple[Event, ...]:
     :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
         so HTTP errors are possible as well.
     """
-    data = api_get_request("https://ll.thespacedevs.com/2.0.0/event/upcoming", {"limit": num_events})
+    data = api_get_request("https://ll.thespacedevs.com/2.0.1/event/upcoming", {"limit": num_events})
 
     events = []
     for result in data["results"]:
