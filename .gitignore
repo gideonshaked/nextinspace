@@ -13,9 +13,6 @@ dist/
 # Pytest
 .pytest_cache
 
-# Poetry
-poetry.lock
-
 # Docs
 docs/_build
 
