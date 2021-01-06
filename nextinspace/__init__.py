@@ -121,7 +121,7 @@ def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple[Union[L
     :param num_items: Number of items to get from the API
     :type num_items: int
     :param include_launcher: Whether to include the launcher of the requested :class:`Launches <Launch>`, defaults to False
-    :type inlcude_launcher: bool, optional
+    :type include_launcher: bool, optional
     :return: Upcoming :class:`Launches <Launch>` and :class:`Events <Event>`. Note that the length of this tuple will be <= `num_items`.
     :rtype: Tuple
     :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
@@ -209,7 +209,7 @@ def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple[Laun
     :param num_launches: Number of :class:`Launches <Launch>` to get from the API
     :type num_launches: int
     :param include_launcher: Whether to include the launcher of the requested :class:`Launches <Launch>`, defaults to False
-    :type inlcude_launcher: bool, optional
+    :type include_launcher: bool, optional
     :return: Upcoming :class:`Launches <Launch>`. Note that the length of this tuple will be <= `num_launches`.
     :rtype: Tuple
     :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
