@@ -71,7 +71,7 @@ def display_event(event, verbosity):
     show_location(event.location)
     show_filler()
     show_date(event.date)
-    show_type(nextinspace.Event, event.type_)
+    show_type(event, event.type_)
 
     # If verbosity is not set to quiet, show description
     if verbosity != Verbosity.quiet:
@@ -84,7 +84,7 @@ def display_launch(launch, verbosity):
     show_location(launch.location)
     show_filler()
     show_date(launch.date)
-    show_type(nextinspace.Launch, launch.type_)
+    show_type(launch, launch.type_)
 
     # If verbosity is not set to quiet, print mission description
     if verbosity != Verbosity.quiet:
@@ -127,9 +127,9 @@ def show_date(date):
 
 def show_type(obj, type_):
     if type_ is not None:
-        print("│" + ("    " + type(obj).__name__ + " Type: " + type_).ljust(MAX_LINE_LENGTH, " ") + "│")
+        print("│" + ("    " + obj.__class__.__qualname__ + " Type: " + type_).ljust(MAX_LINE_LENGTH, " ") + "│")
     else:
-        print("│" + "    Launch Type Unavailable".ljust(MAX_LINE_LENGTH, " ") + "│")
+        print("│" + ("    " + obj.__class__.__qualname__ + " Type Unavailable").ljust(MAX_LINE_LENGTH, " ") + "│")
 
 
 def show_description(description):
