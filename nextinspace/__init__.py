@@ -2,12 +2,12 @@ __version__ = "2.0.1"
 __all__ = ["nextinspace", "next_launch", "next_event"]
 
 import typing
-from datetime import MINYEAR
-from datetime import date as datetime_date  # Get around duplicate date identifier
-from datetime import datetime, timezone
+from datetime import MINYEAR, datetime, timezone
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import requests
+
+BASE_URL = "https://ll.thespacedevs.com/2.1.0"
 
 
 class Event:
@@ -133,7 +133,7 @@ def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple[Union[L
        once for the next *n* :class:`Events <Event>`, and once for the next *n* :class:`Launches <Launch>`, and merge the queries
        into a sorted form. **As such, this function may be slower than anticipated.** 🙁
 
-    .. note::
+    .. deprecated:: 2.0.2
 
        Because the filter by time function of the LL2 API is currently broken, **upcoming means beyond and including today**.
     """
@@ -215,8 +215,8 @@ def next_launch(num_launches: int, include_launcher: bool = False) -> Tuple[Laun
     :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
         so HTTPErrors are possible as well.
     """
-    today_str = datetime_date.today().strftime("%Y-%m-%d")
-    data = api_get_request("https://ll.thespacedevs.com/2.0.1/launch", {"limit": num_launches, "net__gte": today_str})
+    now_str = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    data = api_get_request(f"{BASE_URL}/launch", {"limit": num_launches, "net__gte": now_str})
 
     launches = []
     for result in data["results"]:
@@ -259,7 +259,7 @@ def next_event(num_events: int) -> Tuple[Event, ...]:
     :raises requests.exceptions.RequestException: If there is a problem connecting to the API. Also does a `raise_for_status()` call \
         so HTTP errors are possible as well.
     """
-    data = api_get_request("https://ll.thespacedevs.com/2.0.1/event/upcoming", {"limit": num_events})
+    data = api_get_request(f"{BASE_URL}/event/upcoming", {"limit": num_events})
 
     events = []
     for result in data["results"]:

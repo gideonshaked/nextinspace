@@ -6,6 +6,7 @@ from datetime import MINYEAR, datetime, timedelta, timezone
 import pytest
 
 import nextinspace
+from nextinspace import BASE_URL
 
 
 @pytest.mark.parametrize(
@@ -74,9 +75,9 @@ def test_date_str_to_datetime(datetime_str, result):
 )
 def test_next_launch(requests_mock, example_launch_text, launch, include_launcher, example_launcher_text):
     # Mock API
-    now = datetime.now()
+    now = datetime.utcnow()
     requests_mock.get(
-        "https://ll.thespacedevs.com/2.0.0/launch?limit=1&net__gte=" + now.strftime("%Y-%m-%d"),
+        f"{BASE_URL}/launch?limit=1&net__gte=" + now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         text=example_launch_text,
     )
     # Make sure the request from the nested get_launcher call is intercepted
@@ -101,7 +102,7 @@ def test_get_launcher(requests_mock, example_launcher_text, example_launcher):
 
 def test_next_event(requests_mock, example_event_text, example_event):
     # Mock API
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming?limit=1", text=example_event_text)
+    requests_mock.get(f"{BASE_URL}/event/upcoming?limit=1", text=example_event_text)
 
     # Get result of function
     event = nextinspace.next_event(1)[0]
@@ -113,16 +114,16 @@ def test_nextinspace(
     requests_mock, example_launch_text, example_event_text, example_launcher_text, example_event, example_launch_normal
 ):
     # Mock API (Launch)
-    now = datetime.now()
+    now = datetime.utcnow()
     requests_mock.get(
-        "https://ll.thespacedevs.com/2.0.0/launch?limit=2&net__gte=" + now.strftime("%Y-%m-%d"),
+        f"{BASE_URL}/launch?limit=2&net__gte=" + now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         text=example_launch_text,
     )
     # Make sure the request from the nested get_launcher call is intercepted
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/config/launcher/137/", text=example_launcher_text)
+    requests_mock.get(f"{BASE_URL}/config/launcher/137/", text=example_launcher_text)
 
     # Mock API (Event)
-    requests_mock.get("https://ll.thespacedevs.com/2.0.0/event/upcoming?limit=2", text=example_event_text)
+    requests_mock.get(f"{BASE_URL}/event/upcoming?limit=2", text=example_event_text)
 
     next = nextinspace.nextinspace(2)
 
