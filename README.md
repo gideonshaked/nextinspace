@@ -18,7 +18,9 @@
 
 A command-line tool for seeing the latest in space. Nextinspace also supports use as a Python library, so you can integrate it into your application. You can also get data printed to the terminal in JSON, which can be piped into another program.
 
-[Features](#features) • [Installation and Documentation](#installation-and-documentation) • [Using the Nextinspace Public API](#using-the-nextinspace-public-api) • [Using Nextinspace in Shell Scripting](#using-nextinspace-in-shell-scripting) • [CLI Reference](#cli-reference) • [Credits](#credits)
+<p align="center">
+<a href="#features">Features</a> • <a href="#installation-and-documentation">Installation and Documentation</a> • <a href="#using-the-nextinspace-public-api">Using the Nextinspace Public API</a> • <a href="#using-nextinspace-in-shell-scripting">Using Nextinspace in Shell Scripting</a> • <a href="#cli-reference">CLI Reference</a> • <a href="#credits">Credits</a>
+</p>
 
 ## Features
 
