@@ -1,25 +1,21 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: master
+    rev: 21.5b1
     hooks:
       - id: black
         language_version: python3.8
   - repo: https://github.com/timothycrosley/isort
-    rev: master
+    rev: 5.8.0
     hooks:
       - id: isort
-  - repo: https://github.com/life4/flakehell
-    rev: master
-    hooks:
-      - id: flakehell
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: master
+    rev: v4.0.1
     hooks:
       - id: check-json
       - id: check-toml
       - id: check-yaml
   - repo: https://github.com/codespell-project/codespell
-    rev: master
+    rev: v2.0.0
     hooks:
       - id: codespell
         # Should be with the "--skip" option but this seems to be broken
@@ -29,12 +25,12 @@ repos:
               .*\.cast
           )$
   - repo: https://github.com/pappasam/toml-sort
-    rev: master
+    rev: v0.19.0
     hooks:
       - id: toml-sort
         args: ["--in-place"]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: master
+    rev: v0.812
     hooks:
       - id: mypy
 exclude: docs/
