@@ -19,5 +19,5 @@ Table of Contents
 
 Usage & Distribution
 ---------------------
-* Source is available on the `Github Project Page <https://github.com/not-stirred/nextinspace>`_.
+* Source is available on the `Github Project Page <https://github.com/gideonshaked/nextinspace>`_.
 * Nextinspace is distributed under the `GNU GPLv3 <https://www.gnu.org/licenses/gpl-3.0>`_.

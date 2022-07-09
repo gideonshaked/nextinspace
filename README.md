@@ -1,12 +1,12 @@
 # Nextinspace
 
 <p align="center">
-<a href="https://github.com/not-stirred/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/not-stirred/nextinspace/workflows/Test/badge.svg"></a>
+<a href="https://github.com/gideonshaked/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/gideonshaked/nextinspace/workflows/Test/badge.svg"></a>
 <a href='https://nextinspace.readthedocs.io/en/stable/?badge=stable'><img src='https://readthedocs.org/projects/nextinspace/badge/?version=stable' alt='Documentation Status' /></a>
-<a href="https://codecov.io/gh/not-stirred/nextinspace">
-<img src="https://codecov.io/gh/not-stirred/nextinspace/branch/master/graph/badge.svg?token=OCYIVWG21F"/></a>
+<a href="https://codecov.io/gh/gideonshaked/nextinspace">
+<img src="https://codecov.io/gh/gideonshaked/nextinspace/branch/master/graph/badge.svg?token=OCYIVWG21F"/></a>
 <a href="https://pypi.org/project/nextinspace"><img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace?color=lgreen&label=PyPI%20Package"></a>
-<a href="https://github.com/not-stirred/nextinspace/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/not-stirred/nextinspace?label=Github%20Release"></a>
+<a href="https://github.com/gideonshaked/nextinspace/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/gideonshaked/nextinspace?label=Github%20Release"></a>
 <a href="https://pepy.tech/project/nextinspace"><img alt="Downloads" src="https://static.pepy.tech/personalized-badge/nextinspace?period=total&units=none&left_color=grey&right_color=green&left_text=Downloads"></a>
 <a href="https://img.shields.io/pypi/pyversions/nextinspace"><img alt="Pyversions" src="https://img.shields.io/pypi/pyversions/nextinspace"></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
@@ -37,7 +37,7 @@ With `--verbose`, you can see all of the important details such as description a
 - **Pretty printing:** Nextinspace prints upcoming items in formatted panels and with colored text.
 
 <p align="center">
-  <img height=550 src="https://raw.githubusercontent.com/not-stirred/nextinspace/master/img/demo.svg" />
+  <img height=550 src="https://raw.githubusercontent.com/gideonshaked/nextinspace/master/img/demo.svg" />
 </p>
 
 ## Installation and Documentation
@@ -51,7 +51,7 @@ pip install nextinspace
 It can also be installed directly from Github:
 
 ```bash
-pip install git+https://github.com/not-stirred/nextinspace
+pip install git+https://github.com/gideonshaked/nextinspace
 ```
 
 Or you can use your favorite package manager:
