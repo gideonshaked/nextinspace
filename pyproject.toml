@@ -47,16 +47,18 @@ homepage = "https://github.com/gideonshaked/nextinspace"
 repository = "https://github.com/gideonshaked/nextinspace"
 keywords = ["space", "nextinspace", "space news", "spaceflight", "rockets"]
 include = ["LICENSE"]
-classifiers = ["Environment :: Console",
-        "License :: OSI Approved :: GNU General Public License (GPL)",
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3 :: Only",
-        "Natural Language :: English"]
+classifiers = [
+  "Environment :: Console",
+  "License :: OSI Approved :: GNU General Public License (GPL)",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3 :: Only",
+  "Natural Language :: English"
+]
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
