@@ -1,6 +1,7 @@
 # type: ignore
 
 import pytest
+from pytest_lazy_fixtures import lf
 
 from nextinspace.cli import viewer
 
@@ -13,8 +14,8 @@ def test_dict_event(example_event, example_event_dict):
     "launcher, dict_",
     [
         (
-            pytest.lazy_fixture("example_launcher"),
-            pytest.lazy_fixture("example_launcher_dict"),
+            lf("example_launcher"),
+            lf("example_launcher_dict"),
         ),
         (None, None),
     ],
@@ -27,12 +28,12 @@ def test_dict_launcher(launcher, dict_):
     "launch, dict_",
     [
         (
-            pytest.lazy_fixture("example_launch_verbose"),
-            pytest.lazy_fixture("example_launch_verbose_dict"),
+            lf("example_launch_verbose"),
+            lf("example_launch_verbose_dict"),
         ),
         (
-            pytest.lazy_fixture("example_launch_normal"),
-            pytest.lazy_fixture("example_launch_normal_dict"),
+            lf("example_launch_normal"),
+            lf("example_launch_normal_dict"),
         ),
     ],
 )
@@ -44,12 +45,12 @@ def test_dict_launch(launch, dict_):
     "item, dict_",
     [
         (
-            pytest.lazy_fixture("example_launch_normal"),
-            pytest.lazy_fixture("example_launch_normal_dict"),
+            lf("example_launch_normal"),
+            lf("example_launch_normal_dict"),
         ),
         (
-            pytest.lazy_fixture("example_event"),
-            pytest.lazy_fixture("example_event_dict"),
+            lf("example_event"),
+            lf("example_event_dict"),
         ),
     ],
 )
