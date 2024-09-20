@@ -4,6 +4,7 @@ import copy
 from datetime import MINYEAR, datetime, timedelta, timezone
 
 import pytest
+from pytest_lazy_fixtures import lf
 
 import nextinspace
 from nextinspace import BASE_URL
@@ -12,9 +13,9 @@ from nextinspace import BASE_URL
 @pytest.mark.parametrize(
     "example",
     [
-        pytest.lazy_fixture("example_event"),
-        pytest.lazy_fixture("example_launcher"),
-        pytest.lazy_fixture("example_launch_verbose"),
+        lf("example_event"),
+        lf("example_launcher"),
+        lf("example_launch_verbose"),
     ],
 )
 def test_eq(example):
@@ -69,8 +70,8 @@ def test_date_str_to_datetime(datetime_str, result):
 @pytest.mark.parametrize(
     "launch, include_launcher",
     [
-        (pytest.lazy_fixture("example_launch_verbose"), True),
-        (pytest.lazy_fixture("example_launch_normal"), False),
+        (lf("example_launch_verbose"), True),
+        (lf("example_launch_normal"), False),
     ],
 )
 def test_next_launch(requests_mock, example_launch_text, launch, include_launcher, example_launcher_text):
