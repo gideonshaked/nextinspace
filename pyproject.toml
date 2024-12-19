@@ -46,12 +46,11 @@ readme = "README.md"
 homepage = "https://github.com/gideonshaked/nextinspace"
 repository = "https://github.com/gideonshaked/nextinspace"
 keywords = ["space", "nextinspace", "space news", "spaceflight", "rockets"]
-classifiers = ["Environment :: Console",
+classifiers = [
+        "Environment :: Console",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
@@ -59,8 +58,10 @@ classifiers = ["Environment :: Console",
         "Programming Language :: Python :: 3 :: Only",
         "Natural Language :: English"]
 
+include = ["LICENSE"]
+
 [tool.poetry.dependencies]
-python = "^3.8.0"
+python = "^3.10"
 requests = "^2.24"
 colorama = "^0.4.3"
 
