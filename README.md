@@ -3,8 +3,6 @@
 <p align="center">
 <a href="https://github.com/gideonshaked/nextinspace/actions?query=workflow%3ATest"><img alt="Test" src="https://github.com/gideonshaked/nextinspace/workflows/Test/badge.svg"></a>
 <a href='https://nextinspace.readthedocs.io/en/stable/?badge=stable'><img src='https://readthedocs.org/projects/nextinspace/badge/?version=stable' alt='Documentation Status' /></a>
-<a href="https://codecov.io/gh/gideonshaked/nextinspace">
-<img src="https://codecov.io/gh/gideonshaked/nextinspace/branch/master/graph/badge.svg?token=OCYIVWG21F"/></a>
 <a href="https://pypi.org/project/nextinspace"><img alt="PyPI" src="https://img.shields.io/pypi/v/nextinspace?color=lgreen&label=PyPI%20Package"></a>
 <a href="https://github.com/gideonshaked/nextinspace/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/gideonshaked/nextinspace?label=Github%20Release"></a>
 <a href="https://pepy.tech/project/nextinspace"><img alt="Downloads" src="https://static.pepy.tech/personalized-badge/nextinspace?period=total&units=none&left_color=grey&right_color=green&left_text=Downloads"></a>

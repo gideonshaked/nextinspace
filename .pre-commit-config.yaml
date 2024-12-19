@@ -13,23 +13,9 @@ repos:
       - id: check-json
       - id: check-toml
       - id: check-yaml
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
-    hooks:
-      - id: codespell
-        # Should be with the "--skip" option but this seems to be broken
-        exclude: >
-          (?x)^(
-              .*\.svg|
-              .*\.cast
-          )$
   - repo: https://github.com/pappasam/toml-sort
     rev: v0.24.2
     hooks:
       - id: toml-sort
         args: ["--in-place"]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.13.0
-    hooks:
-      - id: mypy
 exclude: docs/
