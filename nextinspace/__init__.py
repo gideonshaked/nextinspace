@@ -1,4 +1,4 @@
-__version__ = "3.0.0"
+__version__ = "3.0.1"
 __all__ = ["nextinspace", "next_launch", "next_event"]
 
 import typing
@@ -133,7 +133,7 @@ def nextinspace(num_items: int, include_launcher: bool = False) -> Tuple[Union[L
        once for the next *n* :class:`Events <Event>`, and once for the next *n* :class:`Launches <Launch>`, and merge the queries
        into a sorted form. **As such, this function may be slower than anticipated.** 🙁
 
-    .. deprecated:: 3.0.0
+    .. deprecated:: 3.0.1
 
        Because the filter by time function of the LL2 API is currently broken, **upcoming means beyond and including today**.
     """

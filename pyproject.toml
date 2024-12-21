@@ -37,7 +37,7 @@ profile = "black"
 
 [tool.poetry]
 name = "nextinspace"
-version = "3.0.0"
+version = "3.0.1"
 description = "Never miss a launch."
 license = "GPL-3.0-or-later"
 authors = ["Gideon Shaked <gideonshaked@gmail.com>"]
