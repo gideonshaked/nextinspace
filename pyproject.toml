@@ -58,7 +58,9 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   "Natural Language :: English"
 ]
-include = ["LICENSE"]
+include = [
+  {path = "LICENSE", format = "sdist"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
