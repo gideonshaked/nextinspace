@@ -1,13 +1,64 @@
 __version__ = "3.0.1"
 __all__ = ["nextinspace", "next_launch", "next_event"]
 
+import hashlib
+import json
+import tempfile
+import time
 import typing
 from datetime import MINYEAR, datetime, timezone
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import requests
 
 BASE_URL = "https://ll.thespacedevs.com/2.1.0"
+
+# Short-lived disk cache for LL2 responses (helps avoid HTTP 429 on repeated CLI use).
+CACHE_TTL_SECONDS = 300
+CACHE_DIR = Path(tempfile.gettempdir()) / "nextinspace_ll2_cache"
+
+
+def _cache_key(endpoint: str, payload: Dict) -> str:
+    """Stable cache key for an endpoint and query parameters."""
+    items = sorted((str(k), str(v)) for k, v in payload.items())
+    raw = endpoint + "?" + "&".join(f"{k}={v}" for k, v in items)
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def clear_api_cache() -> None:
+    """Remove all cached LL2 responses. Useful in tests."""
+    if not CACHE_DIR.exists():
+        return
+    for path in CACHE_DIR.glob("*.json"):
+        try:
+            path.unlink()
+        except OSError:
+            pass
+
+
+def _read_cache(cache_path: Path) -> Optional[Any]:
+    try:
+        if not cache_path.is_file():
+            return None
+        age = time.time() - cache_path.stat().st_mtime
+        if age > CACHE_TTL_SECONDS:
+            return None
+        with cache_path.open("r", encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, json.JSONDecodeError, ValueError):
+        return None
+
+
+def _write_cache(cache_path: Path, data: Any) -> None:
+    try:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        with cache_path.open("w", encoding="utf-8") as fh:
+            json.dump(data, fh)
+    except (OSError, TypeError, ValueError):
+        # Caching must never break API access.
+        pass
+
 
 
 class Event:
@@ -356,7 +407,17 @@ def api_get_request(endpoint: str, payload: Dict = {}) -> Any:
     :return: Either JSON data from the API or raise an exception if the API is unreachable
     :rtype: Any
     :raises requests.exceptions.RequestException:
+
+    Responses are cached on disk for :data:`CACHE_TTL_SECONDS` so repeated CLI
+    invocations with the same query do not always hit the network (see issue #12).
     """
+    cache_path = CACHE_DIR / f"{_cache_key(endpoint, payload)}.json"
+    cached = _read_cache(cache_path)
+    if cached is not None:
+        return cached
+
     response = requests.get(endpoint, params=payload)
     response.raise_for_status()
-    return response.json()
+    data = response.json()
+    _write_cache(cache_path, data)
+    return data

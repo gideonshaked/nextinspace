@@ -1,6 +1,7 @@
 # type: ignore
 
 import copy
+import time
 from datetime import MINYEAR, datetime, timedelta, timezone
 
 import pytest
@@ -129,3 +130,47 @@ def test_nextinspace(
     next = nextinspace.nextinspace(2)
 
     assert next == (example_event, example_launch_normal)
+
+
+def test_api_get_request_uses_cache(requests_mock, monkeypatch, tmp_path):
+    cache_dir = tmp_path / "cache"
+    monkeypatch.setattr(nextinspace, "CACHE_DIR", cache_dir)
+    monkeypatch.setattr(nextinspace, "CACHE_TTL_SECONDS", 300)
+    nextinspace.clear_api_cache()
+
+    endpoint = f"{BASE_URL}/event/upcoming"
+    payload = {"limit": 1}
+    body = {"results": [{"name": "cached", "location": "x", "date": "2020-01-10T15:30:00Z", "description": "d", "type": {"name": "t"}}]}
+    matcher = requests_mock.get(endpoint, json=body)
+
+    first = nextinspace.api_get_request(endpoint, payload)
+    second = nextinspace.api_get_request(endpoint, payload)
+
+    assert first == body
+    assert second == body
+    assert matcher.call_count == 1
+
+
+def test_api_get_request_refetches_after_ttl(requests_mock, monkeypatch, tmp_path):
+    cache_dir = tmp_path / "cache"
+    monkeypatch.setattr(nextinspace, "CACHE_DIR", cache_dir)
+    monkeypatch.setattr(nextinspace, "CACHE_TTL_SECONDS", 1)
+    nextinspace.clear_api_cache()
+
+    endpoint = f"{BASE_URL}/event/upcoming"
+    payload = {"limit": 3}
+    body_a = {"results": [], "label": "a"}
+    body_b = {"results": [], "label": "b"}
+    matcher = requests_mock.get(endpoint, [{"json": body_a}, {"json": body_b}])
+
+    assert nextinspace.api_get_request(endpoint, payload) == body_a
+    # Expire the cache file by backdating mtime.
+    cache_files = list(cache_dir.glob("*.json"))
+    assert len(cache_files) == 1
+    expired = time.time() - 10
+    import os
+
+    os.utime(cache_files[0], (expired, expired))
+
+    assert nextinspace.api_get_request(endpoint, payload) == body_b
+    assert matcher.call_count == 2
