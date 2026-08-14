@@ -7,6 +7,16 @@ import pytest
 import nextinspace
 
 
+@pytest.fixture(autouse=True)
+def _clear_ll2_cache(tmp_path, monkeypatch):
+    """Isolate LL2 disk cache per test so mocks stay authoritative."""
+    cache_dir = tmp_path / "ll2_cache"
+    monkeypatch.setattr(nextinspace, "CACHE_DIR", cache_dir)
+    nextinspace.clear_api_cache()
+    yield
+    nextinspace.clear_api_cache()
+
+
 @pytest.fixture
 def example_launch_text():
     return open("tests/data/launch.json", "r").read()
