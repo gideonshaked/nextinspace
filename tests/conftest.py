@@ -16,7 +16,7 @@ NOW = datetime(2026, 10, 10, 12, 37, 15, tzinfo=UTC)
 
 
 def read(name: str) -> Any:
-    return json.loads((DATA / name).read_text())
+    return json.loads((DATA / name).read_text(encoding="utf-8"))
 
 
 class FrozenDatetime(datetime):
