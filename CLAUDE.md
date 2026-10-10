@@ -17,6 +17,7 @@ The 3.x library functions `nextinspace()`, `next_launch()` and `next_event()` we
 Sphinx docs and Read the Docs were dropped because the README covers a CLI of this size.
 Poetry and bump2version gave way to uv and hatchling, and black and isort to ruff.
 Python 3.10 support was dropped because it reached end of life in October 2026.
+`tzdata` is a Windows-only dependency because Windows ships no IANA time-zone database, so `zoneinfo` and `--tz` fail there without it.
 
 ### Launch Library 2 behaviour
 

@@ -39,7 +39,8 @@ dependencies = [
   "platformdirs>=4.0",
   "rich>=13.7",
   "textual>=1.0",
-  "typer>=0.12"
+  "typer>=0.12",
+  "tzdata>=2024.1; sys_platform == 'win32'"
 ]
 
 [project.scripts]
