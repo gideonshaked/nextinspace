@@ -98,7 +98,7 @@ class Browser(App[None]):
                     LIMIT, launches=self.mode != "events", events=self.mode != "launches", filters=filters
                 )
         except LL2Error as e:
-            self.call_from_thread(self.set_status, f"[red]{e}[/]")
+            self.call_from_thread(self.set_status, str(e), "red")
             return
         finally:
             self.client.refresh = False
@@ -110,7 +110,7 @@ class Browser(App[None]):
         try:
             full = self.client.detail(item)
         except LL2Error as e:
-            self.call_from_thread(self.set_status, f"[red]{e}[/]")
+            self.call_from_thread(self.set_status, str(e), "red")
             return
         self.details[key(item)] = full
         self.call_from_thread(self.show_detail, full)
@@ -118,10 +118,12 @@ class Browser(App[None]):
 
     # ---- View ----
 
-    def set_status(self, message: str) -> None:
-        notes = "  ".join(f"[yellow]{n}[/]" for n in dict.fromkeys(self.client.notes))
+    def set_status(self, message: str, style: str = "") -> None:
+        status = Text(message, style=style)
+        for note in dict.fromkeys(self.client.notes):
+            status.append(f"  {note}", style="yellow")
         self.client.notes.clear()
-        self.query_one("#status", Static).update(f"{message}  {notes}".strip())
+        self.query_one("#status", Static).update(status)
 
     def show_items(self, items: list[Item]) -> None:
         self.items = items

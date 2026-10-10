@@ -218,6 +218,7 @@ def past(
 ) -> None:
     """Recent launches and how they went."""
     filters = Filters(search=search, provider=provider, crewed=crewed, within=_duration(within))
+    zone = _zone(tz)
     with make_client(refresh) as client:
         try:
             items = client.previous_launches(count, filters)
@@ -232,7 +233,7 @@ def past(
             return
         remember(client, list(items))
     title = "Recent launches" + describe_filters(filters)
-    out.print(render.outcomes(items, _zone(tz), title=title, width=out.width))
+    out.print(render.outcomes(items, zone, title=title, width=out.width))
 
 
 def resolve(client: Client, target: str | None) -> Item:

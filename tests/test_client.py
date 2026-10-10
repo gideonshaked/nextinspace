@@ -1,78 +1,14 @@
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
-import httpx
 import pytest
 
 from nextinspace import __version__
-from nextinspace.cache import Cache
-from nextinspace.client import Client, Filters, LL2Error, sort_key
+from nextinspace.client import Filters, LL2Error, sort_key
 from nextinspace.models import Event, Launch, parse_event, parse_launch
 
 LAUNCHES = "/2.3.0/launches/upcoming/"
 EVENTS = "/2.3.0/events/upcoming/"
 PREVIOUS = "/2.3.0/launches/previous/"
-NOW = datetime(2026, 10, 10, 12, 37, 15, tzinfo=UTC)
-
-
-class FrozenDatetime(datetime):
-    @classmethod
-    def now(cls, tz=None):
-        return NOW.astimezone(tz)
-
-
-class FakeLL2:
-    def __init__(self, load):
-        self.pages = {
-            LAUNCHES: load("launches_upcoming.json"),
-            EVENTS: load("events_upcoming.json"),
-            PREVIOUS: load("launches_previous.json"),
-        }
-        self.detail = load("launch_crewed_detailed.json")["results"][0]
-        self.requests: list[httpx.Request] = []
-        self.status = 200
-        self.text = ""
-        self.offline = False
-
-    def __call__(self, request: httpx.Request) -> httpx.Response:
-        self.requests.append(request)
-        if self.offline:
-            raise httpx.ConnectError("unreachable", request=request)
-        if self.status != 200:
-            return httpx.Response(self.status, text=self.text)
-        path = request.url.path
-        if path in self.pages:
-            return httpx.Response(200, json=self.pages[path])
-        if path == f"/2.3.0/launches/{self.detail['id']}/":
-            return httpx.Response(200, json=self.detail)
-        return httpx.Response(404, json={"detail": "Not found."})
-
-    def params(self, path: str) -> dict[str, str]:
-        (request,) = [r for r in self.requests if r.url.path == path]
-        return dict(request.url.params)
-
-
-@pytest.fixture
-def server(load):
-    return FakeLL2(load)
-
-
-@pytest.fixture
-def make_client(server, tmp_path):
-    clients = []
-
-    def make(**kwargs):
-        client = Client(cache=Cache(tmp_path), transport=httpx.MockTransport(server), **kwargs)
-        clients.append(client)
-        return client
-
-    yield make
-    for client in clients:
-        client.close()
-
-
-@pytest.fixture
-def frozen(monkeypatch):
-    monkeypatch.setattr("nextinspace.client.datetime", FrozenDatetime)
 
 
 def test_ttl_hit_skips_http(server, make_client):
@@ -186,20 +122,17 @@ def test_upcoming_kinds(server, make_client):
     client = make_client()
     assert all(isinstance(i, Launch) for i in client.upcoming(10, events=False))
     assert all(isinstance(i, Event) for i in client.upcoming(10, launches=False))
-    assert [r.url.path for r in server.requests] == [LAUNCHES, EVENTS]
+    assert server.paths() == [LAUNCHES, EVENTS]
 
 
 @pytest.mark.parametrize(
     ("filters", "expected"),
-    [
-        (Filters(provider="SpaceX"), {"lsp__name": "SpaceX"}),
-        (Filters(crewed=True), {"is_crewed": "true"}),
-    ],
+    [(Filters(provider="SpaceX"), {"lsp__name": "SpaceX"}), (Filters(crewed=True), {"is_crewed": "true"})],
 )
 def test_launch_only_filters_skip_events(server, make_client, filters, expected):
     items = make_client().upcoming(5, filters=filters)
     assert all(isinstance(i, Launch) for i in items)
-    assert [r.url.path for r in server.requests] == [LAUNCHES]
+    assert server.paths() == [LAUNCHES]
     assert server.params(LAUNCHES).items() >= expected.items()
 
 
@@ -222,12 +155,7 @@ def test_previous_launches(server, make_client, frozen):
     assert len(launches) == 10
     assert launches[0].status.abbrev == "Go"
     params = server.params(PREVIOUS)
-    assert params == {
-        "limit": "10",
-        "mode": "normal",
-        "lsp__name": "SpaceX",
-        "net__gte": "2026-10-09T00:30:00Z",
-    }
+    assert params == {"limit": "10", "mode": "normal", "lsp__name": "SpaceX", "net__gte": "2026-10-09T00:30:00Z"}
 
 
 def test_launch_detail(server, make_client):
@@ -241,8 +169,13 @@ def test_launch_detail(server, make_client):
 
 
 def test_detail_dispatches_on_kind(server, make_client):
+    client = make_client()
     launch = parse_launch({"id": server.detail["id"], "name": "stub"})
-    assert make_client().detail(launch).name == "Falcon 9 Block 5 | Crew-14"
+    assert client.detail(launch).name == "Falcon 9 Block 5 | Crew-14"
+    event = parse_event({"id": 1525, "name": "stub"})
+    assert client.detail(event).name == "SpaceX CRS-35 Dragon Docking"
+    assert server.paths()[-1] == "/2.3.0/events/1525/"
+    assert dict(server.requests[-1].url.params) == {"mode": "detailed"}
 
 
 def test_sort_key_puts_undated_last(load):
@@ -250,9 +183,6 @@ def test_sort_key_puts_undated_last(load):
     event = parse_event(load("events_upcoming.json")["results"][0])
     undated_launch = parse_launch({"id": "x", "name": "x"})
     undated_event = parse_event({"id": 1, "name": "y"})
-    items = sorted(
-        [undated_launch, dated[2], undated_event, event, dated[0], dated[1]],
-        key=sort_key,
-    )
+    items = sorted([undated_launch, dated[2], undated_event, event, dated[0], dated[1]], key=sort_key)
     assert items[:4] == [dated[0], dated[1], event, dated[2]]
     assert {id(i) for i in items[4:]} == {id(undated_launch), id(undated_event)}

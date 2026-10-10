@@ -4,11 +4,7 @@ import pytest
 
 from nextinspace.models import Event, Launch, parse_event, parse_launch, to_dict
 
-LAUNCH_FILES = [
-    "launches_upcoming.json",
-    "launches_previous.json",
-    "launch_crewed_detailed.json",
-]
+LAUNCH_FILES = ["launches_upcoming.json", "launches_previous.json", "launch_crewed_detailed.json"]
 
 
 @pytest.mark.parametrize("name", LAUNCH_FILES)
@@ -105,11 +101,7 @@ def test_to_dict_values(load, detailed_launch):
 
     d = to_dict(parse_launch(detailed_launch))
     assert d["rocket"]["maiden_flight"] == "2018-05-11"
-    assert d["spacecraft"][0]["crew"][0] == {
-        "name": "Kayla Barron",
-        "role": "Spacecraft Commander",
-        "agency": "NASA",
-    }
+    assert d["spacecraft"][0]["crew"][0] == {"name": "Kayla Barron", "role": "Spacecraft Commander", "agency": "NASA"}
 
     d = to_dict(parse_event(load("events_upcoming.json")["results"][0]))
     assert d["kind"] == "event"
@@ -159,11 +151,7 @@ def test_partial_nested_fields():
             "name": "n",
             "pad": {"name": "LC-1", "location": None},
             "mission": {"name": "m", "orbit": None, "agencies": None},
-            "rocket": {
-                "configuration": None,
-                "launcher_stage": None,
-                "spacecraft_stage": None,
-            },
+            "rocket": {"configuration": None, "launcher_stage": None, "spacecraft_stage": None},
         }
     )
     assert launch.location == "LC-1"
@@ -175,16 +163,7 @@ def test_partial_nested_fields():
 
 
 def test_event_with_null_fields():
-    event = parse_event(
-        {
-            "id": 7,
-            "name": "e",
-            "type": None,
-            "date": None,
-            "date_precision": None,
-            "location": "",
-        }
-    )
+    event = parse_event({"id": 7, "name": "e", "type": None, "date": None, "date_precision": None, "location": ""})
     assert event.id == "7"
     assert event.type is None
     assert event.net is None

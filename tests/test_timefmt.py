@@ -3,14 +3,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from nextinspace.timefmt import (
-    ago,
-    countdown,
-    describe,
-    has_clock,
-    parse_duration,
-    relative,
-)
+from nextinspace.timefmt import ago, countdown, describe, has_clock, parse_duration, relative
 
 NEW_YORK = ZoneInfo("America/New_York")
 LOS_ANGELES = ZoneInfo("America/Los_Angeles")
@@ -95,6 +88,7 @@ def test_relative_clock():
         (datetime(2026, 10, 31, 18, tzinfo=UTC), "today"),
         (datetime(2026, 10, 30, 1, tzinfo=UTC), "tomorrow"),
         (datetime(2026, 10, 27, 23, 59, tzinfo=UTC), "in 4 days"),
+        (datetime(2026, 11, 1, 23, tzinfo=UTC), "yesterday"),
         (datetime(2026, 11, 3, tzinfo=UTC), "3 days ago"),
     ],
 )
@@ -125,6 +119,7 @@ def test_relative_coarse():
         (420, "7 min"),
         (3600, "1 h"),
         (3 * 3600 + 59, "3 h"),
+        (86400, "1 day"),
         (172800, "2 days"),
     ],
 )
