@@ -78,11 +78,7 @@ class Client:
         if api_key:
             headers["Authorization"] = f"Token {api_key}"
         self._http = httpx.Client(
-            base_url=base_url.rstrip("/"),
-            headers=headers,
-            timeout=20,
-            transport=transport,
-            follow_redirects=True,
+            base_url=base_url.rstrip("/"), headers=headers, timeout=20, transport=transport, follow_redirects=True
         )
         self.cache = cache or Cache(platformdirs.user_cache_path("nextinspace"))
         self.ttl = ttl
@@ -109,11 +105,7 @@ class Client:
         try:
             response = self._http.get(path, params=params)
         except httpx.TransportError as err:
-            return self._fallback(
-                cached,
-                f"could not reach Launch Library 2 ({err.__class__.__name__})",
-                "",
-            )
+            return self._fallback(cached, f"could not reach Launch Library 2 ({err.__class__.__name__})", "")
 
         if response.status_code == 429:
             wait = re.search(r"(\d+) seconds", response.text)
@@ -142,22 +134,14 @@ class Client:
     # ---- Listings ----
 
     def upcoming_launches(self, limit: int, filters: Filters = NO_FILTERS) -> list[Launch]:
-        params: dict[str, Any] = {
-            "limit": limit,
-            "mode": "normal",
-            "hide_recent_previous": "true",
-        }
+        params: dict[str, Any] = {"limit": limit, "mode": "normal", "hide_recent_previous": "true"}
         params |= self._launch_filters(filters)
         if filters.within:
             params["net__lte"] = _stamp(datetime.now(UTC) + filters.within)
         return [parse_launch(r) for r in self.get("/launches/upcoming/", params)["results"]]
 
     def upcoming_events(self, limit: int, filters: Filters = NO_FILTERS) -> list[Event]:
-        params: dict[str, Any] = {
-            "limit": limit,
-            "mode": "normal",
-            "hide_recent_previous": "true",
-        }
+        params: dict[str, Any] = {"limit": limit, "mode": "normal", "hide_recent_previous": "true"}
         if filters.search:
             params["search"] = filters.search
         if filters.within:
@@ -172,12 +156,7 @@ class Client:
         return [parse_launch(r) for r in self.get("/launches/previous/", params)["results"]]
 
     def upcoming(
-        self,
-        limit: int,
-        *,
-        launches: bool = True,
-        events: bool = True,
-        filters: Filters = NO_FILTERS,
+        self, limit: int, *, launches: bool = True, events: bool = True, filters: Filters = NO_FILTERS
     ) -> list[Item]:
         """The next ``limit`` launches and events, merged chronologically.
 

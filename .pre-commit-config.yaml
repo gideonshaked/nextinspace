@@ -12,6 +12,6 @@ repos:
       - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
-        exclude: ^tests/data/
+        exclude: ^(tests/data|img)/
       - id: trailing-whitespace
-        exclude: ^tests/data/
+        exclude: ^(tests/data|img)/

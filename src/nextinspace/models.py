@@ -198,12 +198,7 @@ def _date(s: str | None) -> date | None:
 def _webcasts(urls: list[dict[str, Any]] | None) -> tuple[Webcast, ...]:
     ordered = sorted(urls or [], key=lambda v: v.get("priority") or 0)
     return tuple(
-        Webcast(
-            title=v.get("title"),
-            url=v["url"],
-            publisher=v.get("publisher"),
-            live=bool(v.get("live")),
-        )
+        Webcast(title=v.get("title"), url=v["url"], publisher=v.get("publisher"), live=bool(v.get("live")))
         for v in ordered
         if v.get("url")
     )

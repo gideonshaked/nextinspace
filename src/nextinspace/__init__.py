@@ -8,13 +8,4 @@ __version__ = version("nextinspace")
 from nextinspace.client import Client, Filters, LL2Error
 from nextinspace.models import Event, Item, Launch, to_dict
 
-__all__ = [
-    "Client",
-    "Event",
-    "Filters",
-    "Item",
-    "LL2Error",
-    "Launch",
-    "__version__",
-    "to_dict",
-]
+__all__ = ["Client", "Event", "Filters", "Item", "LL2Error", "Launch", "__version__", "to_dict"]

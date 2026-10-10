@@ -30,13 +30,7 @@ class DefaultToNext(TyperGroup):
     """Run ``next`` when no subcommand is given, so ``nextinspace 5 -l`` works."""
 
     def parse_args(self, ctx: Any, args: list[str]) -> list[str]:
-        passthrough = {
-            "--help",
-            "-h",
-            "--version",
-            "--install-completion",
-            "--show-completion",
-        }
+        passthrough = {"--help", "-h", "--version", "--install-completion", "--show-completion"}
         if not args or (args[0] not in self.commands and args[0] not in passthrough):
             args = ["next", *args]
         return super().parse_args(ctx, args)
@@ -84,43 +78,20 @@ def _duration(value: str | None) -> timedelta | None:
         raise typer.BadParameter(str(e)) from None
 
 
-Count = Annotated[
-    int,
-    typer.Argument(min=1, max=100, help="How many items to show.", show_default=True),
-]
+Count = Annotated[int, typer.Argument(min=1, max=100, help="How many items to show.", show_default=True)]
 Search = Annotated[
-    str | None,
-    typer.Option(
-        "--search",
-        "-s",
-        help="Free-text search over names, rockets, providers and sites.",
-    ),
+    str | None, typer.Option("--search", "-s", help="Free-text search over names, rockets, providers and sites.")
 ]
 Provider = Annotated[
-    str | None,
-    typer.Option(
-        "--provider",
-        "-p",
-        help="Exact launch provider name, e.g. SpaceX or 'Rocket Lab'.",
-    ),
+    str | None, typer.Option("--provider", "-p", help="Exact launch provider name, e.g. SpaceX or 'Rocket Lab'.")
 ]
 Crewed = Annotated[bool, typer.Option("--crewed", help="Only launches carrying people.")]
-Within = Annotated[
-    str | None,
-    typer.Option("--within", "-w", help="Only items within a time span: 90m, 36h, 7d, 2w."),
-]
+Within = Annotated[str | None, typer.Option("--within", "-w", help="Only items within a time span: 90m, 36h, 7d, 2w.")]
 Tz = Annotated[
     str | None,
-    typer.Option(
-        "--tz",
-        envvar="NEXTINSPACE_TZ",
-        help="IANA time zone for display (default: system local).",
-    ),
+    typer.Option("--tz", envvar="NEXTINSPACE_TZ", help="IANA time zone for display (default: system local)."),
 ]
-Refresh = Annotated[
-    bool,
-    typer.Option("--refresh", "-r", help="Ignore cached responses and ask the API again."),
-]
+Refresh = Annotated[bool, typer.Option("--refresh", "-r", help="Ignore cached responses and ask the API again.")]
 
 
 def make_client(refresh: bool) -> Client:
@@ -166,26 +137,26 @@ def describe_filters(filters: Filters) -> str:
 # ---- Commands ----
 
 
+def _version(value: bool) -> None:
+    if value:
+        out.print(f"nextinspace {__version__}")
+        raise typer.Exit()
+
+
 @app.callback()
 def root(
     version: Annotated[
-        bool,
-        typer.Option("--version", help="Show the version and exit.", is_eager=True),
+        bool, typer.Option("--version", help="Show the version and exit.", is_eager=True, callback=_version)
     ] = False,
 ) -> None:
-    if version:
-        out.print(f"nextinspace {__version__}")
-        raise typer.Exit()
+    pass
 
 
 @app.command("next")
 def next_(
     count: Count = 5,
     launches: Annotated[bool, typer.Option("--launches", "-l", help="Only launches.")] = False,
-    events: Annotated[
-        bool,
-        typer.Option("--events", "-e", help="Only events: dockings, spacewalks..."),
-    ] = False,
+    events: Annotated[bool, typer.Option("--events", "-e", help="Only events: dockings, spacewalks...")] = False,
     search: Search = None,
     provider: Provider = None,
     crewed: Crewed = False,
@@ -231,12 +202,7 @@ def next_(
         out.print(render.cards(items, now, zone))
     else:
         out.print(render.listing(items, now, zone, title=title, width=out.width))
-        out.print(
-            Text(
-                "nextinspace show <#> for details · nextinspace watch for a live countdown",
-                style="dim",
-            )
-        )
+        out.print(Text("nextinspace show <#> for details · nextinspace watch for a live countdown", style="dim"))
 
 
 @app.command()
@@ -361,27 +327,16 @@ def watch_view(item: Item, upcoming: list[Launch], now: datetime, tz: tzinfo | N
     for launch in [u for u in upcoming if u.id != item.id][:4]:
         mission, _ = render.split_name(launch)
         later.add_row(
-            Text(
-                relative(launch.net, launch.precision, now),
-                style=render.countdown_style(launch, now),
-            ),
+            Text(relative(launch.net, launch.precision, now), style=render.countdown_style(launch, now)),
             Text(mission, style="bold"),
             render.subtitle(launch),
         )
     footer = Text("Updates itself · Ctrl+C to exit", style="dim", justify="center")
-    return Group(
-        hero,
-        Panel(later, title="Up next", title_align="left", border_style="dim"),
-        footer,
-    )
+    return Group(hero, Panel(later, title="Up next", title_align="left", border_style="dim"), footer)
 
 
 @app.command()
-def watch(
-    target: TargetArg = None,
-    tz: Tz = None,
-    refresh: Refresh = False,
-) -> None:
+def watch(target: TargetArg = None, tz: Tz = None, refresh: Refresh = False) -> None:
     """Full-screen live countdown to the next launch (or any launch you name)."""
     zone = _zone(tz)
     client = make_client(refresh)

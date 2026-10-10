@@ -42,21 +42,9 @@ def calendar(items: Sequence[Item], now: datetime) -> str:
     ]
     for item in items:
         # Items known only to the month or coarser would land on an arbitrary day.
-        if item.net is None or item.precision not in {
-            None,
-            "SEC",
-            "MIN",
-            "HR",
-            "AM",
-            "PM",
-            "DAY",
-        }:
+        if item.net is None or item.precision not in {None, "SEC", "MIN", "HR", "AM", "PM", "DAY"}:
             continue
-        lines += [
-            "BEGIN:VEVENT",
-            f"UID:{item.kind}-{item.id}@nextinspace",
-            f"DTSTAMP:{_utc(now)}",
-        ]
+        lines += ["BEGIN:VEVENT", f"UID:{item.kind}-{item.id}@nextinspace", f"DTSTAMP:{_utc(now)}"]
         if has_clock(item.precision):
             start = item.window_start if isinstance(item, Launch) and item.window_start else item.net
             end = item.window_end if isinstance(item, Launch) and item.window_end else item.net
@@ -65,10 +53,7 @@ def calendar(items: Sequence[Item], now: datetime) -> str:
             lines += [f"DTSTART:{_utc(start)}", f"DTEND:{_utc(end)}"]
         else:
             day = item.net.astimezone(UTC).date()
-            lines += [
-                f"DTSTART;VALUE=DATE:{day:%Y%m%d}",
-                f"DTEND;VALUE=DATE:{day + timedelta(days=1):%Y%m%d}",
-            ]
+            lines += [f"DTSTART;VALUE=DATE:{day:%Y%m%d}", f"DTEND;VALUE=DATE:{day + timedelta(days=1):%Y%m%d}"]
 
         summary = f"🚀 {item.name}" if isinstance(item, Launch) else f"🛰 {item.name}"
         lines.append(f"SUMMARY:{_escape(summary)}")

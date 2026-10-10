@@ -33,11 +33,7 @@ STATUS_STYLES = {
 }
 EVENT_STYLE = "magenta"
 ACCENT = "bright_cyan"
-LANDING = {
-    True: ("landed", "green"),
-    False: ("lost", "red"),
-    None: ("landing", "yellow"),
-}
+LANDING = {True: ("landed", "green"), False: ("lost", "red"), None: ("landing", "yellow")}
 
 
 def status_text(item: Item) -> Text:
@@ -159,12 +155,7 @@ def outcomes(items: Sequence[Launch], tz: tzinfo | None, *, title: str, width: i
         mission.append("\n" + subtitle(item), style="dim")
         if item.failreason:
             mission.append("\n" + item.failreason, style="red")
-        row: list[RenderableType] = [
-            str(i),
-            describe(item.net, item.precision, tz),
-            status_text(item),
-            mission,
-        ]
+        row: list[RenderableType] = [str(i), describe(item.net, item.precision, tz), status_text(item), mission]
         if show_location:
             row.append(Text(site(item) or "", style="dim"))
         table.add_row(*row)
@@ -178,25 +169,13 @@ def cards(items: Sequence[Item], now: datetime, tz: tzinfo | None) -> Group:
 def card(item: Item, now: datetime, tz: tzinfo | None, *, index: int | None = None) -> Panel:
     grid = _kv_grid()
     _row(grid, "When", Text(describe(item.net, item.precision, tz)))
-    _row(
-        grid,
-        "Countdown",
-        Text(relative(item.net, item.precision, now), style=countdown_style(item, now)),
-    )
+    _row(grid, "Countdown", when(item, now))
     if isinstance(item, Launch):
         _row(grid, "Provider", item.provider.name if item.provider else None)
         _row(grid, "Rocket", item.rocket.full_name if item.rocket else None)
         if item.mission:
-            _row(
-                grid,
-                "Mission",
-                " · ".join(p for p in (item.mission.type, item.mission.orbit) if p) or None,
-            )
-        _row(
-            grid,
-            "Probability",
-            f"{item.probability}% go" if item.probability is not None else None,
-        )
+            _row(grid, "Mission", " · ".join(p for p in (item.mission.type, item.mission.orbit) if p) or None)
+        _row(grid, "Probability", f"{item.probability}% go" if item.probability is not None else None)
     _row(grid, "Location", item.location)
     body: list[RenderableType] = [grid]
     if item.description:
@@ -233,11 +212,7 @@ def _header(item: Item, now: datetime, tz: tzinfo | None) -> Panel:
 
     grid = _kv_grid()
     if item.net and has_clock(item.precision):
-        _row(
-            grid,
-            "Countdown",
-            Text(countdown(item.net, now), style=countdown_style(item, now)),
-        )
+        _row(grid, "Countdown", Text(countdown(item.net, now), style=countdown_style(item, now)))
     _row(grid, "NET", describe(item.net, item.precision, tz))
     if item.net and has_clock(item.precision):
         _row(grid, "UTC", Text(describe(item.net, item.precision, UTC), style="dim"))
@@ -248,17 +223,9 @@ def _header(item: Item, now: datetime, tz: tzinfo | None) -> Panel:
             _row(grid, "Window", f"{span} ({minutes} min)")
         elif item.window_start and item.window_start == item.window_end and has_clock(item.precision):
             _row(grid, "Window", "Instantaneous")
-        _row(
-            grid,
-            "Probability",
-            f"{item.probability}% go" if item.probability is not None else None,
-        )
+        _row(grid, "Probability", f"{item.probability}% go" if item.probability is not None else None)
         _row(grid, "Weather", item.weather_concerns)
-        _row(
-            grid,
-            "Failure",
-            Text(item.failreason, style="red") if item.failreason else None,
-        )
+        _row(grid, "Failure", Text(item.failreason, style="red") if item.failreason else None)
     return Panel(Group(head, Text(), grid), box=box.HEAVY, border_style=ACCENT, padding=(0, 1))
 
 
@@ -269,11 +236,7 @@ def launch_detail(launch: Launch, now: datetime, tz: tzinfo | None) -> Group:
         m = launch.mission
         grid = _kv_grid()
         _row(grid, "Type", m.type)
-        _row(
-            grid,
-            "Orbit",
-            f"{m.orbit} ({m.orbit_abbrev})" if m.orbit and m.orbit_abbrev else m.orbit,
-        )
+        _row(grid, "Orbit", f"{m.orbit} ({m.orbit_abbrev})" if m.orbit and m.orbit_abbrev else m.orbit)
         _row(grid, "Customers", ", ".join(m.agencies) or None)
         body: list[RenderableType] = [grid]
         if m.description:
@@ -294,16 +257,8 @@ def launch_detail(launch: Launch, now: datetime, tz: tzinfo | None) -> Group:
         _row(grid, "To GTO", _unit(r.gto_capacity_kg, "kg"))
         _row(grid, "Reusable", {True: "yes", False: "no", None: None}[r.reusable])
         if r.maiden_flight:
-            _row(
-                grid,
-                "First flight",
-                f"{r.maiden_flight:%B} {r.maiden_flight.day}, {r.maiden_flight.year}",
-            )
-        _row(
-            grid,
-            "Record",
-            _record(r.successful_launches, r.failed_launches, r.consecutive_successes),
-        )
+            _row(grid, "First flight", f"{r.maiden_flight:%B} {r.maiden_flight.day}, {r.maiden_flight.year}")
+        _row(grid, "Record", _record(r.successful_launches, r.failed_launches, r.consecutive_successes))
         vehicle.append(grid)
     for b in launch.boosters:
         line = Text("Booster ", style="dim")
@@ -330,12 +285,7 @@ def launch_detail(launch: Launch, now: datetime, tz: tzinfo | None) -> Group:
         crew.add_column("Agency")
         for c in craft.crew:
             crew.add_row(Text(c.name, style="bold"), c.role or "", c.agency or "")
-        sections.append(
-            _section(
-                f"Spacecraft · {title}",
-                crew if craft.crew else Text("Uncrewed", style="dim"),
-            )
-        )
+        sections.append(_section(f"Spacecraft · {title}", crew if craft.crew else Text("Uncrewed", style="dim")))
 
     if launch.pad:
         p = launch.pad
@@ -347,11 +297,7 @@ def launch_detail(launch: Launch, now: datetime, tz: tzinfo | None) -> Group:
         _row(grid, "Map", _link(p.map_url))
         sections.append(_section("Launch site", grid))
 
-    links = _links(
-        launch.webcasts,
-        launch.info_urls,
-        launch.rocket.wiki_url if launch.rocket else None,
-    )
+    links = _links(launch.webcasts, launch.info_urls, launch.rocket.wiki_url if launch.rocket else None)
     if links:
         sections.append(_section("Watch & read", links))
 
@@ -437,13 +383,7 @@ def _row(grid: Table, key: str, value: RenderableType | None) -> None:
 
 
 def _section(title: str, body: RenderableType) -> Panel:
-    return Panel(
-        body,
-        title=Text(title, style="bold"),
-        title_align="left",
-        border_style="dim",
-        padding=(0, 1),
-    )
+    return Panel(body, title=Text(title, style="bold"), title_align="left", border_style="dim", padding=(0, 1))
 
 
 def _unit(value: float | None, unit: str) -> str | None:

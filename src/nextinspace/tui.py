@@ -23,12 +23,7 @@ from nextinspace.client import Client, Filters, LL2Error
 from nextinspace.models import Item, Launch
 from nextinspace.timefmt import describe, has_clock
 
-MODES = {
-    "all": "Next in space",
-    "launches": "Next launches",
-    "events": "Next events",
-    "past": "Recent launches",
-}
+MODES = {"all": "Next in space", "launches": "Next launches", "events": "Next events", "past": "Recent launches"}
 LIMIT = 30
 
 
@@ -71,10 +66,7 @@ class Browser(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
-        yield Input(
-            placeholder="Search names, rockets, providers, sites (Enter to search, Esc to clear)",
-            id="search",
-        )
+        yield Input(placeholder="Search names, rockets, providers, sites (Enter to search, Esc to clear)", id="search")
         with Horizontal(id="body"):
             yield DataTable(id="list", cursor_type="row", zebra_stripes=True)
             with VerticalScroll(id="detail-scroll"):
@@ -85,7 +77,7 @@ class Browser(App[None]):
     def on_mount(self) -> None:
         table = self.query_one(DataTable)
         table.add_column("When", key="when", width=15)
-        table.add_column("Status", key="status", width=10)
+        table.add_column("Status", key="status")
         table.add_column("Mission", key="mission")
         table.focus()
         self.load()
@@ -103,10 +95,7 @@ class Browser(App[None]):
                 items: list[Item] = list(self.client.previous_launches(LIMIT, filters))
             else:
                 items = self.client.upcoming(
-                    LIMIT,
-                    launches=self.mode != "events",
-                    events=self.mode != "launches",
-                    filters=filters,
+                    LIMIT, launches=self.mode != "events", events=self.mode != "launches", filters=filters
                 )
         except LL2Error as e:
             self.call_from_thread(self.set_status, f"[red]{e}[/]")

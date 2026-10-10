@@ -1,0 +1,179 @@
+<svg class="rich-terminal" viewBox="0 0 1458 757.5999999999999" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generated with Rich https://www.textualize.io -->
+    <style>
+
+    @font-face {
+        font-family: "Fira Code";
+        src: local("FiraCode-Regular"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff2/FiraCode-Regular.woff2") format("woff2"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff/FiraCode-Regular.woff") format("woff");
+        font-style: normal;
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: "Fira Code";
+        src: local("FiraCode-Bold"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff2/FiraCode-Bold.woff2") format("woff2"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff/FiraCode-Bold.woff") format("woff");
+        font-style: bold;
+        font-weight: 700;
+    }
+
+    .terminal-1291422331-matrix {
+        font-family: Fira Code, monospace;
+        font-size: 20px;
+        line-height: 24.4px;
+        font-variant-east-asian: full-width;
+    }
+
+    .terminal-1291422331-title {
+        font-size: 18px;
+        font-weight: bold;
+        font-family: arial;
+    }
+
+    .terminal-1291422331-r1 { fill: #d9d9d9;font-weight: bold }
+.terminal-1291422331-r2 { fill: #d9d9d9 }
+.terminal-1291422331-r3 { fill: #58d1eb;font-weight: bold }
+.terminal-1291422331-r4 { fill: #878787 }
+.terminal-1291422331-r5 { fill: #fd971f;font-weight: bold }
+.terminal-1291422331-r6 { fill: #98e024;font-weight: bold }
+.terminal-1291422331-r7 { fill: #878787;font-weight: bold }
+.terminal-1291422331-r8 { fill: #58d1eb }
+.terminal-1291422331-r9 { fill: #f4005f }
+.terminal-1291422331-r10 { fill: #9c5f17 }
+    </style>
+
+    <defs>
+    <clipPath id="terminal-1291422331-clip-terminal">
+      <rect x="0" y="0" width="1438.6" height="706.5999999999999" />
+    </clipPath>
+    <clipPath id="terminal-1291422331-line-0">
+    <rect x="0" y="1.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-1">
+    <rect x="0" y="25.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-2">
+    <rect x="0" y="50.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-3">
+    <rect x="0" y="74.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-4">
+    <rect x="0" y="99.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-5">
+    <rect x="0" y="123.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-6">
+    <rect x="0" y="147.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-7">
+    <rect x="0" y="172.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-8">
+    <rect x="0" y="196.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-9">
+    <rect x="0" y="221.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-10">
+    <rect x="0" y="245.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-11">
+    <rect x="0" y="269.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-12">
+    <rect x="0" y="294.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-13">
+    <rect x="0" y="318.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-14">
+    <rect x="0" y="343.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-15">
+    <rect x="0" y="367.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-16">
+    <rect x="0" y="391.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-17">
+    <rect x="0" y="416.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-18">
+    <rect x="0" y="440.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-19">
+    <rect x="0" y="465.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-20">
+    <rect x="0" y="489.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-21">
+    <rect x="0" y="513.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-22">
+    <rect x="0" y="538.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-23">
+    <rect x="0" y="562.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-24">
+    <rect x="0" y="587.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-25">
+    <rect x="0" y="611.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-26">
+    <rect x="0" y="635.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-1291422331-line-27">
+    <rect x="0" y="660.3" width="1439.6" height="24.65"/>
+            </clipPath>
+    </defs>
+
+    <rect fill="#0c0c0c" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1456" height="755.6" rx="8"/><text class="terminal-1291422331-title" fill="#d9d9d9" text-anchor="middle" x="728" y="27">nextinspace</text>
+            <g transform="translate(26,22)">
+            <circle cx="0" cy="0" r="7" fill="#ff5f57"/>
+            <circle cx="22" cy="0" r="7" fill="#febc2e"/>
+            <circle cx="44" cy="0" r="7" fill="#28c840"/>
+            </g>
+        
+    <g transform="translate(9, 41)" clip-path="url(#terminal-1291422331-clip-terminal)">
+    
+    <g class="terminal-1291422331-matrix">
+    <text class="terminal-1291422331-r1" x="0" y="20" textLength="183" clip-path="url(#terminal-1291422331-line-0)">$&#160;nextinspace&#160;8</text><text class="terminal-1291422331-r2" x="1439.6" y="20" textLength="12.2" clip-path="url(#terminal-1291422331-line-0)">
+</text><text class="terminal-1291422331-r3" x="0" y="44.4" textLength="1439.6" clip-path="url(#terminal-1291422331-line-1)">Next&#160;in&#160;space&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="44.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-1)">
+</text><text class="terminal-1291422331-r2" x="1439.6" y="68.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-2)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="93.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-3)">#</text><text class="terminal-1291422331-r4" x="61" y="93.2" textLength="158.6" clip-path="url(#terminal-1291422331-line-3)">When&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="256.2" y="93.2" textLength="317.2" clip-path="url(#terminal-1291422331-line-3)">Date&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="610" y="93.2" textLength="85.4" clip-path="url(#terminal-1291422331-line-3)">Status&#160;</text><text class="terminal-1291422331-r4" x="732" y="93.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-3)">Mission&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="93.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-3)">Location&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="93.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-3)">
+</text><text class="terminal-1291422331-r2" x="0" y="117.6" textLength="1439.6" clip-path="url(#terminal-1291422331-line-4)">&#160;────────────────────────────────────────────────────────────────────────────────────────────────────────────────────&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="117.6" textLength="12.2" clip-path="url(#terminal-1291422331-line-4)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="142" textLength="12.2" clip-path="url(#terminal-1291422331-line-5)">1</text><text class="terminal-1291422331-r5" x="61" y="142" textLength="158.6" clip-path="url(#terminal-1291422331-line-5)">T-18:09:43&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="256.2" y="142" textLength="317.2" clip-path="url(#terminal-1291422331-line-5)">Sat&#160;Oct&#160;10,&#160;2026&#160;19:00&#160;EDT</text><text class="terminal-1291422331-r6" x="610" y="142" textLength="85.4" clip-path="url(#terminal-1291422331-line-5)">Go&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="142" textLength="329.4" clip-path="url(#terminal-1291422331-line-5)">Starlink&#160;Group&#160;15-25&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="142" textLength="329.4" clip-path="url(#terminal-1291422331-line-5)">Vandenberg&#160;SFB,&#160;CA,&#160;USA&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="142" textLength="12.2" clip-path="url(#terminal-1291422331-line-5)">
+</text><text class="terminal-1291422331-r7" x="732" y="166.4" textLength="329.4" clip-path="url(#terminal-1291422331-line-6)">Falcon&#160;9&#160;Block&#160;5&#160;·&#160;SpaceX&#160;·</text><text class="terminal-1291422331-r2" x="1439.6" y="166.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-6)">
+</text><text class="terminal-1291422331-r7" x="732" y="190.8" textLength="36.6" clip-path="url(#terminal-1291422331-line-7)">LEO</text><text class="terminal-1291422331-r2" x="1439.6" y="190.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-7)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="215.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-8)">2</text><text class="terminal-1291422331-r8" x="61" y="215.2" textLength="158.6" clip-path="url(#terminal-1291422331-line-8)">T-3d&#160;05:43:27</text><text class="terminal-1291422331-r2" x="256.2" y="215.2" textLength="317.2" clip-path="url(#terminal-1291422331-line-8)">Tue&#160;Oct&#160;13,&#160;2026&#160;06:33&#160;EDT</text><text class="terminal-1291422331-r6" x="610" y="215.2" textLength="85.4" clip-path="url(#terminal-1291422331-line-8)">Go&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="215.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-8)">Dragon&#160;CRS-2&#160;SpX-35&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="215.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-8)">Cape&#160;Canaveral&#160;SFS,&#160;FL,&#160;USA</text><text class="terminal-1291422331-r2" x="1439.6" y="215.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-8)">
+</text><text class="terminal-1291422331-r7" x="732" y="239.6" textLength="329.4" clip-path="url(#terminal-1291422331-line-9)">Falcon&#160;9&#160;Block&#160;5&#160;·&#160;SpaceX&#160;·</text><text class="terminal-1291422331-r2" x="1439.6" y="239.6" textLength="12.2" clip-path="url(#terminal-1291422331-line-9)">
+</text><text class="terminal-1291422331-r7" x="732" y="264" textLength="36.6" clip-path="url(#terminal-1291422331-line-10)">LEO</text><text class="terminal-1291422331-r2" x="1439.6" y="264" textLength="12.2" clip-path="url(#terminal-1291422331-line-10)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="288.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-11)">3</text><text class="terminal-1291422331-r8" x="61" y="288.4" textLength="158.6" clip-path="url(#terminal-1291422331-line-11)">T-5d&#160;10:09:43</text><text class="terminal-1291422331-r2" x="256.2" y="288.4" textLength="317.2" clip-path="url(#terminal-1291422331-line-11)">Thu&#160;Oct&#160;15,&#160;2026&#160;11:00&#160;EDT</text><text class="terminal-1291422331-r9" x="610" y="288.4" textLength="85.4" clip-path="url(#terminal-1291422331-line-11)">Docking</text><text class="terminal-1291422331-r1" x="732" y="288.4" textLength="329.4" clip-path="url(#terminal-1291422331-line-11)">SpaceX&#160;CRS-35&#160;Dragon&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="288.4" textLength="329.4" clip-path="url(#terminal-1291422331-line-11)">International&#160;Space&#160;Station</text><text class="terminal-1291422331-r2" x="1439.6" y="288.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-11)">
+</text><text class="terminal-1291422331-r1" x="732" y="312.8" textLength="329.4" clip-path="url(#terminal-1291422331-line-12)">Docking&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="312.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-12)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="337.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-13)">4</text><text class="terminal-1291422331-r8" x="61" y="337.2" textLength="158.6" clip-path="url(#terminal-1291422331-line-13)">T-9d&#160;14:50:46</text><text class="terminal-1291422331-r2" x="256.2" y="337.2" textLength="317.2" clip-path="url(#terminal-1291422331-line-13)">Mon&#160;Oct&#160;19,&#160;2026&#160;15:41&#160;EDT</text><text class="terminal-1291422331-r6" x="610" y="337.2" textLength="85.4" clip-path="url(#terminal-1291422331-line-13)">Go&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="337.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-13)">Martian&#160;Moon&#160;eXplorer&#160;(MMX)</text><text class="terminal-1291422331-r4" x="1098" y="337.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-13)">Tanegashima&#160;Space&#160;Center,&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="337.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-13)">
+</text><text class="terminal-1291422331-r7" x="732" y="361.6" textLength="219.6" clip-path="url(#terminal-1291422331-line-14)">H3-24&#160;·&#160;MHI&#160;·&#160;Mars</text><text class="terminal-1291422331-r4" x="1098" y="361.6" textLength="329.4" clip-path="url(#terminal-1291422331-line-14)">Japan&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="361.6" textLength="12.2" clip-path="url(#terminal-1291422331-line-14)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="386" textLength="12.2" clip-path="url(#terminal-1291422331-line-15)">5</text><text class="terminal-1291422331-r2" x="256.2" y="386" textLength="317.2" clip-path="url(#terminal-1291422331-line-15)">October&#160;2026&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r10" x="610" y="386" textLength="85.4" clip-path="url(#terminal-1291422331-line-15)">TBD&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="386" textLength="329.4" clip-path="url(#terminal-1291422331-line-15)">Amazon&#160;Leo&#160;(LE-04)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="386" textLength="329.4" clip-path="url(#terminal-1291422331-line-15)">Guiana&#160;Space&#160;Centre,&#160;French</text><text class="terminal-1291422331-r2" x="1439.6" y="386" textLength="12.2" clip-path="url(#terminal-1291422331-line-15)">
+</text><text class="terminal-1291422331-r7" x="732" y="410.4" textLength="244" clip-path="url(#terminal-1291422331-line-16)">Ariane&#160;64&#160;Block&#160;2&#160;·&#160;</text><text class="terminal-1291422331-r4" x="1098" y="410.4" textLength="329.4" clip-path="url(#terminal-1291422331-line-16)">Guiana&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="410.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-16)">
+</text><text class="terminal-1291422331-r7" x="732" y="434.8" textLength="207.4" clip-path="url(#terminal-1291422331-line-17)">Arianespace&#160;·&#160;LEO</text><text class="terminal-1291422331-r2" x="1439.6" y="434.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-17)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="459.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-18)">6</text><text class="terminal-1291422331-r2" x="256.2" y="459.2" textLength="317.2" clip-path="url(#terminal-1291422331-line-18)">October&#160;2026&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r10" x="610" y="459.2" textLength="85.4" clip-path="url(#terminal-1291422331-line-18)">TBD&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="459.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-18)">Bandwagon&#160;5&#160;(Dedicated&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="459.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-18)">Cape&#160;Canaveral&#160;SFS,&#160;FL,&#160;USA</text><text class="terminal-1291422331-r2" x="1439.6" y="459.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-18)">
+</text><text class="terminal-1291422331-r1" x="732" y="483.6" textLength="329.4" clip-path="url(#terminal-1291422331-line-19)">Mid-Inclination&#160;Rideshare)&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="483.6" textLength="12.2" clip-path="url(#terminal-1291422331-line-19)">
+</text><text class="terminal-1291422331-r7" x="732" y="508" textLength="329.4" clip-path="url(#terminal-1291422331-line-20)">Falcon&#160;9&#160;Block&#160;5&#160;·&#160;SpaceX&#160;·</text><text class="terminal-1291422331-r2" x="1439.6" y="508" textLength="12.2" clip-path="url(#terminal-1291422331-line-20)">
+</text><text class="terminal-1291422331-r7" x="732" y="532.4" textLength="36.6" clip-path="url(#terminal-1291422331-line-21)">LEO</text><text class="terminal-1291422331-r2" x="1439.6" y="532.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-21)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="556.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-22)">7</text><text class="terminal-1291422331-r2" x="256.2" y="556.8" textLength="317.2" clip-path="url(#terminal-1291422331-line-22)">October&#160;2026&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r10" x="610" y="556.8" textLength="85.4" clip-path="url(#terminal-1291422331-line-22)">TBD&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="556.8" textLength="329.4" clip-path="url(#terminal-1291422331-line-22)">IRNSS-1L&#160;(NVS-03)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="556.8" textLength="329.4" clip-path="url(#terminal-1291422331-line-22)">Satish&#160;Dhawan&#160;Space&#160;Centre,</text><text class="terminal-1291422331-r2" x="1439.6" y="556.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-22)">
+</text><text class="terminal-1291422331-r7" x="732" y="581.2" textLength="280.6" clip-path="url(#terminal-1291422331-line-23)">GSLV&#160;Mk&#160;II&#160;·&#160;ISRO&#160;·&#160;GTO</text><text class="terminal-1291422331-r4" x="1098" y="581.2" textLength="329.4" clip-path="url(#terminal-1291422331-line-23)">India&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="581.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-23)">
+</text><text class="terminal-1291422331-r4" x="12.2" y="605.6" textLength="12.2" clip-path="url(#terminal-1291422331-line-24)">8</text><text class="terminal-1291422331-r2" x="256.2" y="605.6" textLength="317.2" clip-path="url(#terminal-1291422331-line-24)">October&#160;2026&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r10" x="610" y="605.6" textLength="85.4" clip-path="url(#terminal-1291422331-line-24)">TBD&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r1" x="732" y="605.6" textLength="329.4" clip-path="url(#terminal-1291422331-line-24)">Flight&#160;2&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r4" x="1098" y="605.6" textLength="329.4" clip-path="url(#terminal-1291422331-line-24)">Jiuquan&#160;Satellite&#160;Launch&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="605.6" textLength="12.2" clip-path="url(#terminal-1291422331-line-24)">
+</text><text class="terminal-1291422331-r7" x="732" y="630" textLength="329.4" clip-path="url(#terminal-1291422331-line-25)">Long&#160;March&#160;12A&#160;·&#160;CASC&#160;·&#160;LEO</text><text class="terminal-1291422331-r4" x="1098" y="630" textLength="329.4" clip-path="url(#terminal-1291422331-line-25)">Center,&#160;People&#x27;s&#160;Republic&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="630" textLength="12.2" clip-path="url(#terminal-1291422331-line-25)">
+</text><text class="terminal-1291422331-r4" x="1098" y="654.4" textLength="329.4" clip-path="url(#terminal-1291422331-line-26)">of&#160;China&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-1291422331-r2" x="1439.6" y="654.4" textLength="12.2" clip-path="url(#terminal-1291422331-line-26)">
+</text><text class="terminal-1291422331-r2" x="1439.6" y="678.8" textLength="12.2" clip-path="url(#terminal-1291422331-line-27)">
+</text><text class="terminal-1291422331-r4" x="0" y="703.2" textLength="890.6" clip-path="url(#terminal-1291422331-line-28)">nextinspace&#160;show&#160;&lt;#&gt;&#160;for&#160;details&#160;·&#160;nextinspace&#160;watch&#160;for&#160;a&#160;live&#160;countdown</text><text class="terminal-1291422331-r2" x="1439.6" y="703.2" textLength="12.2" clip-path="url(#terminal-1291422331-line-28)">
+</text>
+    </g>
+    </g>
+</svg>
