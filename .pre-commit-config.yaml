@@ -1,21 +1,17 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.6
     hooks:
-      - id: black
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: check-json
       - id: check-toml
       - id: check-yaml
-  - repo: https://github.com/pappasam/toml-sort
-    rev: v0.24.2
-    hooks:
-      - id: toml-sort
-        args: ["--in-place"]
-exclude: docs/
+      - id: end-of-file-fixer
+        exclude: ^tests/data/
+      - id: trailing-whitespace
+        exclude: ^tests/data/

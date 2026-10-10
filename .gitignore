@@ -1,21 +1,18 @@
-# Virtualenvwrapper
-.project
-
-# Vscode
-.vscode/
+# macOS
+.DS_Store
+**/.DS_Store
+._*
 
 # Python
-__pycache__
-nextinspace.egg-info
+__pycache__/
+*.egg-info/
+.venv/
 build/
 dist/
 
-# Pytest
-.pytest_cache
-
-# Docs
-docs/_build
-
-# Coverage
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 coverage.*
