@@ -8,6 +8,7 @@ records a note saying so, rather than failing outright.
 
 from __future__ import annotations
 
+import copy
 import heapq
 import re
 from collections.abc import Callable, Sequence
@@ -15,7 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from itertools import islice
-from typing import Any
+from typing import Any, TypeVar
 from urllib.parse import urlencode
 
 import httpx
@@ -29,6 +30,8 @@ from nextinspace.timefmt import ago
 PROD_URL = "https://ll.thespacedevs.com/2.3.0"
 DEV_URL = "https://lldev.thespacedevs.com/2.3.0"
 DEFAULT_TTL = 600
+
+T = TypeVar("T", Launch, Event)
 
 
 class LL2Error(Exception):
@@ -56,11 +59,20 @@ def sort_key(item: Item) -> tuple[bool, datetime]:
     return item.net is None, item.net or datetime.max.replace(tzinfo=UTC)
 
 
-def _stamp(t: datetime) -> str:
-    # Bounds are floored to ten minutes so repeated calls produce identical query
-    # strings and therefore hit the cache instead of spending the hourly quota.
-    t = t.astimezone(UTC).replace(second=0, microsecond=0)
-    return t.replace(minute=t.minute - t.minute % 10).strftime("%Y-%m-%dT%H:%M:%SZ")
+def _within(items: list[T], within: timedelta | None, *, future: bool) -> list[T]:
+    """Apply a time span locally.
+
+    LL2 accepts net__lte and friends, but a bound that moves with the clock gives
+    every call a new cache key, which spends the hourly quota. Listings come back
+    sorted by date, so filtering the first ``limit`` results here returns exactly
+    what the server would have.
+    """
+    if within is None:
+        return items
+    now = datetime.now(UTC)
+    if future:
+        return [i for i in items if i.net is not None and i.net <= now + within]
+    return [i for i in items if i.net is not None and i.net >= now - within]
 
 
 class Client:
@@ -84,6 +96,12 @@ class Client:
         self.ttl = ttl
         self.refresh = refresh
         self.notes: list[str] = []
+
+    def fresh(self) -> Client:
+        """A view of this client that skips the cache, sharing its connection, cache and notes."""
+        clone = copy.copy(self)
+        clone.refresh = True
+        return clone
 
     def close(self) -> None:
         self._http.close()
@@ -136,24 +154,21 @@ class Client:
     def upcoming_launches(self, limit: int, filters: Filters = NO_FILTERS) -> list[Launch]:
         params: dict[str, Any] = {"limit": limit, "mode": "normal", "hide_recent_previous": "true"}
         params |= self._launch_filters(filters)
-        if filters.within:
-            params["net__lte"] = _stamp(datetime.now(UTC) + filters.within)
-        return [parse_launch(r) for r in self.get("/launches/upcoming/", params)["results"]]
+        launches = [parse_launch(r) for r in self.get("/launches/upcoming/", params)["results"]]
+        return _within(launches, filters.within, future=True)
 
     def upcoming_events(self, limit: int, filters: Filters = NO_FILTERS) -> list[Event]:
         params: dict[str, Any] = {"limit": limit, "mode": "normal", "hide_recent_previous": "true"}
         if filters.search:
             params["search"] = filters.search
-        if filters.within:
-            params["date__lte"] = _stamp(datetime.now(UTC) + filters.within)
-        return [parse_event(r) for r in self.get("/events/upcoming/", params)["results"]]
+        events = [parse_event(r) for r in self.get("/events/upcoming/", params)["results"]]
+        return _within(events, filters.within, future=True)
 
     def previous_launches(self, limit: int, filters: Filters = NO_FILTERS) -> list[Launch]:
         params: dict[str, Any] = {"limit": limit, "mode": "normal"}
         params |= self._launch_filters(filters)
-        if filters.within:
-            params["net__gte"] = _stamp(datetime.now(UTC) - filters.within)
-        return [parse_launch(r) for r in self.get("/launches/previous/", params)["results"]]
+        launches = [parse_launch(r) for r in self.get("/launches/previous/", params)["results"]]
+        return _within(launches, filters.within, future=False)
 
     def upcoming(
         self, limit: int, *, launches: bool = True, events: bool = True, filters: Filters = NO_FILTERS

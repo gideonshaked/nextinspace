@@ -142,20 +142,26 @@ def test_search_applies_to_launches_and_events(server, make_client):
     assert server.params(EVENTS)["search"] == "dragon"
 
 
-def test_within_bounds_upcoming(server, make_client, frozen):
-    make_client().upcoming(5, filters=Filters(within=timedelta(days=2)))
-    # Floored to ten minutes so repeated runs share a cache key.
-    assert server.params(LAUNCHES)["net__lte"] == "2026-10-12T12:30:00Z"
-    assert server.params(EVENTS)["date__lte"] == "2026-10-12T12:30:00Z"
-    assert "net__lte" not in server.params(EVENTS)
+def test_within_filters_locally(server, make_client, frozen):
+    items = make_client().upcoming(5, filters=Filters(within=timedelta(days=2)))
+    # Only the Starlink launch on Oct 10 23:00 falls before Oct 12 12:37:15.
+    assert [i.name for i in items] == ["Falcon 9 Block 5 | Starlink Group 15-25"]
+    for path in (LAUNCHES, EVENTS):
+        assert not {"net__lte", "date__lte"} & server.params(path).keys()
+
+
+def test_within_keeps_cache_key_stable(server, make_client, frozen):
+    client = make_client()
+    client.upcoming(5)
+    client.upcoming(5, filters=Filters(within=timedelta(hours=1)))
+    assert len(server.requests) == 2
 
 
 def test_previous_launches(server, make_client, frozen):
     launches = make_client().previous_launches(10, Filters(within=timedelta(hours=36), provider="SpaceX"))
-    assert len(launches) == 10
-    assert launches[0].status.abbrev == "Go"
-    params = server.params(PREVIOUS)
-    assert params == {"limit": "10", "mode": "normal", "lsp__name": "SpaceX", "net__gte": "2026-10-09T00:30:00Z"}
+    # Of the ten fixture launches only the Oct 9 19:25 one is after Oct 9 00:37:15.
+    assert [launch.net.isoformat() for launch in launches] == ["2026-10-09T19:25:00+00:00"]
+    assert server.params(PREVIOUS) == {"limit": "10", "mode": "normal", "lsp__name": "SpaceX"}
 
 
 def test_launch_detail(server, make_client):

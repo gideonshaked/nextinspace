@@ -24,6 +24,7 @@ class Webcast:
     title: str | None
     url: str
     publisher: str | None
+    type: str | None
     live: bool
 
 
@@ -196,11 +197,22 @@ def _date(s: str | None) -> date | None:
 
 
 def _webcasts(urls: list[dict[str, Any]] | None) -> tuple[Webcast, ...]:
-    ordered = sorted(urls or [], key=lambda v: v.get("priority") or 0)
+    # LL2's "priority" only orders streams within a launch and usually puts a fan
+    # re-stream first. The type id ranks them: 1 official, 2 official re-stream,
+    # 3 unofficial, 4 unofficial re-stream, higher ids are recaps and other video.
+    ordered = sorted(
+        (v for v in urls or [] if v.get("url")),
+        key=lambda v: (_get(v, "type", "id") or 99, v.get("priority") or 0),
+    )
     return tuple(
-        Webcast(title=v.get("title"), url=v["url"], publisher=v.get("publisher"), live=bool(v.get("live")))
+        Webcast(
+            title=v.get("title"),
+            url=v["url"],
+            publisher=v.get("publisher"),
+            type=_get(v, "type", "name"),
+            live=bool(v.get("live")),
+        )
         for v in ordered
-        if v.get("url")
     )
 
 

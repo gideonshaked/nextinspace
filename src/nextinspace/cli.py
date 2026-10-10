@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import json
 import os
 import sys
@@ -30,8 +31,10 @@ class DefaultToNext(TyperGroup):
     """Run ``next`` when no subcommand is given, so ``nextinspace 5 -l`` works."""
 
     def parse_args(self, ctx: Any, args: list[str]) -> list[str]:
+        # Shell completion parses with resilient_parsing set; rewriting its arguments
+        # would stop it from ever offering the subcommand names.
         passthrough = {"--help", "-h", "--version", "--install-completion", "--show-completion"}
-        if not args or (args[0] not in self.commands and args[0] not in passthrough):
+        if not ctx.resilient_parsing and (not args or (args[0] not in self.commands and args[0] not in passthrough)):
             args = ["next", *args]
         return super().parse_args(ctx, args)
 
@@ -113,8 +116,20 @@ def fail(message: str) -> typer.Exit:
     return typer.Exit(1)
 
 
+def emit(text: str) -> None:
+    """Write UTF-8 bytes to stdout.
+
+    Writing text would let Windows encode a redirected stdout in its ANSI code page
+    and turn every LF into CRLF, which mangles JSON and doubles the CRLF line endings
+    iCalendar requires.
+    """
+    sys.stdout.flush()
+    sys.stdout.buffer.write(text.encode())
+    sys.stdout.buffer.flush()
+
+
 def emit_json(data: Any) -> None:
-    sys.stdout.write(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+    emit(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
 
 
 def remember(client: Client, items: list[Item]) -> None:
@@ -188,7 +203,9 @@ def next_(
             emit_json([to_dict(i) for i in items])
             return
         if fmt == Format.ics:
-            sys.stdout.write(ics.calendar(items, now))
+            if not ics.exportable(items):
+                raise fail("nothing to export: no item has a known day yet")
+            emit(ics.calendar(items, now))
             return
         if not items:
             err.print("Nothing found." + (" Try fewer filters." if describe_filters(filters) else ""))
@@ -239,7 +256,8 @@ def past(
 def resolve(client: Client, target: str | None) -> Item:
     """Turn a listing number, LL2 id or search text into an item."""
     if target is None:
-        launches = client.upcoming_launches(1)
+        # Five, not one, so this shares a cache entry with `next` and `watch`.
+        launches = client.upcoming_launches(5)
         if not launches:
             raise LL2Error("no upcoming launches")
         return client.detail(launches[0])
@@ -294,7 +312,7 @@ def show(
     out.print(render.detail(item, datetime.now(UTC), zone))
 
 
-def watch_view(item: Item, upcoming: list[Launch], now: datetime, tz: tzinfo | None) -> Group:
+def watch_view(item: Item, upcoming: list[Launch], now: datetime, tz: tzinfo | None, note: str | None = None) -> Group:
     name, _ = render.split_name(item)
     head = Text(name, style=f"bold {render.ACCENT}", justify="center")
     sub = render.subtitle(item)
@@ -333,6 +351,8 @@ def watch_view(item: Item, upcoming: list[Launch], now: datetime, tz: tzinfo | N
             render.subtitle(launch),
         )
     footer = Text("Updates itself · Ctrl+C to exit", style="dim", justify="center")
+    if note:
+        footer.append(f"\n{note}", style="yellow")
     return Group(hero, Panel(later, title="Up next", title_align="left", border_style="dim"), footer)
 
 
@@ -347,14 +367,18 @@ def watch(target: TargetArg = None, tz: Tz = None, refresh: Refresh = False) -> 
     try:
         with Live(console=out, screen=True, auto_refresh=False, transient=True) as live:
             while True:
-                # The client's cache keeps this to one real request per TTL; reloading
-                # every minute only picks up the next launch once this one is gone.
+                # Reloading every minute costs two real requests per cache TTL: the list,
+                # and the detail by id. A named target is resolved only once, because a
+                # search costs more and a listing number would follow later listings.
                 if time.monotonic() - loaded_at > 60:
                     try:
                         upcoming = client.upcoming_launches(5)
                         if target is None and not upcoming:
                             raise LL2Error("no upcoming launches")
-                        item = resolve(client, target) if target else client.detail(upcoming[0])
+                        if target is None:
+                            item = client.detail(upcoming[0])
+                        else:
+                            item = client.detail(item) if item else resolve(client, target)
                         loaded_at = time.monotonic()
                         client.refresh = False
                     except LL2Error as e:
@@ -363,7 +387,8 @@ def watch(target: TargetArg = None, tz: Tz = None, refresh: Refresh = False) -> 
                         client.notes.append(str(e))
                         loaded_at = time.monotonic()
                 assert item is not None
-                live.update(watch_view(item, upcoming, datetime.now(UTC), zone), refresh=True)
+                note = client.notes[-1] if client.notes else None
+                live.update(watch_view(item, upcoming, datetime.now(UTC), zone, note), refresh=True)
                 time.sleep(1 - time.time() % 1)
     except KeyboardInterrupt:
         pass
@@ -379,8 +404,13 @@ def browse(tz: Tz = None, refresh: Refresh = False) -> None:
     """Interactive full-screen browser: search, filter, read details and open webcasts."""
     from nextinspace.tui import Browser
 
-    Browser(make_client(refresh), _zone(tz)).run()
+    Browser(make_client(False), _zone(tz), refresh=refresh).run()
 
 
 def main() -> None:
+    # Windows encodes redirected output in its ANSI code page, which cannot represent
+    # the arrows and symbols the renderers print.
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(encoding="utf-8")
     app()

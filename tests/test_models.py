@@ -169,3 +169,30 @@ def test_event_with_null_fields():
     assert event.net is None
     assert event.precision is None
     assert event.location is None
+
+
+def test_webcasts_rank_official_streams_first():
+    def stream(priority, type_id, name):
+        return {"priority": priority, "url": f"https://x/{name}", "title": name, "type": {"id": type_id, "name": name}}
+
+    launch = parse_launch(
+        {
+            "id": "x",
+            "name": "x",
+            "vid_urls": [
+                stream(8, 4, "Unofficial Re-stream"),
+                stream(9, 3, "Unofficial Webcast"),
+                stream(10, 1, "Official Webcast"),
+                stream(11, 1, "Official Webcast 2"),
+                {"priority": 1, "url": "https://x/untyped"},
+            ],
+        }
+    )
+    assert [w.title for w in launch.webcasts] == [
+        "Official Webcast",
+        "Official Webcast 2",
+        "Unofficial Webcast",
+        "Unofficial Re-stream",
+        None,
+    ]
+    assert launch.webcasts[0].type == "Official Webcast"

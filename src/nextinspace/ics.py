@@ -32,7 +32,16 @@ def _utc(t: datetime) -> str:
     return t.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
 
 
+# Coarser precisions would put the item on an arbitrary day of its week or month.
+DAY_OR_FINER = {None, "SEC", "MIN", "HR", "AM", "PM", "DAY"}
+
+
+def exportable(items: Sequence[Item]) -> list[Item]:
+    return [i for i in items if i.net is not None and i.precision in DAY_OR_FINER]
+
+
 def calendar(items: Sequence[Item], now: datetime) -> str:
+    """An iCalendar file of the exportable items. RFC 5545 needs at least one."""
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
@@ -40,10 +49,8 @@ def calendar(items: Sequence[Item], now: datetime) -> str:
         "CALSCALE:GREGORIAN",
         "X-WR-CALNAME:Next in space",
     ]
-    for item in items:
-        # Items known only to the month or coarser would land on an arbitrary day.
-        if item.net is None or item.precision not in {None, "SEC", "MIN", "HR", "AM", "PM", "DAY"}:
-            continue
+    for item in exportable(items):
+        assert item.net is not None
         lines += ["BEGIN:VEVENT", f"UID:{item.kind}-{item.id}@nextinspace", f"DTSTAMP:{_utc(now)}"]
         if has_clock(item.precision):
             start = item.window_start if isinstance(item, Launch) and item.window_start else item.net

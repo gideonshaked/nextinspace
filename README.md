@@ -33,7 +33,7 @@ nextinspace                      # the next 5 launches and events
 nextinspace 12                   # the next 12
 nextinspace -l                   # launches only
 nextinspace -e                   # events only: dockings, spacewalks, landings, flybys
-nextinspace -w 48h               # everything in the next two days
+nextinspace 20 -w 48h           # up to 20 items in the next two days
 nextinspace -s starship          # free-text search over names, rockets, providers and sites
 nextinspace -p SpaceX --crewed   # crewed SpaceX launches
 nextinspace -v                   # full cards with mission descriptions
@@ -65,7 +65,7 @@ nextinspace watch                # full-screen clock for the next launch
 nextinspace watch "crew-14"      # or for any launch you name
 ```
 
-The clock moves on to the next launch by itself once the current one has flown.
+With no target, the clock moves on to the next launch by itself once the current one has flown.
 
 <p align="center"><img src="https://raw.githubusercontent.com/gideonshaked/nextinspace/master/img/watch.svg" width="700"></p>
 
@@ -80,7 +80,7 @@ The other keys are listed below.
 
 - `/` searches.
 - `a`, `l`, `e` and `p` switch between everything, launches, events and past launches.
-- `w` opens the webcast and `m` opens the pad on a map.
+- `w` opens the webcast, preferring the official stream, and `m` opens the pad on a map.
 - `r` refreshes and `q` quits.
 
 <p align="center"><img src="https://raw.githubusercontent.com/gideonshaked/nextinspace/master/img/browse.svg" width="820"></p>
@@ -100,7 +100,7 @@ nextinspace 5 --json | jq '.[].name'
 nextinspace show --json | jq '.rocket'
 ```
 
-The calendar export skips items known only to the month or coarser, since they would land on an arbitrary day.
+The calendar export skips items known only to the week or coarser, since they would land on an arbitrary day.
 
 ## Rate limits and configuration
 

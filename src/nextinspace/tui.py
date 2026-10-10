@@ -54,7 +54,7 @@ class Browser(App[None]):
         Binding("q", "quit", "Quit"),
     ]
 
-    def __init__(self, client: Client, tz: tzinfo | None) -> None:
+    def __init__(self, client: Client, tz: tzinfo | None, *, refresh: bool = False) -> None:
         super().__init__()
         self.client = client
         self.tz = tz
@@ -63,6 +63,8 @@ class Browser(App[None]):
         self.items: list[Item] = []
         self.details: dict[str, Item] = {}
         self.current: Item | None = None
+        self.refresh_first = refresh
+        self.generation = 0
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -80,29 +82,31 @@ class Browser(App[None]):
         table.add_column("Status", key="status")
         table.add_column("Mission", key="mission")
         table.focus()
-        self.load()
+        self.load(refresh=self.refresh_first)
         self.set_interval(1, self.tick)
 
     # ---- Data ----
 
-    @work(thread=True, exclusive=True, group="list")
     def load(self, refresh: bool = False) -> None:
-        self.call_from_thread(self.set_status, "Loading...")
-        filters = Filters(search=self.search)
-        self.client.refresh = refresh
+        # Cancelling a thread worker only flags it, and the thread runs to the end, so
+        # each load carries a generation number and stale results are dropped.
+        self.generation += 1
+        self.set_status("Loading...")
+        self._load(self.generation, self.mode, self.search, refresh)
+
+    @work(thread=True, exclusive=True, group="list")
+    def _load(self, generation: int, mode: str, search: str | None, refresh: bool) -> None:
+        client = self.client.fresh() if refresh else self.client
+        filters = Filters(search=search)
         try:
-            if self.mode == "past":
-                items: list[Item] = list(self.client.previous_launches(LIMIT, filters))
+            if mode == "past":
+                items: list[Item] = list(client.previous_launches(LIMIT, filters))
             else:
-                items = self.client.upcoming(
-                    LIMIT, launches=self.mode != "events", events=self.mode != "launches", filters=filters
-                )
+                items = client.upcoming(LIMIT, launches=mode != "events", events=mode != "launches", filters=filters)
         except LL2Error as e:
             self.call_from_thread(self.set_status, str(e), "red")
             return
-        finally:
-            self.client.refresh = False
-        self.call_from_thread(self.show_items, items)
+        self.call_from_thread(self.show_items, items, generation)
 
     @work(thread=True, exclusive=True, group="detail")
     def load_detail(self, item: Item) -> None:
@@ -113,8 +117,13 @@ class Browser(App[None]):
             self.call_from_thread(self.set_status, str(e), "red")
             return
         self.details[key(item)] = full
-        self.call_from_thread(self.show_detail, full)
-        self.call_from_thread(self.set_status, full.name)
+        self.call_from_thread(self.detail_loaded, full)
+
+    def detail_loaded(self, full: Item) -> None:
+        # The cursor may have moved on while the request was in flight.
+        if self.current is not None and key(self.current) == key(full):
+            self.show_detail(full)
+            self.set_status(full.name)
 
     # ---- View ----
 
@@ -125,7 +134,9 @@ class Browser(App[None]):
         self.client.notes.clear()
         self.query_one("#status", Static).update(status)
 
-    def show_items(self, items: list[Item]) -> None:
+    def show_items(self, items: list[Item], generation: int) -> None:
+        if generation != self.generation:
+            return
         self.items = items
         self.sub_title = MODES[self.mode] + (f" matching “{self.search}”" if self.search else "")
         table = self.query_one(DataTable)

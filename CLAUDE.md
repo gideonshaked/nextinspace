@@ -33,13 +33,34 @@ Python 3.10 support was dropped because it reached end of life in October 2026.
 
 Responses are cached for ten minutes in the platformdirs cache directory, keyed on URL and query.
 On a 429, a network error or a 5xx, the client serves the newest cached copy of any age and records a note, which the CLI prints to stderr.
-Time bounds such as `net__lte` are floored to ten minutes so repeated commands produce the same query and hit the cache.
-`watch` re-resolves every minute but costs two requests per cache window, one for the list and one for the detail.
+`--within` is applied client-side rather than through `net__lte`, `net__gte` or `date__lte`, because a bound that moves with the clock gives every call a new cache key and leaves nothing to fall back on when rate-limited.
+Listings arrive sorted by date, so filtering the first `limit` results locally matches what the server would return.
+`show` with no target asks for five launches, not one, so it shares a cache entry with `next` and `watch`.
+`watch` reloads every minute but costs two requests per cache window, the list and the detail by id.
+A named `watch` target is resolved once, because a search costs an extra two requests and a listing number would follow whatever listing another terminal prints next.
 The TUI fetches detail only on Enter for the same reason.
+
+### Webcasts
+
+LL2's `priority` on a webcast only orders streams and usually puts a fan re-stream first.
+`models.py` sorts by the webcast type id instead (1 official, 2 official re-stream, 3 unofficial, 4 unofficial re-stream), so `webcasts[0]` is the provider's own stream when there is one.
+
+### Output on Windows
+
+Windows writes redirected stdout in its ANSI code page with strict errors, and translates LF to CRLF.
+`main()` reconfigures stdout and stderr to UTF-8 for Rich output, and JSON and iCalendar go out as UTF-8 bytes through `emit()` so the CRLF line endings iCalendar requires are not doubled.
+
+### Textual workers
+
+Cancelling a thread worker only flags it, and the thread still finishes and calls back.
+`Browser.load` stamps each request with a generation number and `show_items` drops results from older generations.
+`detail_loaded` shows a fetched detail only if its row is still the current one.
+A refresh goes through `Client.fresh()`, a shallow copy with `refresh` set, so overlapping workers never share a mutable refresh flag.
 
 ### CLI shape
 
 `DefaultToNext` in `cli.py` routes anything that is not a subcommand to `next`, so `nextinspace 5 -l` works like the 3.x interface.
+It leaves arguments alone when `ctx.resilient_parsing` is set, which is how shell completion parses, or completion would never offer subcommand names.
 `--version` uses an eager option callback because Click checks for a missing subcommand before the group callback runs.
 Typer 0.27 vendors Click as `typer._click` and no longer installs `click`, so `cli.py` does not import it.
 `show <n>` indexes the last listing printed by `next` or `past`, which is saved to `last_listing.json` in the cache directory.

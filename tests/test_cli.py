@@ -185,3 +185,19 @@ def test_watch_view(load, detailed_launch):
 
     console.print(cli.watch_view(parse_launch(detailed_launch), launches, now, UTC))
     assert "NET March 2027" in console.export_text()
+
+
+def test_completion_offers_subcommands(monkeypatch):
+    monkeypatch.setenv("_NEXTINSPACE_COMPLETE", "complete_zsh")
+    monkeypatch.setenv("_TYPER_COMPLETE_ARGS", "nextinspace sh")
+    result = CliRunner().invoke(cli.app, [], prog_name="nextinspace")
+    assert "show" in result.output
+
+
+def test_ics_with_nothing_exportable_fails(run, server, load):
+    page = load("launches_upcoming.json")
+    server.pages[LAUNCHES] = {**page, "results": [r for r in page["results"] if r["net_precision"]["abbrev"] == "M"]}
+    result = run("-l", "-f", "ics")
+    assert result.exit_code == 1
+    assert "nothing to export" in result.stderr
+    assert "BEGIN:VCALENDAR" not in result.stdout

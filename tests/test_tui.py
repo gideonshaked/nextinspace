@@ -77,3 +77,20 @@ async def test_status_shows_markup_literally(browser):
         browser.set_status("Starlink [/] [bold]x")
         await pilot.pause()
         assert "Starlink [/] [bold]x" in str(browser.query_one("#status", Static).render())
+
+
+async def test_stale_listing_is_dropped(browser):
+    async with browser.run_test() as pilot:
+        await settle(browser, pilot)
+        before = row_keys(browser)
+        browser.show_items([], browser.generation - 1)
+        assert row_keys(browser) == before
+
+
+async def test_detail_for_a_row_left_behind_is_not_shown(browser, server):
+    async with browser.run_test() as pilot:
+        await settle(browser, pilot)
+        first, second = browser.items[0], browser.items[1]
+        browser.show_detail(second)
+        browser.detail_loaded(first)
+        assert browser.current is second
